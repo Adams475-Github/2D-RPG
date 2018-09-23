@@ -41,7 +41,7 @@ public class Player extends Creature {
 	//Miscellaneous Variables from ongoing implementation
 	private int lastAnim = 0;
 	private Animation currentAttack = animAttackDown;
-	private boolean attacking ;
+	private boolean attacking;
 	private long lastAttackTimer, attackCooldown = 550, attackTimer = attackCooldown;
 	private boolean inv = false;
 	private boolean esc = false;
