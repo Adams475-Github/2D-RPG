@@ -338,7 +338,7 @@ public class Inventory {
 		}
 	}
 	
-	//getters and setters
+	//Getters and Setters
 	public Handler getHandler() {
 		return handler;
 	}

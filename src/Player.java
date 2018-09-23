@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 
 public class Player extends Creature {
 	
+	//Instance variable initialization
+	
 	//Inventory
 	private Inventory inventory;
 	private EscapeMenu escapeMenu;
@@ -17,19 +19,24 @@ public class Player extends Creature {
 	//Interaction Rectangle
 	Rectangle interactionBounds;
 	
-	//Experience
+	//Experience (unused for now)
 	private int exp;
 	
-	
 	//Animations
+	
+	//Walking
 	private Animation animDown;
 	private Animation animUp;
 	private Animation animLeft;
 	private Animation animRight;
+	
+	//Attacking with a normal sword
 	private Animation animAttackDown;
 	private Animation animAttackUp;
 	private Animation animAttackLeft;
 	private Animation animAttackRight;
+	
+	//Attacking with a blue sword
 	private Animation animAttackDownB;
 	private Animation animAttackUpB;
 	private Animation animAttackLeftB;
@@ -38,7 +45,7 @@ public class Player extends Creature {
 	//Array for still sprites
 	private BufferedImage still[];
 	
-	//Miscellaneous Variables from ongoing implementation
+	//Miscellaneous Variables from ongoing implementation (will refactor)
 	private int lastAnim = 0;
 	private Animation currentAttack = animAttackDown;
 	private boolean attacking;
@@ -46,9 +53,8 @@ public class Player extends Creature {
 	private boolean inv = false;
 	private boolean esc = false;
 	
-	//Overlay
-	Overlay playerO = new Overlay(handler);
-	
+	//Overlay (Might not need this but for now I'm doing it this way)
+	Overlay playerO = new Overlay(handler);	
 	
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, 60, 98);
@@ -57,32 +63,34 @@ public class Player extends Creature {
 		bounds.x = 13;
 		bounds.y = 60;
 		bounds.width = 23;
-		bounds.height = 32;
-		
-		 
+		bounds.height = 32;	 
 		
 		//Animation Initialization
+		
+		//Walking
 		animDown = new Animation(250, Assets.player_down);
 		animUp = new Animation(250, Assets.player_up);	
 		animLeft = new Animation(250, Assets.player_left);
 		animRight = new Animation(250, Assets.player_right);
 		
+		//Starter sword swing
 		animAttackDown = new Animation(125, Assets.player_attack_down);
 		animAttackUp = new Animation(125, Assets.player_attack_up);
 		animAttackLeft = new Animation(125, Assets.player_attack_left);
 		animAttackRight = new Animation(125, Assets.player_attack_right);
 		
+		//Blue sword swing
 		animAttackDownB = new Animation(125, Assets.player_attack_downB);
 		animAttackUpB = new Animation(125, Assets.player_attack_upB);
 		animAttackLeftB = new Animation(125, Assets.player_attack_leftB);
 		animAttackRightB = new Animation(125, Assets.player_attack_rightB);
 		
-		
+		//standing still asset setting
 		still = Assets.player_idle;
 		
+		//Initializing stats/gear
 		chestPlate = Item.nothing;
 		sword = Item.nothing;
-		
 		this.health = 12;
 		
 		//inventory initialization
@@ -94,35 +102,38 @@ public class Player extends Creature {
 	public void setDimension(int setWidth, int setHeight) {
 		width = setWidth;
 		height = setHeight;
+		
 	}
-			
 
 	public void tick() {
 		
-		if(handler.getWorld().getEntityManager().getPlayer().sword == Item.blueSword) {
-			
-		}
-		
-		
-		
 		//Animations
+		
+		//Walking
 		animDown.tick();
 		animUp.tick();
 		animLeft.tick();
 		animRight.tick();
 		
-		animAttackDown.tick();
-		animAttackUp.tick();
-		animAttackRight.tick();
-		animAttackLeft.tick();
+		if(this.sword == Item.swordStarter) {
+			//Basic Sword
+			animAttackDown.tick();
+			animAttackUp.tick();
+			animAttackRight.tick();
+			animAttackLeft.tick();
+		} else {
+			//Blue Sword
+			animAttackDownB.tick();
+			animAttackUpB.tick();
+			animAttackRightB.tick();
+			animAttackLeftB.tick();
+		}
 		
-		animAttackDownB.tick();
-		animAttackUpB.tick();
-		animAttackRightB.tick();
-		animAttackLeftB.tick();
-		
+		//overlay
 		playerO.tick();
 		
+		//this is useless code once I refactor how attack animations are treated
+		//Resets Attack Frame so animation always starts on first frame.
 		if(!attacking) {
 			animAttackUp.set(0);
 			animAttackDown.set(0);
@@ -134,13 +145,11 @@ public class Player extends Creature {
 			animAttackRightB.set(0);
 			animAttackLeftB.set(0);
 		}
-		
-		
-		//Resets Attack Frame so animation always starts on first frame.
-		
-		
+
+		//Checks if the player is attacking or interacting with an object
 		checkAttacks();
 		interactWith();
+		
 		
 		if(this.getInventory().isActive()) {
 			inv = true;
@@ -275,10 +284,6 @@ public class Player extends Creature {
 				currentAttack = animAttackRightB;
 			}
 		}
-		
-		
-		
-
 	}
 
 	public void render(Graphics g) {
@@ -297,8 +302,6 @@ public class Player extends Creature {
 		escapeMenu.render(g);
 		playerO.render(g);
 		inventory.render(g);
-		
-		
 		
 	}
 	
@@ -362,13 +365,14 @@ public class Player extends Creature {
 				e.interact();
 			}
 		}
-		
-		
 	}
 	
+	//Implemented method needed since all entities must have an interact method, but the player doesn't do anything when interacted with yet.
 	public void interact() {
 		
 	}
+	
+	//Getters and Setters
 
 	public Inventory getInventory() {
 		return inventory;
