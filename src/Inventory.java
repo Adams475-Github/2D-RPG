@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 public class Inventory {
 	
+	private long time = 550;
+	private int holder = 0;
+	private long timeDone;
 	//Handler initialization
 	private Handler handler;
 	//Whether its active or not
@@ -114,6 +117,8 @@ public class Inventory {
 			return;
 		}
 		
+		checkUse();
+		
 		//updates correct arrays based on which one it's displaying
 		if(display == 0) {
 			currentInv = inventoryAttack;
@@ -221,11 +226,28 @@ public class Inventory {
 				}
 			}
 			
-			if (use.contains(mouseX, mouseY) && handler.getMouseManager().isLeftPressed()) {
+			
+			if (use.contains(mouseX, mouseY) && handler.getMouseManager().isLeftPressed() && holder == 0) {
 				hotbarAdd();
-				
+				holder = 1;
 			}
+			
+			
 		}
+	}
+	
+	public void checkUse() {
+		time += System.currentTimeMillis() - timeDone;
+		timeDone = System.currentTimeMillis();
+		
+		
+		if(time < 550) {
+			return;
+		}
+		
+		
+		holder = 0;
+		time = 0;
 	}
 	
 	//render method
@@ -327,6 +349,7 @@ public class Inventory {
 	//smart method to add items to hot-bar, although I don't know how smart it was to make this.. Maybe could've implemented into normal add
 	public void hotbarAdd() {
 		int i = 0;
+		Item temp = Item.nothing;
 		
 		for(int x = 0; x < 5; x++) {
 			
@@ -336,7 +359,7 @@ public class Inventory {
 					if(i < currentInv.size() && currentInv.get(i).type == 1) {
 						
 						if(hotbar.get(0) != Item.nothing) {
-							this.addItem((hotbar.get(0)));
+							temp = hotbar.get(0);
 							
 						}
 						
@@ -349,10 +372,13 @@ public class Inventory {
 						handler.getWorld().getEntityManager().getPlayer().setChestPlate(currentInv.get(i));
 						setNothing(i, x, y);
 						
-					} else {
-						break;
+					} 
+					
+					if(temp != Item.nothing) {
+						this.addItem(temp);
 						
 					}
+					
 				}
 				//need this to loop through arrayList as well, honestly could do x * y but i think its a little more intuitive to just do i++ after
 				i++;
