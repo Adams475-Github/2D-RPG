@@ -21,15 +21,10 @@ public class Assets {
 	public static Font font28, font28nBold, fontPlaceHolder;
 	public static BufferedImage parchment, tlCorner, trCorner, blCorner, brCorner, vertLine, horzLine;
 	public static BufferedImage swordStarter, test, chestPlate, swordBlue, swordRed, swordGreen, swordBlack;
+	public static BufferedImage tabHighlightSword, tabHighlightShield, tabHighlightPotion, tabHighlightQuest;
 	
 	
 	public static void init() {
-		
-		
-		//Font
-		font28 = FontLoader.highTower;
-		font28nBold = FontLoader.highTowernBold;
-		fontPlaceHolder = new Font("Times New Roman", Font.BOLD, 28);
 		
 		//Load Sprite Sheets
 		SpriteSheet sheetWorld = new SpriteSheet(ImageLoader.loadImage("/textures/Overworld.png"));
@@ -45,6 +40,17 @@ public class Assets {
 		SpriteSheet overlayItems = new SpriteSheet(ImageLoader.loadImage("/textures/objects.png"));
 		SpriteSheet blueSwordSwing = new SpriteSheet(ImageLoader.loadImage("/textures/swordSwingBlue.png"));
 		SpriteSheet rangerFemale = new SpriteSheet(ImageLoader.loadImage("/textures/ranger_f.png"));
+		
+		//Highlighters for tabs
+		tabHighlightSword = invUI.crop(144, 138, 13, 17);
+		tabHighlightShield = invUI.crop(144, 156, 13, 17);
+		tabHighlightPotion = invUI.crop(144, 174, 13, 17);
+		tabHighlightQuest = invUI.crop(144, 192, 13, 17);
+		
+		//Font
+		font28 = FontLoader.highTower;
+		font28nBold = FontLoader.highTowernBold;
+		fontPlaceHolder = new Font("Times New Roman", Font.BOLD, 28);
 		
 		//Ranger Female
 		archF_up = new BufferedImage[3];

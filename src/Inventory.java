@@ -118,10 +118,13 @@ public class Inventory {
 		if(display == 0) {
 			currentInv = inventoryAttack;
 			Update();
+			
 		} else if(display == 1) {
 			Update();
+			
 		} else if(display == 2) {
 			Update();
+			
 		}
 		
 		//sets mouse x and y as variables so I don't have to type all the way out
@@ -138,6 +141,7 @@ public class Inventory {
 				
 			}
 		}
+		
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_LEFT)) {
 			if(xMove > 0) {
 				xMove -= 1;
@@ -147,6 +151,7 @@ public class Inventory {
 				
 			}
 		}
+		
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_DOWN)) {
 			if(yMove < 2) {
 				yMove += 1;
@@ -156,6 +161,7 @@ public class Inventory {
 				
 			}
 		}
+		
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)) {
 			if(yMove > 0) {
 				yMove -= 1;
@@ -174,18 +180,21 @@ public class Inventory {
 				currentInv = inventoryAttack;
 				Update();
 			}
+			
 			if (shieldBounds.contains(mouseX, mouseY) && handler.getMouseManager().isLeftPressed()) {
 				display = 1;
 				current2d = armor2d;
 				currentInv = inventoryArmor;
 				Update();
 			}
+			
 			if (potionsBounds.contains(mouseX, mouseY) && handler.getMouseManager().isLeftPressed()) {
 				display = 2;
 				current2d = potions2d;
 				currentInv = inventoryPotions;
 				Update();
 			}
+			
 			if (questBounds.contains(mouseX, mouseY) && handler.getMouseManager().isLeftPressed()) {
 				display = 3;
 			}
@@ -253,6 +262,19 @@ public class Inventory {
 		//draws items in hot-bar
 		for(int i = 0; i < hotbar.size(); i++) {
 			g.drawImage(hotbar.get(i).texture, 341 + invSlotDist * i, 621, 48, 48, null);
+		}
+		
+		if(display == 0) {
+			g.drawImage(Assets.tabHighlightSword, 705, 179, 13*4, 17*4, null);
+			
+		} else if(display == 1){
+			g.drawImage(Assets.tabHighlightShield, 705, 250, 13*4, 17*4, null);
+			
+		} else if(display == 2) {
+			g.drawImage(Assets.tabHighlightPotion, 705, 322, 13*4, 17*4, null);
+			
+		} else {
+			g.drawImage(Assets.tabHighlightQuest, 705, 394, 13*4, 17*4, null);
 		}
 
 	}
