@@ -6,7 +6,7 @@ public class Assets {
 	private static final int width = 16, height = 16;
 	
 	//Stand-alone
-	public static BufferedImage dirt, grass, stone, tree, rock, bush, wood, coin;
+	public static BufferedImage dirt, grass, stone, tree, rock, bush, wood, coin, chestClosed, chestOpen;
 	//Player walk
 	public static BufferedImage[] player_down, player_up, player_right, player_left, player_idle;
 	//Player attack
@@ -26,6 +26,10 @@ public class Assets {
 	
 	public static void init() {
 		
+		//149, 0, 171, 16
+		
+		
+		
 		//Load Sprite Sheets
 		SpriteSheet sheetWorld = new SpriteSheet(ImageLoader.loadImage("/textures/Overworld.png"));
 		SpriteSheet sheetCharacter = new SpriteSheet(ImageLoader.loadImage("/textures/character.png"));
@@ -40,6 +44,10 @@ public class Assets {
 		SpriteSheet overlayItems = new SpriteSheet(ImageLoader.loadImage("/textures/objects.png"));
 		SpriteSheet blueSwordSwing = new SpriteSheet(ImageLoader.loadImage("/textures/swordSwingBlue.png"));
 		SpriteSheet rangerFemale = new SpriteSheet(ImageLoader.loadImage("/textures/ranger_f.png"));
+		
+		//Chest
+		chestClosed = objectSheet.crop(149, 0, 22, 17);
+		chestOpen = objectSheet.crop(229, 23, 22, 17);
 		
 		//Highlighters for tabs
 		tabHighlightSword = invUI.crop(144, 138, 13, 17);
