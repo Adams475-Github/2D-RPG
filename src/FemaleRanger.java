@@ -16,6 +16,7 @@ public class FemaleRanger extends Creature{
 	private int moveCount = 0;
 	private long lastMove, moveCooldown = 800, moveTimer = moveCooldown;
 	private boolean forceStop = false;
+	private boolean moving = true;
 	Rectangle walkingArea = new Rectangle(200, 300, 300, 200);
 	private Random rand = new Random();
 
@@ -72,6 +73,7 @@ public class FemaleRanger extends Creature{
 		
 		npcWanderLogic();
 		checkBounds();
+		checkPlayer();
 		move();
 		
 		
@@ -104,7 +106,7 @@ public class FemaleRanger extends Creature{
 		moveTimer += System.currentTimeMillis() - lastMove;
 		lastMove = System.currentTimeMillis();
 		
-		if(moveTimer < moveCooldown) {
+		if(moveTimer < moveCooldown || !moving) {
 			return;
 		}
 		
@@ -191,6 +193,16 @@ public class FemaleRanger extends Creature{
 			forceDir = -1;
 			forceStop = true;
 			moveCount = 1;
+		}
+		
+	}
+	
+	public void checkPlayer() {
+		
+		if(Math.abs(handler.getWorld().getEntityManager().getPlayer().getX() - x) < 100 && Math.abs(handler.getWorld().getEntityManager().getPlayer().getY() - y) < 100) {
+			moving = false;
+		} else {
+			moving = true;
 		}
 		
 	}
