@@ -29,10 +29,8 @@ public class FemaleRanger extends Creature{
 		this.y = y;
 		this.x = x;
 		
-		bounds.x = 18;
-		bounds.y = 40;
-		bounds.width = 50;
-		bounds.height = 45;
+		bounds.width = 20*4;
+		bounds.height = 23*4;
 		
 		animDown = new Animation(250, Assets.archF_down);
 		animUp = new Animation(250, Assets.archF_up);	
