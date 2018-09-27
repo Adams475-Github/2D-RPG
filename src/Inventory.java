@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class Inventory {
-	
+
 	private long time = 550;
 	private int holder = 0;
 	private long timeDone;
@@ -108,9 +108,9 @@ public class Inventory {
 	public void tick() {
 		
 		//if user presses E either opens or closes menu
-		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_E) && !handler.getWorld().getEntityManager().getPlayer().getEscapeMenu().isActive()) {
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_I) && !handler.getWorld().getEntityManager().getPlayer().getEscapeMenu().isActive()) {
 			active = !active;
-		}
+		}		
 		
 		//doesn't tick if it's not active
 		if(!active) {
@@ -241,9 +241,11 @@ public class Inventory {
 		timeDone = System.currentTimeMillis();
 		
 		
+		
 		if(time < 550) {
 			return;
 		}
+		
 		
 		
 		holder = 0;

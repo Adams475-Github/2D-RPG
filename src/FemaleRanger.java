@@ -113,7 +113,6 @@ public class FemaleRanger extends Creature{
 			yMove = 0;
 			
 		}
-		
 			
 		if(forceDir == 0) {
 			yMove = -speed;

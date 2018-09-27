@@ -88,5 +88,9 @@ public class EscapeMenu {
 	public boolean isActive() {
 		return active;
 	}
+	
+	public void setActive(boolean b) {
+		active = b;
+	}
 
 }

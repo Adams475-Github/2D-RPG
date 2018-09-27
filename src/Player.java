@@ -98,13 +98,6 @@ public class Player extends Creature {
 		escapeMenu = new EscapeMenu(handler);
 	}
 	
-	//sets render dimension of player, used for consistent sizes with different width/height sprites
-	public void setDimension(int setWidth, int setHeight) {
-		width = setWidth;
-		height = setHeight;
-		
-	}
-
 	public void tick() {
 		
 		//Animations
@@ -187,52 +180,29 @@ public class Player extends Creature {
 		escapeMenu.tick();
 	}
 	
-	private void checkAttacks() {
-		attackTimer += System.currentTimeMillis() - lastAttackTimer;
-		lastAttackTimer = System.currentTimeMillis();
-		
-		if(attackTimer < attackCooldown) {
-			return;
-		}
-		
-		Rectangle cb = getCollisionBounds(0,0);
-		Rectangle ar = new Rectangle();
-		int arSize = 20;
-		ar.width = arSize;
-		ar.height = arSize;
-		
-		if(handler.getKeyManager().attackUp) {
-			ar.x = cb.x + cb.width / 2 - arSize / 2;
-			ar.y = cb.y - arSize - 40;
-		} else if(handler.getKeyManager().attackDown) {
-			ar.x = cb.x + cb.width / 2 - arSize / 2;
-			ar.y = cb.y + cb.height + 10;
-		} else if(handler.getKeyManager().attackLeft) {
-			ar.x = cb.x - arSize - 10;
-			ar.y = cb.y + cb.height / 2 - arSize / 2;
-		} else if(handler.getKeyManager().attackRight) {
-			ar.x = cb.x + cb.width + 10;
-			ar.y = cb.y + cb.height / 2 - arSize / 2;;
+	public void render(Graphics g) {
+
+		//forces render to loop through attack if called, else draws normally
+		if(attacking) {
+			g.drawImage(currentAttack.getCurrentFrame(), (int) (x - handler.getGameCamera().getxOffset() - 7), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+			if(currentAttack.hasPlayedOnce() && !handler.getKeyManager().attackDown && !handler.getKeyManager().attackUp && !handler.getKeyManager().attackRight && !handler.getKeyManager().attackLeft) {
+				attacking = false;
+				setDimension(60, 98);
+			}
 		} else {
-			return;
+			g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset() - 7), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
 		}
 		
-		attackTimer = 0;
-		
-		for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
-			if(e.equals(this)) {
-				continue;
-			}
-			if(e.getCollisionBounds(0, 0).intersects(ar)) {
-				e.hurt(sword.attackValue);
-			}
-		}
+		escapeMenu.render(g);
+		playerO.render(g);
+		inventory.render(g);
 		
 	}
-	
-	public void die() {
-		//TODO
-		System.out.println("You lose");
+
+	public void postRender(Graphics g) {
+		playerO.render(g);
+		inventory.render(g);
+		escapeMenu.render(g);
 	}
 	
 	private void getInput() {
@@ -285,30 +255,53 @@ public class Player extends Creature {
 			}
 		}
 	}
-
-	public void render(Graphics g) {
-
-		//forces render to loop through attack if called, else draws normally
-		if(attacking) {
-			g.drawImage(currentAttack.getCurrentFrame(), (int) (x - handler.getGameCamera().getxOffset() - 7), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
-			if(currentAttack.hasPlayedOnce() && !handler.getKeyManager().attackDown && !handler.getKeyManager().attackUp && !handler.getKeyManager().attackRight && !handler.getKeyManager().attackLeft) {
-				attacking = false;
-				setDimension(60, 98);
-			}
-		} else {
-			g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset() - 7), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+	
+	private void checkAttacks() {
+		attackTimer += System.currentTimeMillis() - lastAttackTimer;
+		lastAttackTimer = System.currentTimeMillis();
+		
+		if(attackTimer < attackCooldown) {
+			return;
 		}
 		
-		escapeMenu.render(g);
-		playerO.render(g);
-		inventory.render(g);
+		Rectangle cb = getCollisionBounds(0,0);
+		Rectangle ar = new Rectangle();
+		int arSize = 20;
+		ar.width = arSize;
+		ar.height = arSize;
+		
+		if(handler.getKeyManager().attackUp) {
+			ar.x = cb.x + cb.width / 2 - arSize / 2;
+			ar.y = cb.y - arSize - 40;
+		} else if(handler.getKeyManager().attackDown) {
+			ar.x = cb.x + cb.width / 2 - arSize / 2;
+			ar.y = cb.y + cb.height + 10;
+		} else if(handler.getKeyManager().attackLeft) {
+			ar.x = cb.x - arSize - 10;
+			ar.y = cb.y + cb.height / 2 - arSize / 2;
+		} else if(handler.getKeyManager().attackRight) {
+			ar.x = cb.x + cb.width + 10;
+			ar.y = cb.y + cb.height / 2 - arSize / 2;;
+		} else {
+			return;
+		}
+		
+		attackTimer = 0;
+		
+		for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
+			if(e.equals(this)) {
+				continue;
+			}
+			if(e.getCollisionBounds(0, 0).intersects(ar)) {
+				e.hurt(sword.attackValue);
+			}
+		}
 		
 	}
-
-	public void postRender(Graphics g) {
-		playerO.render(g);
-		inventory.render(g);
-		escapeMenu.render(g);
+	
+	public void die() {
+		//TODO
+		System.out.println("You lose");
 	}
 	
 	private BufferedImage getCurrentAnimationFrame() {
@@ -333,6 +326,15 @@ public class Player extends Creature {
 		
 	}
 	
+
+	//sets render dimension of player, used for consistent sizes with different width/height sprites
+	public void setDimension(int setWidth, int setHeight) {
+		width = setWidth;
+		height = setHeight;
+		
+	}
+
+	
 	private void interactWith() {
 		//Basically the exact same code as attack but interact instead, only need 1 hitbox that's kinda big as well
 		attackTimer += System.currentTimeMillis() - lastAttackTimer;
@@ -348,7 +350,7 @@ public class Player extends Creature {
 		ar.width = arSize;
 		ar.height = arSize;
 		
-		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_I)) {
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_E)) {
 			ar.x = cb.x - 30;
 			ar.y = cb.y - 30;
 		} else {
