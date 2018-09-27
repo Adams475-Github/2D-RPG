@@ -6,7 +6,7 @@ public class Assets {
 	private static final int width = 16, height = 16;
 	
 	//Stand-alone
-	public static BufferedImage dirt, grass, stone, tree, rock, bush, wood, coin, chestClosed, chestOpen;
+	public static BufferedImage dirt, grass, stone, tree, rock, bush, wood, coin, chestClosed, chestOpen, displayBoxRed;
 	//Player walk
 	public static BufferedImage[] player_down, player_up, player_right, player_left, player_idle;
 	//Player attack
@@ -48,6 +48,9 @@ public class Assets {
 		//Chest
 		chestClosed = objectSheet.crop(149, 0, 22, 17);
 		chestOpen = objectSheet.crop(229, 23, 22, 17);
+		
+		//Display text box
+		displayBoxRed = invUI.crop(6, 13, 76, 37);
 		
 		//Highlighters for tabs
 		tabHighlightSword = invUI.crop(144, 138, 13, 17);

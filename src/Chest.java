@@ -1,21 +1,36 @@
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 
 public class Chest extends Entity {
 
-	public Chest(Handler handler, float x, float y, int width, int height) {
+	private boolean opened = false;
+	private boolean display = false;
+	Item item;
+	
+	public Chest(Handler handler, float x, float y, int width, int height, Item item) {
 		super(handler, x, y, width, height);
-		// TODO Auto-generated constructor stub
+		bounds.height = height * 4 - 20;
+		bounds.width = width * 4;
+		this.item = item;
 	}
 
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
+			display = false;
+		}
 		
 	}
 
 	@Override
 	public void render(Graphics g) {
-		// TODO Auto-generated method stub
+		if(!opened) {
+			g.drawImage(Assets.chestClosed, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width * 4, height * 4, null);
+			
+		} else {
+			g.drawImage(Assets.chestOpen, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width * 4, height * 4, null);
+			
+		}
 		
 	}
 
@@ -27,7 +42,14 @@ public class Chest extends Entity {
 
 	@Override
 	public void interact() {
-		// TODO Auto-generated method stub
+		if(!opened) {
+			opened = !opened;
+
+		} else {
+			return;
+		}
+		
+		handler.getWorld().getEntityManager().getPlayer().getInventory().addItem(this.item);
 		
 	}
 

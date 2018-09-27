@@ -304,7 +304,7 @@ public class Player extends Creature {
 		inventory.render(g);
 		
 	}
-	
+
 	public void postRender(Graphics g) {
 		playerO.render(g);
 		inventory.render(g);
@@ -421,6 +421,5 @@ public class Player extends Creature {
 	public int getExp() {
 		return exp;
 	}
-	
 	
 }
