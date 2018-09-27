@@ -72,6 +72,7 @@ public class EnemyMageM extends Creature{
 		//npcWanderLogic();
 		npcTrackLogic();
 		checkBounds();
+		attack();
 		checkPlayer();
 		move();
 		
@@ -95,6 +96,13 @@ public class EnemyMageM extends Creature{
 		
 		
 		//g.drawRect( (int) (walkingArea.x - handler.getGameCamera().getxOffset()),(int) (walkingArea.y - handler.getGameCamera().getyOffset()), walkingArea.width, walkingArea.height);
+	}
+	
+	public void attack() {
+		if(Math.abs((this.x - handler.getWorld().getEntityManager().getPlayer().getX() + 10)) < 40 && Math.abs((this.y - handler.getWorld().getEntityManager().getPlayer().getY())) < 50){
+
+			handler.getWorld().getEntityManager().getPlayer().health -= 5;
+		}
 	}
 
 	@Override
