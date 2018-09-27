@@ -75,10 +75,10 @@ public class Assets {
 		archF_left[1] = rangerFemale.crop(34, 108, 27, 33);
 		archF_left[2] = rangerFemale.crop(68, 110, 27, 33);
 		
-		archF_idle[0] = rangerFemale.crop(34, 0, 27, 33);
-		archF_idle[1] = rangerFemale.crop(34, 36, 27, 33);
-		archF_idle[2] = rangerFemale.crop(34, 72, 27, 33);
-		archF_idle[3] = rangerFemale.crop(34, 108, 27, 33);
+		archF_idle[2] = rangerFemale.crop(34, 0, 27, 33);
+		archF_idle[0] = rangerFemale.crop(34, 36, 27, 33);
+		archF_idle[3] = rangerFemale.crop(34, 72, 27, 33);
+		archF_idle[1] = rangerFemale.crop(34, 108, 27, 33);
 		
 		//Overlay Images
 		heartFull = overlayItems.crop(65, 3, 12, 11);

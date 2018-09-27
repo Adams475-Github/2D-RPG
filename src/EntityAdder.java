@@ -13,7 +13,7 @@ public class EntityAdder {
 	public void addEntities() {
 		entityManager.addEntity(new TallPlantPot(handler, 100, 250));
 		entityManager.addEntity(new BushSmall(handler, 150, 100));
-		entityManager.addEntity(new FemaleRanger(handler, 300, 500, 27, 33));
+		entityManager.addEntity(new FemaleRanger(handler, 250, 350, 27, 33));
 	}
 
 }
