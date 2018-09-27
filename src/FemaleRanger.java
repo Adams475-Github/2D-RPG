@@ -93,6 +93,12 @@ public class FemaleRanger extends Creature{
 			
 		}
 		
+		if(!moving) {
+			g.setFont(Assets.font28);
+			g.drawImage(Assets.speechBubble, (int) (x - handler.getGameCamera().getxOffset()) - 10, (int) (y - handler.getGameCamera().getyOffset()) - 100, 52 * 2, 47 * 2, null);
+			g.drawString("Hello!", (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()) - 50);
+		}
+		
 		//g.drawRect( (int) (walkingArea.x - handler.getGameCamera().getxOffset()),(int) (walkingArea.y - handler.getGameCamera().getyOffset()), walkingArea.width, walkingArea.height);
 	}
 
@@ -106,15 +112,17 @@ public class FemaleRanger extends Creature{
 		moveTimer += System.currentTimeMillis() - lastMove;
 		lastMove = System.currentTimeMillis();
 		
-		if(moveTimer < moveCooldown || !moving) {
+		if(forceStop || !moving) {
+			xMove = 0;
+			yMove = 0;
 			return;
 		}
 		
-		if(forceStop) {
-			xMove = 0;
-			yMove = 0;
-			
+		if(moveTimer < moveCooldown) {
+			return;
 		}
+		
+		
 			
 		if(forceDir == 0) {
 			yMove = -speed;
@@ -203,6 +211,16 @@ public class FemaleRanger extends Creature{
 			moving = false;
 		} else {
 			moving = true;
+		}
+		
+		if(handler.getWorld().getEntityManager().getPlayer().getX() - x < 0 && Math.abs(handler.getWorld().getEntityManager().getPlayer().getY() - y) < 50) {
+			direction = 1;
+		} else if(handler.getWorld().getEntityManager().getPlayer().getX() - x > 0 && Math.abs(handler.getWorld().getEntityManager().getPlayer().getY() - y) < 50) {
+			direction = 0;
+		} else if(handler.getWorld().getEntityManager().getPlayer().getY() - y < 0 && Math.abs(handler.getWorld().getEntityManager().getPlayer().getX() - x) < 50) {
+			direction = 2;
+		} else if(handler.getWorld().getEntityManager().getPlayer().getY() - y > 0 && Math.abs(handler.getWorld().getEntityManager().getPlayer().getX() - x) < 50) {
+			direction = 3;
 		}
 		
 	}

@@ -6,7 +6,7 @@ public class Assets {
 	private static final int width = 16, height = 16;
 	
 	//Stand-alone
-	public static BufferedImage dirt, grass, stone, tree, rock, bush, wood, coin, chestClosed, chestOpen, displayBoxRed;
+	public static BufferedImage dirt, grass, stone, tree, rock, bush, wood, coin, chestClosed, chestOpen, displayBoxRed, speechBubble;
 	//Player walk
 	public static BufferedImage[] player_down, player_up, player_right, player_left, player_idle;
 	//Player attack
@@ -44,6 +44,9 @@ public class Assets {
 		SpriteSheet overlayItems = new SpriteSheet(ImageLoader.loadImage("/textures/objects.png"));
 		SpriteSheet blueSwordSwing = new SpriteSheet(ImageLoader.loadImage("/textures/swordSwingBlue.png"));
 		SpriteSheet rangerFemale = new SpriteSheet(ImageLoader.loadImage("/textures/ranger_f.png"));
+		
+		//Speech Bubble
+		speechBubble = objectSheet.crop(309, 96, 52, 47);
 		
 		//Chest
 		chestClosed = objectSheet.crop(149, 0, 22, 17);
