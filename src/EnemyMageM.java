@@ -2,7 +2,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Random;
 
-public class FemaleRanger extends Creature{
+public class EnemyMageM extends Creature{
 	
 	private Animation animDown;
 	private Animation animUp;
@@ -20,7 +20,7 @@ public class FemaleRanger extends Creature{
 	Rectangle walkingArea = new Rectangle(200, 300, 300, 200);
 	private Random rand = new Random();
 
-	public FemaleRanger(Handler handler, float x, float y, int width, int height) {
+	public EnemyMageM(Handler handler, float x, float y, int width, int height) {
 		//TODO add bounding rectangle to the arguments in constructor
 		super(handler, x, y, width, height);
 		this.width = width;
@@ -32,11 +32,11 @@ public class FemaleRanger extends Creature{
 		bounds.width = 20*4;
 		bounds.height = 23*4;
 		
-		animDown = new Animation(250, Assets.archF_down);
-		animUp = new Animation(250, Assets.archF_up);	
-		animLeft = new Animation(250, Assets.archF_left);
-		animRight = new Animation(250, Assets.archF_right);
-		animStill = new Animation(250, Assets.archF_idle);
+		animDown = new Animation(250, Assets.mageM_down);
+		animUp = new Animation(250, Assets.mageM_up);	
+		animLeft = new Animation(250, Assets.mageM_left);
+		animRight = new Animation(250, Assets.mageM_right);
+		animStill = new Animation(250, Assets.mageM_idle);
 	
 	}
 
@@ -69,7 +69,8 @@ public class FemaleRanger extends Creature{
 		}
 		
 		
-		npcWanderLogic();
+		//npcWanderLogic();
+		npcTrackLogic();
 		checkBounds();
 		checkPlayer();
 		move();
@@ -87,15 +88,11 @@ public class FemaleRanger extends Creature{
 			g.drawImage(currentAnim.getCurrentFrame(), (int)(x - handler.getGameCamera().getxOffset()), (int)(y - handler.getGameCamera().getyOffset()), 77, 93, null);
 			
 		} else {
-			g.drawImage(Assets.archF_idle[direction], (int)(x - handler.getGameCamera().getxOffset()), (int)(y - handler.getGameCamera().getyOffset()), 77, 93, null);
+			g.drawImage(Assets.mageM_idle[direction], (int)(x - handler.getGameCamera().getxOffset()), (int)(y - handler.getGameCamera().getyOffset()), 77, 93, null);
 			
 		}
 		
-		if(!moving) {
-			g.setFont(Assets.font28);
-			g.drawImage(Assets.speechBubble, (int) (x - handler.getGameCamera().getxOffset()) - 10, (int) (y - handler.getGameCamera().getyOffset()) - 100, 52 * 2, 47 * 2, null);
-			g.drawString("Hello!", (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()) - 50);
-		}
+		
 		
 		//g.drawRect( (int) (walkingArea.x - handler.getGameCamera().getxOffset()),(int) (walkingArea.y - handler.getGameCamera().getyOffset()), walkingArea.width, walkingArea.height);
 	}
@@ -106,17 +103,50 @@ public class FemaleRanger extends Creature{
 		
 	}
 	
-	private void npcWanderLogic(){
-		moveTimer += System.currentTimeMillis() - lastMove;
-		lastMove = System.currentTimeMillis();
-
-		if(!moving) {
+	private void npcTrackLogic(){
+		
+		if(this.x < handler.getWorld().getEntityManager().getPlayer().x) {
+			if(Math.abs(this.x - handler.getWorld().getEntityManager().getPlayer().x) < 5) {
+				xMove = 0;
+			} else {
+				xMove = 2;
+			}
 			
-			xMove = 0;
-			yMove = 0;
-			return;
 		}
 		
+		if(this.x > handler.getWorld().getEntityManager().getPlayer().x) {
+			if(Math.abs(this.x - handler.getWorld().getEntityManager().getPlayer().x) < 5) {
+				xMove = 0;
+			} else {
+				xMove = -2;
+			}
+			
+		}
+		
+		if(this.y < handler.getWorld().getEntityManager().getPlayer().y) {
+			if(Math.abs(this.y - handler.getWorld().getEntityManager().getPlayer().y) < 5) {
+				yMove = 0;
+			} else {
+				yMove = 2;
+			}
+			
+		}
+		
+		if(this.y > handler.getWorld().getEntityManager().getPlayer().y) {
+			
+			if(Math.abs(this.y - handler.getWorld().getEntityManager().getPlayer().y) < 5) {
+				yMove = 0;
+			} else {
+				yMove = -2;
+			}
+			
+		}
+		
+	}
+	
+	private void npcWanderLogic(){
+		moveTimer += System.currentTimeMillis() - lastMove;
+		lastMove = System.currentTimeMillis();		
 		
 		
 		if(moveTimer < moveCooldown) {

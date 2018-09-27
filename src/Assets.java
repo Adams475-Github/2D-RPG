@@ -13,6 +13,7 @@ public class Assets {
 	public static BufferedImage[] player_attack_down, player_attack_up, player_attack_right, player_attack_left;
 	//Archer Female
 	public static BufferedImage[] archF_down, archF_up, archF_right, archF_left, archF_idle;
+	public static BufferedImage[] mageM_down, mageM_up, mageM_right, mageM_left, mageM_idle;
 	public static BufferedImage[] player_attack_downB, player_attack_rightB,  player_attack_upB,  player_attack_leftB;
 	//Start Menu UI
 	public static BufferedImage[] btn_start, btn_blank, btn_inc_pos;
@@ -44,6 +45,7 @@ public class Assets {
 		SpriteSheet overlayItems = new SpriteSheet(ImageLoader.loadImage("/textures/objects.png"));
 		SpriteSheet blueSwordSwing = new SpriteSheet(ImageLoader.loadImage("/textures/swordSwingBlue.png"));
 		SpriteSheet rangerFemale = new SpriteSheet(ImageLoader.loadImage("/textures/ranger_f.png"));
+		SpriteSheet mageMale = new SpriteSheet(ImageLoader.loadImage("/textures/mage_m.png"));
 		
 		//Speech Bubble
 		speechBubble = objectSheet.crop(309, 96, 52, 47);
@@ -65,6 +67,34 @@ public class Assets {
 		font28 = FontLoader.highTower;
 		font28nBold = FontLoader.highTowernBold;
 		fontPlaceHolder = new Font("Times New Roman", Font.BOLD, 28);
+		
+		//Mage Male
+		mageM_up = new BufferedImage[3];
+		mageM_down = new BufferedImage[3];
+		mageM_left = new BufferedImage[3];
+		mageM_right = new BufferedImage[3];
+		mageM_idle = new BufferedImage[4];
+		
+		mageM_up[0] = mageMale.crop(2, 2, 27, 33);
+		mageM_up[1] = mageMale.crop(34, 0, 27, 33);
+		mageM_up[2] = mageMale.crop(68, 2, 27, 33);
+		
+		mageM_right[0] = mageMale.crop(2, 38, 27, 33);
+		mageM_right[1] = mageMale.crop(34, 36, 27, 33);
+		mageM_right[2] = mageMale.crop(68, 38, 27, 33);
+		
+		mageM_down[0] = mageMale.crop(2, 74, 27, 33);
+		mageM_down[1] = mageMale.crop(34, 72, 27, 33);
+		mageM_down[2] = mageMale.crop(68, 74, 27, 33);
+		
+		mageM_left[0] = mageMale.crop(2, 110, 27, 33);
+		mageM_left[1] = mageMale.crop(34, 108, 27, 33);
+		mageM_left[2] = mageMale.crop(68, 110, 27, 33);
+		
+		mageM_idle[2] = mageMale.crop(34, 0, 27, 33);
+		mageM_idle[0] = mageMale.crop(34, 36, 27, 33);
+		mageM_idle[3] = mageMale.crop(34, 72, 27, 33);
+		mageM_idle[1] = mageMale.crop(34, 108, 27, 33);
 		
 		//Ranger Female
 		archF_up = new BufferedImage[3];
