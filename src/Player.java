@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -99,6 +100,7 @@ public class Player extends Creature {
 	}
 	
 	public void tick() {
+		
 		
 		//Animations
 		
@@ -423,5 +425,8 @@ public class Player extends Creature {
 	public int getExp() {
 		return exp;
 	}
+
+
+
 	
 }

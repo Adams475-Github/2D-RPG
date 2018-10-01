@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.Random;
 
@@ -236,4 +237,5 @@ public class FemaleRanger extends Creature{
 		
 	}
 
+	
 }

@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.Point;
 
 public class TallPlantPot extends StaticEntity{
 
@@ -33,5 +34,7 @@ public class TallPlantPot extends StaticEntity{
 		g.drawImage(Assets.tree, (int)(x - handler.getGameCamera().getxOffset()), (int)(y - handler.getGameCamera().getyOffset()), width, height, null);
 		
 	}
+
+	
 
 }

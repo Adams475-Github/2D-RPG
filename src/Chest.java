@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 
 public class Chest extends Entity {
@@ -12,6 +13,7 @@ public class Chest extends Entity {
 		bounds.height = height * 4 - 20;
 		bounds.width = width * 4;
 		this.item = item;
+		health = 1;
 	}
 
 	@Override
@@ -52,5 +54,14 @@ public class Chest extends Entity {
 		handler.getWorld().getEntityManager().getPlayer().getInventory().addItem(this.item);
 		
 	}
+	
+	public Point center() {
+		
+		Point center = new Point( (int) (x - handler.getGameCamera().getxOffset() + (width * 4 / 2)) , (int) (y - handler.getGameCamera().getyOffset() + (height * 4 / 2)) );		
+		
+		return center;
+	}
+
+
 
 }

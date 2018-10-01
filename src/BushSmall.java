@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.Point;
 import java.util.Random;
 
 public class BushSmall extends StaticEntity {
@@ -37,6 +38,8 @@ public class BushSmall extends StaticEntity {
 		handler.getWorld().getEntityManager().getPlayer().getInventory().coins += 1;
 		
 	}
+
+
 
 }
 
