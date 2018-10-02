@@ -20,15 +20,18 @@ public class EnemyMageM extends Creature{
 	private int steeringTime;
 	private float centerX;
 	private float centerY;
+	private float distanceNeed;
+	private int ticksNeed;
+	private Entity immediateBlocker;
 	private float offsetX, offsetY;
 	private boolean tracking = true;
 	private Point ahead = new Point();
-	private long lastMove, moveCooldown = 800, moveTimer = moveCooldown;
+	private long lastMove, moveCooldown = 200, moveTimer = moveCooldown;
 	private boolean forceStop = false;
 	private boolean moving = true;
 	private int steering, steeringY;
 	private float rightSide, leftSide, top, bottom;
-	private float lastX;
+	private float lastX, lastY;
 	Rectangle walkingArea = new Rectangle(200, 300, 300, 200);
 	private Random rand = new Random();
 
@@ -157,26 +160,28 @@ public class EnemyMageM extends Creature{
 	
 	public void checkNav() {
 		
-		for(int i = 0; i < handler.getWorld().getEntityManager().getEntities().size(); i++){
-			
-			if(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-handler.getGameCamera().getxOffset(),
-					-handler.getGameCamera().getyOffset()).contains(ahead) && handler.getWorld().getEntityManager().getEntities().get(i) != this 
-					&& handler.getWorld().getEntityManager().getEntities().get(i) != handler.getWorld().getEntityManager().getPlayer()) {
-				
-				avoidance(handler.getWorld().getEntityManager().getEntities().get(i));
-
-				return;
-			} 
-			
-			if(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-handler.getGameCamera().getxOffset(), 
-					-handler.getGameCamera().getyOffset()).contains(ahead) && handler.getWorld().getEntityManager().getEntities().get(i) != this 
-					&& handler.getWorld().getEntityManager().getEntities().get(i) != handler.getWorld().getEntityManager().getPlayer()) {
-				
-				avoidance(handler.getWorld().getEntityManager().getEntities().get(i));
-
-				return;
-			} 
-		}
+//		for(int i = 0; i < handler.getWorld().getEntityManager().getEntities().size(); i++){
+//			
+//			if(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-handler.getGameCamera().getxOffset(),
+//					-handler.getGameCamera().getyOffset()).contains(ahead) && handler.getWorld().getEntityManager().getEntities().get(i) != this 
+//					&& handler.getWorld().getEntityManager().getEntities().get(i) != handler.getWorld().getEntityManager().getPlayer()) {
+//				
+//				avoidance(handler.getWorld().getEntityManager().getEntities().get(i));
+//
+//				return;
+//			} 
+//			
+//			if(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-handler.getGameCamera().getxOffset(), 
+//					-handler.getGameCamera().getyOffset()).contains(ahead) && handler.getWorld().getEntityManager().getEntities().get(i) != this 
+//					&& handler.getWorld().getEntityManager().getEntities().get(i) != handler.getWorld().getEntityManager().getPlayer()) {
+//				
+//				avoidance(	handler.getWorld().getEntityManager().getEntities().get(i));
+//
+//				return;
+//			} 
+//		}
+		
+		
 		
 		
 	}
@@ -270,8 +275,14 @@ public class EnemyMageM extends Creature{
 		lastMove = System.currentTimeMillis();		
 		
 		
+		
 		if(moveTimer < moveCooldown) {
 			return;
+		}
+		
+		if(handler.getWorld().getEntityManager().getPlayer().getCollisionBounds(-offsetX, -offsetY).contains(ahead)) {
+			return;
+			
 		}
 		
 		if (steeringTime > 0) {
@@ -285,8 +296,86 @@ public class EnemyMageM extends Creature{
 			tracking = true;
 		}
 		
+		if(direction == 0) {
+			
+			if(lastX == x) {
+				
+				steering = 0;
+				
+				for(int i = 0; i < handler.getWorld().getEntityManager().getEntities().size(); i++) {
+					
+					if(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY).contains(ahead)) {
+						immediateBlocker = handler.getWorld().getEntityManager().getEntities().get(i);
+					}
+					
+				}
+				
+				
+				
+				if( (this.x - offsetX) - (handler.getWorld().getEntityManager().getPlayer().x - offsetX) > 0) {
+					
+					steeringY = -2;
+					distanceNeed = Math.abs(ahead.y - immediateBlocker.getCollisionBounds(-offsetX, -offsetY).y);
+					ticksNeed = (int) Math.ceil(distanceNeed / 20.0);
+					steeringTime = ticksNeed;
+					tracking = false;
+					
+					System.out.println("distance : " + distanceNeed);
+					System.out.println("ticks: " + ticksNeed);
+					System.out.print(immediateBlocker);
+					
+				} else {
+					
+					distanceNeed = Math.abs(immediateBlocker.getCollisionBounds(-offsetX, -offsetY).y - ahead.y);
+					ticksNeed = (int) Math.ceil(distanceNeed / 40.0);
+					steeringTime = ticksNeed;
+					steeringY = 2;
+					tracking = false;
+					System.out.println("distance : " + distanceNeed);
+					System.out.println("ticks: " + ticksNeed);
+					System.out.print(immediateBlocker);
+					
+				}
+				
+				tracking = false;
+			}
+			
+		} else if (direction == 1)  {
+			
+			if(lastX == x) {
+				steeringY = -2;
+				steering = 0;
+				steeringTime = 1;
+				tracking = false;
+			}
+			
+		} else if(direction == 2) {
+			
+			if(lastY == y) {
+				steering = 2;
+				steeringY = 0;
+				steeringTime = 1;
+				tracking = false;
+			}
+			
+			
+		} else if(direction == 3) {
+			
+			if(lastY == y) {
+				steeringTime = 1;
+				steering = -2;
+				steeringY = 0;
+				tracking = false;
+			}
+			
+		} else if(lastX != x && lastY != y){
+			tracking = true;
+		}
 		
 		
+		
+		lastY = y;
+		lastX = x;
 		
 		moveTimer = 0;
 
