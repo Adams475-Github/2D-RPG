@@ -66,7 +66,6 @@ public class EnemyMageM extends Creature{
 		
 		updateBoxes();
 		
-		
 		offsetX = handler.getGameCamera().getxOffset();
 		offsetY = handler.getGameCamera().getyOffset();		
 		
@@ -103,9 +102,8 @@ public class EnemyMageM extends Creature{
 		collisionLogic();
 		if(!stopped) {
 			npcTrackLogic();
-		} else {
-			findEntity();
 		}
+		avoidance();
 		checkBounds();
 		attack();
 		checkPlayer();
@@ -180,118 +178,86 @@ public class EnemyMageM extends Creature{
 		
 	}
 	
-	private void findEntity() {
-		
-		if(xStopped) {
+	private void avoidance() {
+				
+		for(int i = 0; i < handler.getWorld().getEntityManager().getEntities().size(); i++) {
 			
-			//stopped when moving to right
-			if(direction == 0) {
+			if(left.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && xMove != 0) {
+				dodge(1);		
 				
-				for(int i = 0; i < handler.getWorld().getEntityManager().getEntities().size(); i++) {
-					
-					if(right.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY))) {
-						pathBlocker = handler.getWorld().getEntityManager().getEntities().get(i);
-						avoidance(pathBlocker);
-					}
-					
-				}
-				
-				
-			//stopped when moving to left
-			} else if (direction == 1) {
-				
-				for(int i = 0; i < handler.getWorld().getEntityManager().getEntities().size(); i++) {
-					
-					if(left.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY))) {
-						pathBlocker = handler.getWorld().getEntityManager().getEntities().get(i);
-						avoidance(pathBlocker);
-					}
-				}
-				
-			} else {
-				
-				System.out.println("What?");
+			} 
+			
+			if(up.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && yMove != 0) {
+				dodge(2);	
+						
+			}
+			if(right.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && xMove != 0) {
+				dodge(0);	
 				
 			}
 			
-			
-		} else {
-			
-			//stopped while going up
-			if(direction == 2) {
+			if(down.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && yMove != 0) {
+				dodge(3);	
 				
-				for(int i = 0; i < handler.getWorld().getEntityManager().getEntities().size(); i++) {
-					
-					if(up.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY))) {
-						pathBlocker = handler.getWorld().getEntityManager().getEntities().get(i);
-						avoidance(pathBlocker);
-						
-					}
-					
-				}
-				
-				
-			//stopped while going down
-			} else if (direction == 3) {
-				
-				for(int i = 0; i < handler.getWorld().getEntityManager().getEntities().size(); i++) {
-					
-					if(down.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY))) {
-						pathBlocker = handler.getWorld().getEntityManager().getEntities().get(i);
-						avoidance(pathBlocker);
-					}
-					
-				}
-				
-				
-			}			
-			
+			}
 			
 		}
 		
-	}
-	
-	private void avoidance(Entity e) {
-				
-		System.out.println(e);
+		
 		
 	}
 	
-	private void collisionLogic() {
+	private void dodge(int d) {
 		
 		moveTimer += System.currentTimeMillis() - lastMove;
 		lastMove = System.currentTimeMillis();		
 		
-		if(xMove != 0 && lastX == this.x) {
-			xStopped = true;
-		} else {
-			xStopped = false;
-			
-		}
-		
-		if(yMove != 0 && lastY == this.y) {
-			yStopped = true;
-			
-		} else {
-			yStopped = false;
-			
-		}
-		
-		if(yStopped || xStopped) {
-			stopped = true;
-		} else {
-			stopped = false;
-		}
 		
 		if(moveTimer < moveCooldown) {
 			return;
 		}
 		
-		lastX = this.x;
-		lastY = this.y;
 		
 		moveTimer = 0;
 		
+	}
+	
+	private void collisionLogic() {
+//		
+//		moveTimer += System.currentTimeMillis() - lastMove;
+//		lastMove = System.currentTimeMillis();		
+//		
+//		if(xMove != 0 && lastX == this.x) {
+//			xStopped = true;
+//		} else {
+//			xStopped = false;
+//			
+//		}
+//		
+//		if(yMove != 0 && lastY == this.y) {
+//			yStopped = true;
+//			
+//		} else {
+//			yStopped = false;
+//			steering = 0;
+//			steeringY = 0;
+//		}
+//		
+//		if(yStopped || xStopped) {
+//			stopped = true;
+//		} else {
+//			stopped = false;
+//		}
+//		
+//		if(moveTimer < moveCooldown) {
+//			return;
+//		}
+//		
+//		lastX = this.x;
+//		lastY = this.y;
+//		
+//		moveTimer = 0;
+//		
 		
 	}
 
