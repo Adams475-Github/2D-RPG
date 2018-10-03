@@ -54,10 +54,10 @@ public class EnemyMageM extends Creature{
 		animRight = new Animation(250, Assets.mageM_right);
 		animStill = new Animation(250, Assets.mageM_idle);
 		
-		left = new Rectangle( (int) this.x - 20, (int) this.y, 20, bounds.height);
-		right = new Rectangle( (int) this.x + bounds.width, (int) this.y, 20, bounds.height );
-		up = new Rectangle( (int) this.x, (int) this.y - 20, bounds.width, 20);
-		down = new Rectangle( (int) this.x, (int) this.y + bounds.height, bounds.width, 20);
+		left = new Rectangle( (int) this.getX() - 20, (int) this.y, 20, bounds.height);
+		right = new Rectangle( (int) this.getX() + bounds.width, (int) this.y, 20, bounds.height );
+		up = new Rectangle( (int) this.getX(), (int) this.y - 20, bounds.width, 20);
+		down = new Rectangle( (int) this.getX(), (int) this.y + bounds.height, bounds.width, 20);
 	
 	}
 
@@ -182,41 +182,70 @@ public class EnemyMageM extends Creature{
 				
 		for(int i = 0; i < handler.getWorld().getEntityManager().getEntities().size(); i++) {
 			
-			if(left.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && xMove != 0) {
-				dodge(1);		
+			if(left.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && xMove != 0 && handler.getWorld().getEntityManager().getEntities().get(i) != this) {
+				dodge(1, handler.getWorld().getEntityManager().getEntities().get(i));		
 				
-			} 
+			} else {
+				stopped = false;
+			}
 			
-			if(up.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && yMove != 0) {
-				dodge(2);	
+			if(up.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && yMove != 0 && handler.getWorld().getEntityManager().getEntities().get(i) != this) {
+				dodge(2, handler.getWorld().getEntityManager().getEntities().get(i));	
 						
+			} else {
+				stopped = false;
 			}
-			if(right.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && xMove != 0) {
-				dodge(0);	
+			if(right.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && xMove != 0 && handler.getWorld().getEntityManager().getEntities().get(i) != this) {
+				dodge(0, handler.getWorld().getEntityManager().getEntities().get(i));	
 				
+			}else {
+				stopped = false;
 			}
 			
-			if(down.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && yMove != 0) {
-				dodge(3);	
+			if(down.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && yMove != 0 && handler.getWorld().getEntityManager().getEntities().get(i) != this) {
+				dodge(3, handler.getWorld().getEntityManager().getEntities().get(i));	
 				
+			}else {
+				stopped = false;
 			}
 			
 		}
 		
-		
-		
 	}
 	
-	private void dodge(int d) {
+	private void dodge(int d, Entity e) {
 		
 		moveTimer += System.currentTimeMillis() - lastMove;
 		lastMove = System.currentTimeMillis();		
+		
+		stopped = true;
+		
+		if(d == 0) {
+			yMove = 1;
+		} else if(d == 1) {
+			yMove = -1;
+		} else if(d == 2) {
+			xMove = 1;
+		} else {
+			xMove = -1;
+		}
 		
 		
 		if(moveTimer < moveCooldown) {
 			return;
 		}
 		
+		if(d == 0) {
+			yMove = 0;
+		} else if(d == 1) {
+			yMove = -0;
+		} else if(d == 2) {
+			xMove = 0;
+		} else {
+			xMove = -0;
+		}
+		
+		stopped = false;
 		
 		moveTimer = 0;
 		
