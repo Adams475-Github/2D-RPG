@@ -5,6 +5,10 @@ import java.awt.Rectangle;
 import java.util.Random;
 import java.util.Vector;
 
+/*
+ * Please don't look at this I beg you, it's bad, really bad.
+ * If you insist, bless your soul.
+ */
 public class EnemyMageM extends Creature{
 	
 	private Animation animDown;
@@ -17,6 +21,7 @@ public class EnemyMageM extends Creature{
 	private int direction;
 	private int num;
 	private int forceDir;
+	private Entity lastEntity = this;
 	private int moveCount = 0;
 	private int magnitude = 1;
 	private int steeringTime;
@@ -32,8 +37,6 @@ public class EnemyMageM extends Creature{
 	private long lastMove, moveCooldown = 200, moveTimer = moveCooldown;
 	private boolean forceStop = false;
 	private boolean moving = true;
-	private int steering, steeringY;
-	private float lastX, lastY;
 	Rectangle walkingArea = new Rectangle(200, 300, 300, 200);
 	private Random rand = new Random();
 
@@ -183,9 +186,15 @@ public class EnemyMageM extends Creature{
 				
 		for(int i = 0; i < handler.getWorld().getEntityManager().getEntities().size(); i++) {
 			
-			if(left.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && xMove != 0 && handler.getWorld().getEntityManager().getEntities().get(i) != this) {
+			if(left.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && xMove < 0 && handler.getWorld().getEntityManager().getEntities().get(i) != this) {
 				
+				if( (handler.getWorld().getEntityManager().getPlayer().y - this.y) > 0 && lastEntity != handler.getWorld().getEntityManager().getEntities().get(i)) {
 					magnitude = -1;
+					lastEntity = handler.getWorld().getEntityManager().getEntities().get(i);
+				} else if (handler.getWorld().getEntityManager().getPlayer().y - this.y < 0) {
+					magnitude = 1;
+					lastEntity = handler.getWorld().getEntityManager().getEntities().get(i);
+				} 
 				
 				dodge(1, handler.getWorld().getEntityManager().getEntities().get(i));		
 				
@@ -193,18 +202,30 @@ public class EnemyMageM extends Creature{
 				stopped = false;
 			}
 			
-			if(up.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && yMove != 0 && handler.getWorld().getEntityManager().getEntities().get(i) != this) {
+			if(up.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && yMove < 0 && handler.getWorld().getEntityManager().getEntities().get(i) != this) {
 				
+				if( (handler.getWorld().getEntityManager().getPlayer().y - this.y) > 0 && lastEntity != handler.getWorld().getEntityManager().getEntities().get(i)) {
+					magnitude = 1;
+					lastEntity = handler.getWorld().getEntityManager().getEntities().get(i);
+				} else if (handler.getWorld().getEntityManager().getPlayer().y - this.y < 0) {
 					magnitude = -1;
+					lastEntity = handler.getWorld().getEntityManager().getEntities().get(i);
+				} 
 				 
 				dodge(2, handler.getWorld().getEntityManager().getEntities().get(i));	
 						
 			} else {
 				stopped = false;
 			}
-			if(right.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && xMove != 0 && handler.getWorld().getEntityManager().getEntities().get(i) != this) {
+			if(right.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && xMove > 0 && handler.getWorld().getEntityManager().getEntities().get(i) != this) {
 				
-				magnitude = 1;
+				if( (handler.getWorld().getEntityManager().getPlayer().y - this.y) > 0 && lastEntity != handler.getWorld().getEntityManager().getEntities().get(i)) {
+					magnitude = 1;
+					lastEntity = handler.getWorld().getEntityManager().getEntities().get(i);
+				} else if (handler.getWorld().getEntityManager().getPlayer().y - this.y < 0) {
+					magnitude = -1;
+					lastEntity = handler.getWorld().getEntityManager().getEntities().get(i);
+				}  
 				 
 				dodge(0, handler.getWorld().getEntityManager().getEntities().get(i));	
 				
@@ -212,9 +233,15 @@ public class EnemyMageM extends Creature{
 				stopped = false;
 			}
 			
-			if(down.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && yMove != 0 && handler.getWorld().getEntityManager().getEntities().get(i) != this) {
+			if(down.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && yMove > 0 && handler.getWorld().getEntityManager().getEntities().get(i) != this) {
 				
+				if( (handler.getWorld().getEntityManager().getPlayer().y - this.y) > 0 && lastEntity != handler.getWorld().getEntityManager().getEntities().get(i)) {
+					magnitude = 1;
+					lastEntity = handler.getWorld().getEntityManager().getEntities().get(i);
+				} else if (handler.getWorld().getEntityManager().getPlayer().y - this.y < 0) {
 					magnitude = -1;
+					lastEntity = handler.getWorld().getEntityManager().getEntities().get(i);
+				} 
 				 
 				dodge(3, handler.getWorld().getEntityManager().getEntities().get(i));	
 				
@@ -234,13 +261,13 @@ public class EnemyMageM extends Creature{
 		stopped = true;
 		
 		if(d == 0) {
-			yMove = 1 * magnitude;
+			yMove = 2 * magnitude;
 		} else if(d == 1) {
-			yMove = -1 * magnitude;
+			yMove = -2 * magnitude;
 		} else if(d == 2) {
-			xMove = 1 * magnitude;
+			xMove = 2 * magnitude;
 		} else {
-			xMove = -1 * magnitude;
+			xMove = -2 * magnitude;
 		}
 		
 		
@@ -302,7 +329,7 @@ public class EnemyMageM extends Creature{
 			if(Math.abs(this.x - handler.getWorld().getEntityManager().getPlayer().x) < 5) {
 				xMove = 0;
 			} else {
-				xMove = 1;
+				xMove = 2;
 			}
 			
 		}
@@ -311,7 +338,7 @@ public class EnemyMageM extends Creature{
 			if(Math.abs(this.x - handler.getWorld().getEntityManager().getPlayer().x) < 5) {
 				xMove = 0;
 			} else {
-				xMove = -1;
+				xMove = -2;
 			}
 			
 		}
@@ -320,7 +347,7 @@ public class EnemyMageM extends Creature{
 			if(Math.abs(this.y - handler.getWorld().getEntityManager().getPlayer().y) < 5) {
 				yMove = 0;
 			} else {
-				yMove = 1;
+				yMove = 2;
 			}
 			
 		}
@@ -330,7 +357,7 @@ public class EnemyMageM extends Creature{
 			if(Math.abs(this.y - handler.getWorld().getEntityManager().getPlayer().y) < 5) {
 				yMove = 0;
 			} else {
-				yMove = -1;
+				yMove = -2;
 			}
 			
 		}
