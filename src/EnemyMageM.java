@@ -18,6 +18,7 @@ public class EnemyMageM extends Creature{
 	private int num;
 	private int forceDir;
 	private int moveCount = 0;
+	private int magnitude = 1;
 	private int steeringTime;
 	private float centerX;
 	private float centerY;
@@ -183,6 +184,9 @@ public class EnemyMageM extends Creature{
 		for(int i = 0; i < handler.getWorld().getEntityManager().getEntities().size(); i++) {
 			
 			if(left.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && xMove != 0 && handler.getWorld().getEntityManager().getEntities().get(i) != this) {
+				
+					magnitude = -1;
+				
 				dodge(1, handler.getWorld().getEntityManager().getEntities().get(i));		
 				
 			} else {
@@ -190,12 +194,18 @@ public class EnemyMageM extends Creature{
 			}
 			
 			if(up.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && yMove != 0 && handler.getWorld().getEntityManager().getEntities().get(i) != this) {
+				
+					magnitude = -1;
+				 
 				dodge(2, handler.getWorld().getEntityManager().getEntities().get(i));	
 						
 			} else {
 				stopped = false;
 			}
 			if(right.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && xMove != 0 && handler.getWorld().getEntityManager().getEntities().get(i) != this) {
+				
+				magnitude = 1;
+				 
 				dodge(0, handler.getWorld().getEntityManager().getEntities().get(i));	
 				
 			}else {
@@ -203,6 +213,9 @@ public class EnemyMageM extends Creature{
 			}
 			
 			if(down.intersects(handler.getWorld().getEntityManager().getEntities().get(i).getCollisionBounds(-offsetX, -offsetY)) && yMove != 0 && handler.getWorld().getEntityManager().getEntities().get(i) != this) {
+				
+					magnitude = -1;
+				 
 				dodge(3, handler.getWorld().getEntityManager().getEntities().get(i));	
 				
 			}else {
@@ -221,13 +234,13 @@ public class EnemyMageM extends Creature{
 		stopped = true;
 		
 		if(d == 0) {
-			yMove = 1;
+			yMove = 1 * magnitude;
 		} else if(d == 1) {
-			yMove = -1;
+			yMove = -1 * magnitude;
 		} else if(d == 2) {
-			xMove = 1;
+			xMove = 1 * magnitude;
 		} else {
-			xMove = -1;
+			xMove = -1 * magnitude;
 		}
 		
 		
@@ -235,15 +248,7 @@ public class EnemyMageM extends Creature{
 			return;
 		}
 		
-		if(d == 0) {
-			yMove = 0;
-		} else if(d == 1) {
-			yMove = -0;
-		} else if(d == 2) {
-			xMove = 0;
-		} else {
-			xMove = -0;
-		}
+		
 		
 		stopped = false;
 		

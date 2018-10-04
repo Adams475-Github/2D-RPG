@@ -16,7 +16,7 @@ public class EntityAdder {
 		entityManager.addEntity(new FemaleRanger(handler, 250, 350, 27, 33));
 		entityManager.addEntity(new EnemyMageM(handler, 500, 350, 27, 33));
 		entityManager.addEntity(new Chest(handler, 300, 100, 22, 17, Item.blueSword));
-		
+		entityManager.addEntity(new LongWall(handler, 100, 500));
 	}
 
 }
