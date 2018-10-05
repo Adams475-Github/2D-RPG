@@ -16,6 +16,7 @@ public class EnemyMageM extends Creature{
 	private Animation currentAnim;
 	private Rectangle left, right, up, down;
 	private int direction;
+	private int attackDir;
 	private int forceDir;
 	private boolean close = false;
 	private Entity lastEntity = this;
@@ -68,6 +69,16 @@ public class EnemyMageM extends Creature{
 	@Override
 	public void tick() {
 		
+		if(handler.getWorld().getEntityManager().getPlayer().x - this.x > 0 && Math.abs(handler.getWorld().getEntityManager().getPlayer().y - this.y) < 50) {
+			attackDir = 1;
+		} else if (handler.getWorld().getEntityManager().getPlayer().x - this.x < 0 && Math.abs(handler.getWorld().getEntityManager().getPlayer().y - this.y) < 50) {
+			attackDir = 3;
+		} else if(handler.getWorld().getEntityManager().getPlayer().y - this.y > 0 && Math.abs(handler.getWorld().getEntityManager().getPlayer().x - this.x) < 50) {
+			attackDir = 2;
+		} else if(handler.getWorld().getEntityManager().getPlayer().y - this.y < 0 && Math.abs(handler.getWorld().getEntityManager().getPlayer().x - this.x) < 50){
+			attackDir = 0;
+		}
+		
 		updateBoxes();
 		
 		offsetX = handler.getGameCamera().getxOffset();
@@ -77,6 +88,13 @@ public class EnemyMageM extends Creature{
 		animLeft.tick();
 		animUp.tick();
 		animDown.tick();
+		
+		if(close) {
+			castDown.tick();
+			castUp.tick();
+			castRight.tick();
+			castLeft.tick();
+		}
 		  
 		if(xMove > 0) {
 			currentAnim = animRight;
@@ -103,13 +121,16 @@ public class EnemyMageM extends Creature{
 		}
 		
 		npcWanderLogic();
-		collisionLogic();
-		if(!stopped) {
+		
+		if(!stopped && !close) {
+			collisionLogic();
 			npcTrackLogic();
 		}
 		avoidance();
 		checkBounds();
 		if(close) {
+			xMove = 0;
+			yMove = 0;
 			attack();
 		}
 		checkPlayer();
@@ -174,7 +195,20 @@ public class EnemyMageM extends Creature{
 		
 	}
 	
+	
+	// up 0, right 1, down 2, left 3
+	
 	public void attack() {
+		
+		if(attackDir == 0) {
+			currentAnim = castUp;
+		} else if(attackDir == 1) {
+			currentAnim = castRight;
+		} else if(attackDir == 2) {
+			currentAnim = castDown;
+		} else {
+			currentAnim = castLeft;
+		}
 		
 	}
 	
@@ -404,11 +438,11 @@ public class EnemyMageM extends Creature{
 		
 		
 		
-		if(Math.abs(handler.getWorld().getEntityManager().getPlayer().getX() - x) < 100 && Math.abs(handler.getWorld().getEntityManager().getPlayer().getY() - y) < 100) {
-			close = false;
-			System.out.println("close");
-		} else {
+		if(Math.abs(handler.getWorld().getEntityManager().getPlayer().getX() + 20 - x) < 250 && Math.abs(handler.getWorld().getEntityManager().getPlayer().getY() - 20 - y) < 250) {
 			close = true;
+			
+		} else {
+			close = false;
 		}
 		
 		if(handler.getWorld().getEntityManager().getPlayer().getX() - x < 0 && Math.abs(handler.getWorld().getEntityManager().getPlayer().getY() - y) < 50) {
