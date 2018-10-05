@@ -11,34 +11,26 @@ import java.util.Vector;
  */
 public class EnemyMageM extends Creature{
 	
-	private Animation animDown;
-	private Animation animUp;
-	private Animation animLeft;
-	private Animation animRight;
-	private Animation animStill;
+	private Animation animDown, animUp, animLeft, animRight, animStill;
+	private Animation castDown, castUp, castLeft, castRight;
 	private Animation currentAnim;
 	private Rectangle left, right, up, down;
 	private int direction;
-	private int num;
 	private int forceDir;
+	private boolean close = false;
 	private Entity lastEntity = this;
 	private int moveCount = 0;
 	private int magnitude = 1;
 	private int steeringTime;
 	private float centerX;
 	private float centerY;
-	private boolean xStopped, yStopped, stopped;
-	private float distanceNeed;
-	private int ticksNeed;
-	private Entity pathBlocker;
+	private boolean stopped;
 	private float offsetX, offsetY;
-	private boolean tracking = true;
 	private Point ahead = new Point();
 	private long lastMove, moveCooldown = 200, moveTimer = moveCooldown;
 	private boolean forceStop = false;
 	private boolean moving = true;
 	Rectangle walkingArea = new Rectangle(200, 300, 300, 200);
-	private Random rand = new Random();
 
 	public EnemyMageM(Handler handler, float x, float y, int width, int height) {
 		//TODO add bounding rectangle to the arguments in constructor
@@ -52,12 +44,20 @@ public class EnemyMageM extends Creature{
 		bounds.width = 20*4;
 		bounds.height = 23*4;
 		
+		//walking
 		animDown = new Animation(250, Assets.mageM_down);
 		animUp = new Animation(250, Assets.mageM_up);	
 		animLeft = new Animation(250, Assets.mageM_left);
 		animRight = new Animation(250, Assets.mageM_right);
 		animStill = new Animation(250, Assets.mageM_idle);
 		
+		//casting
+		castDown = new Animation(250, Assets.mageM_downA);
+		castUp = new Animation(250, Assets.mageM_upA);	
+		castLeft = new Animation(250, Assets.mageM_leftA);
+		castRight = new Animation(250, Assets.mageM_rightA);
+		
+		//collision rectangle
 		left = new Rectangle( (int) this.getX() - 20, (int) this.y, 20, bounds.height);
 		right = new Rectangle( (int) this.getX() + bounds.width, (int) this.y, 20, bounds.height );
 		up = new Rectangle( (int) this.getX(), (int) this.y - 20, bounds.width, 20);
@@ -109,7 +109,9 @@ public class EnemyMageM extends Creature{
 		}
 		avoidance();
 		checkBounds();
-		attack();
+		if(close) {
+			attack();
+		}
 		checkPlayer();
 		move();
 		
@@ -400,10 +402,13 @@ public class EnemyMageM extends Creature{
 	
 	public void checkPlayer() {
 		
+		
+		
 		if(Math.abs(handler.getWorld().getEntityManager().getPlayer().getX() - x) < 100 && Math.abs(handler.getWorld().getEntityManager().getPlayer().getY() - y) < 100) {
-			moving = false;
+			close = false;
+			System.out.println("close");
 		} else {
-			moving = true;
+			close = true;
 		}
 		
 		if(handler.getWorld().getEntityManager().getPlayer().getX() - x < 0 && Math.abs(handler.getWorld().getEntityManager().getPlayer().getY() - y) < 50) {

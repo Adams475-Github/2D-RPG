@@ -13,7 +13,9 @@ public class Assets {
 	public static BufferedImage[] player_attack_down, player_attack_up, player_attack_right, player_attack_left;
 	//Archer Female
 	public static BufferedImage[] archF_down, archF_up, archF_right, archF_left, archF_idle;
+	//Mage Male
 	public static BufferedImage[] mageM_down, mageM_up, mageM_right, mageM_left, mageM_idle;
+	public static BufferedImage[] mageM_downA, mageM_upA, mageM_rightA, mageM_leftA, mageM_idleA;
 	public static BufferedImage[] player_attack_downB, player_attack_rightB,  player_attack_upB,  player_attack_leftB;
 	//Start Menu UI
 	public static BufferedImage[] btn_start, btn_blank, btn_inc_pos;
@@ -26,10 +28,6 @@ public class Assets {
 	
 	
 	public static void init() {
-		
-		//149, 0, 171, 16
-		
-		
 		
 		//Load Sprite Sheets
 		SpriteSheet sheetWorld = new SpriteSheet(ImageLoader.loadImage("/textures/Overworld.png"));
@@ -46,6 +44,7 @@ public class Assets {
 		SpriteSheet blueSwordSwing = new SpriteSheet(ImageLoader.loadImage("/textures/swordSwingBlue.png"));
 		SpriteSheet rangerFemale = new SpriteSheet(ImageLoader.loadImage("/textures/ranger_f.png"));
 		SpriteSheet mageMale = new SpriteSheet(ImageLoader.loadImage("/textures/mage_m.png"));
+		SpriteSheet castAnim = new SpriteSheet(ImageLoader.loadImage("/textures/mtt.png"));
 		
 		//Speech Bubble
 		speechBubble = objectSheet.crop(309, 96, 52, 47);
@@ -68,7 +67,7 @@ public class Assets {
 		font28nBold = FontLoader.highTowernBold;
 		fontPlaceHolder = new Font("Times New Roman", Font.BOLD, 28);
 		
-		//Mage Male
+		//Mage Male Walking
 		mageM_up = new BufferedImage[3];
 		mageM_down = new BufferedImage[3];
 		mageM_left = new BufferedImage[3];
@@ -96,7 +95,34 @@ public class Assets {
 		mageM_idle[3] = mageMale.crop(34, 72, 27, 33);
 		mageM_idle[1] = mageMale.crop(34, 108, 27, 33);
 		
-		//Ranger Female
+		//Mage Male Attack
+		mageM_upA = new BufferedImage[4];
+		mageM_downA = new BufferedImage[4];
+		mageM_leftA = new BufferedImage[4];
+		mageM_rightA = new BufferedImage[4];
+		
+		
+		mageM_upA[0] = castAnim.crop(128, 162, 14, 17);
+		mageM_upA[1] = castAnim.crop(146, 162, 14, 17);
+		mageM_upA[2] = castAnim.crop(164, 162, 14, 17);
+		mageM_upA[3] = castAnim.crop(182, 162, 14, 17);
+		
+		mageM_rightA[0] = castAnim.crop(126, 182, 14, 17);
+		mageM_rightA[1] = castAnim.crop(144, 182, 14, 17);
+		mageM_rightA[2] = castAnim.crop(162, 182, 14, 17);
+		mageM_rightA[3] = castAnim.crop(180, 182, 14, 17);
+		
+		mageM_downA[0] = castAnim.crop(128, 202, 14, 17);
+		mageM_downA[1] = castAnim.crop(146, 202, 14, 17);
+		mageM_downA[2] = castAnim.crop(164, 202, 14, 17);
+		mageM_downA[3] = castAnim.crop(182, 202, 14, 17);
+		
+		mageM_leftA[0] = castAnim.crop(130, 223, 14, 17);
+		mageM_leftA[1] = castAnim.crop(148, 223, 14, 17);
+		mageM_leftA[2] = castAnim.crop(166, 223, 14, 17);
+		mageM_leftA[3] = castAnim.crop(184, 223, 14, 17);
+		
+		//Ranger Female Walking
 		archF_up = new BufferedImage[3];
 		archF_down = new BufferedImage[3];
 		archF_left = new BufferedImage[3];
