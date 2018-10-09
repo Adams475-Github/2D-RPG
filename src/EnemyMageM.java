@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.ConcurrentModificationException;
 import java.util.Random;
 import java.util.Vector;
 
@@ -357,6 +358,25 @@ public class EnemyMageM extends Creature{
 //		
 		
 	}
+	
+	private void cast() {
+		
+		moveTimer += System.currentTimeMillis() - lastMove;
+		lastMove = System.currentTimeMillis();		
+		
+		
+		if(moveTimer < 870) {
+			return;
+		}
+		
+		handler.getWorld().getEntityManager().addEntity(new SpellFireBall(handler, this.x, this.y, 0, 0));
+		
+		
+		
+		moveTimer = 0;
+		
+		
+	}
 
 	
 	private void npcTrackLogic(){
@@ -439,7 +459,9 @@ public class EnemyMageM extends Creature{
 		
 		
 		if(Math.abs(handler.getWorld().getEntityManager().getPlayer().getX() + 20 - x) < 250 && Math.abs(handler.getWorld().getEntityManager().getPlayer().getY() - 20 - y) < 250) {
-			close = true;
+			close = true;	
+			cast();
+			
 			
 		} else {
 			close = false;

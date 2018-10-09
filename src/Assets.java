@@ -11,12 +11,14 @@ public class Assets {
 	public static BufferedImage[] player_down, player_up, player_right, player_left, player_idle;
 	//Player attack
 	public static BufferedImage[] player_attack_down, player_attack_up, player_attack_right, player_attack_left;
+	public static BufferedImage[] player_attack_downB, player_attack_rightB,  player_attack_upB,  player_attack_leftB;
 	//Archer Female
 	public static BufferedImage[] archF_down, archF_up, archF_right, archF_left, archF_idle;
 	//Mage Male
 	public static BufferedImage[] mageM_down, mageM_up, mageM_right, mageM_left, mageM_idle;
 	public static BufferedImage[] mageM_downA, mageM_upA, mageM_rightA, mageM_leftA, mageM_idleA;
-	public static BufferedImage[] player_attack_downB, player_attack_rightB,  player_attack_upB,  player_attack_leftB;
+	//Fireball
+	public static BufferedImage[] fb_left, fb_right, fb_up, fb_down;
 	//Start Menu UI
 	public static BufferedImage[] btn_start, btn_blank, btn_inc_pos;
 	//Inventory UI
@@ -45,6 +47,49 @@ public class Assets {
 		SpriteSheet rangerFemale = new SpriteSheet(ImageLoader.loadImage("/textures/ranger_f.png"));
 		SpriteSheet mageMale = new SpriteSheet(ImageLoader.loadImage("/textures/mage_m.png"));
 		SpriteSheet castAnim = new SpriteSheet(ImageLoader.loadImage("/textures/mtt.png"));
+		SpriteSheet fireBall = new SpriteSheet(ImageLoader.loadImage("/textures/fireball_0.png"));
+		
+		//Fireball
+		fb_left = new BufferedImage[8];
+		fb_right = new BufferedImage[8];
+		fb_up = new BufferedImage[8];
+		fb_down = new BufferedImage[8];
+
+		fb_left[0] = fireBall.crop(2, 22, 52, 18);
+		fb_left[1] = fireBall.crop(65, 22, 52, 18);
+		fb_left[2] = fireBall.crop(130, 22, 52, 18);
+		fb_left[3] = fireBall.crop(195, 22, 52, 18);
+		fb_left[4] = fireBall.crop(258, 22, 52, 18);
+		fb_left[5] = fireBall.crop(322, 22, 52, 18);
+		fb_left[6] = fireBall.crop(385, 22, 52, 18);
+		fb_left[7] = fireBall.crop(450, 22, 52, 18);
+		
+		fb_right[0] = fireBall.crop(10, 277, 56, 18);
+		fb_right[1] = fireBall.crop(72, 277, 56, 18);
+		fb_right[2] = fireBall.crop(136, 277, 56, 18);
+		fb_right[3] = fireBall.crop(194, 277, 56, 18);
+		fb_right[4] = fireBall.crop(268, 277, 56, 18);
+		fb_right[5] = fireBall.crop(328, 277, 56, 18);
+		fb_right[6] = fireBall.crop(393, 277, 56, 18);
+		fb_right[7] = fireBall.crop(456, 277, 56, 18);
+		
+		fb_up[0] = fireBall.crop(24, 140, 16, 32);
+		fb_up[1] = fireBall.crop(87, 140, 16, 32);
+		fb_up[2] = fireBall.crop(152, 140, 16, 32);
+		fb_up[3] = fireBall.crop(216, 140, 16, 32);
+		fb_up[4] = fireBall.crop(281, 140, 16, 32);
+		fb_up[5] = fireBall.crop(344, 140, 16, 32);
+		fb_up[6] = fireBall.crop(408, 140, 16, 32);
+		fb_up[7] = fireBall.crop(472, 140, 16, 32);
+		
+		fb_down[0] = fireBall.crop(24, 403, 16, 32);
+		fb_down[1] = fireBall.crop(87, 403, 16, 32);
+		fb_down[2] = fireBall.crop(152, 403, 16, 32);
+		fb_down[3] = fireBall.crop(216, 403, 16, 32);
+		fb_down[4] = fireBall.crop(281, 403, 16, 32);
+		fb_down[5] = fireBall.crop(344, 403, 16, 32);
+		fb_down[6] = fireBall.crop(408, 403, 16, 32);
+		fb_down[7] = fireBall.crop(472, 403, 16, 32);
 		
 		//Speech Bubble
 		speechBubble = objectSheet.crop(309, 96, 52, 47);
@@ -100,8 +145,7 @@ public class Assets {
 		mageM_downA = new BufferedImage[4];
 		mageM_leftA = new BufferedImage[4];
 		mageM_rightA = new BufferedImage[4];
-		
-		
+
 		mageM_upA[0] = castAnim.crop(128, 162, 14, 17);
 		mageM_upA[1] = castAnim.crop(146, 162, 14, 17);
 		mageM_upA[2] = castAnim.crop(164, 162, 14, 17);
