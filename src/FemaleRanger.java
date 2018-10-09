@@ -38,6 +38,7 @@ public class FemaleRanger extends Creature{
 		animLeft = new Animation(250, Assets.archF_left);
 		animRight = new Animation(250, Assets.archF_right);
 		animStill = new Animation(250, Assets.archF_idle);
+
 	
 	}
 

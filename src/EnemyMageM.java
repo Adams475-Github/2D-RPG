@@ -85,16 +85,18 @@ public class EnemyMageM extends Creature{
 		offsetX = handler.getGameCamera().getxOffset();
 		offsetY = handler.getGameCamera().getyOffset();		
 		
-		animRight.tick();
-		animLeft.tick();
-		animUp.tick();
-		animDown.tick();
+		
 		
 		if(close) {
 			castDown.tick();
 			castUp.tick();
 			castRight.tick();
 			castLeft.tick();
+		} else {
+			animRight.tick();
+			animLeft.tick();
+			animUp.tick();
+			animDown.tick();
 		}
 		  
 		if(xMove > 0) {
@@ -461,8 +463,7 @@ public class EnemyMageM extends Creature{
 		if(Math.abs(handler.getWorld().getEntityManager().getPlayer().getX() + 20 - x) < 250 && Math.abs(handler.getWorld().getEntityManager().getPlayer().getY() - 20 - y) < 250) {
 			close = true;	
 			cast();
-			
-			
+		
 		} else {
 			close = false;
 		}

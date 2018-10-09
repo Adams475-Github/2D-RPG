@@ -3,8 +3,9 @@ import java.awt.Graphics;
 public class SpellFireBall extends Creature {
 	
 	private Animation right, left, up, down;
-	private Animation currentAnim = down;
+	private Animation currentAnim;
 	private int direction;
+	private boolean doneTracking;
 
 	public SpellFireBall(Handler handler, float x, float y, int width, int height) {
 		super(handler, x, y, width, height);
@@ -16,10 +17,14 @@ public class SpellFireBall extends Creature {
 		up = new Animation(100, Assets.fb_up);
 		down = new Animation(100, Assets.fb_down);
 		
+		//ignore(?)
+		currentAnim = right;
+		
 	}
 
 	@Override
 	public void tick() {
+		
 		
 		right.tick();
 		left.tick();
@@ -27,34 +32,44 @@ public class SpellFireBall extends Creature {
 		down.tick();
 		
 		if(xMove > 0) {
+			this.width = 52;
+			this.height = 18;
 			currentAnim = right;
 			direction = 0;
 			
 		} else if(xMove < 0) {
+			this.width = 52;
+			this.height = 18;
 			currentAnim = left;
 			direction = 1;
 			
 		} else if(yMove < 0) {
+			this.width = 16;
+			this.height = 32;
 			direction = 3;
 			currentAnim = up;
 			
 		} else if(yMove > 0) {
+			this.width = 16;
+			this.height = 32;
 			direction = 2;
 			currentAnim = down;
 			
-		} else {
-			currentAnim = down;
-		}
+		} 
 		
-		checkPlayer();
+		
+		
+		trackPlayer();
 		move();
+		
 		
 		
 	}
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(currentAnim.getCurrentFrame(), (int) (this.x - handler.getGameCamera().getxOffset()), (int) (this.y - handler.getGameCamera().getyOffset() ), 20, 20, null);
+		g.drawImage(currentAnim.getCurrentFrame(), (int) (this.x - handler.getGameCamera().getxOffset()), (int) (this.y - handler.getGameCamera().getyOffset() ), width, height, null);
+	
 	}
 
 	@Override
@@ -67,25 +82,54 @@ public class SpellFireBall extends Creature {
 		
 	}
 	
-	public void checkPlayer() {
+	public void trackPlayer() {
 		
-		if(handler.getWorld().getEntityManager().getPlayer().getX() - x < 0 && Math.abs(handler.getWorld().getEntityManager().getPlayer().getY() - y) < 50) {
-			direction = 1;
-			xMove = -1;
-			yMove = 0;
-		} else if(handler.getWorld().getEntityManager().getPlayer().getX() - x > 0 && Math.abs(handler.getWorld().getEntityManager().getPlayer().getY() - y) < 50) {
-			direction = 0;
-			xMove = 1;
-			yMove = 0;
-		} else if(handler.getWorld().getEntityManager().getPlayer().getY() - y < 0 && Math.abs(handler.getWorld().getEntityManager().getPlayer().getX() - x) < 50) {
-			direction = 2;
-			yMove = -1;
-			xMove = 0;
-		} else if(handler.getWorld().getEntityManager().getPlayer().getY() - y > 0 && Math.abs(handler.getWorld().getEntityManager().getPlayer().getX() - x) < 50) {
-			direction = 3;
-			yMove = 1;
-			xMove = 0;
+//		if(doneTracking && Math.abs(this.x - handler.getWorld().getEntityManager().getPlayer().x) > 80 || Math.abs(this.y - handler.getWorld().getEntityManager().getPlayer().y) > 80) {
+//			active = false;
+//		}
+//		
+		if(Math.abs(this.x - handler.getWorld().getEntityManager().getPlayer().x) < 30 || Math.abs(this.y - handler.getWorld().getEntityManager().getPlayer().y) < 30 || doneTracking) {
+			doneTracking = true;
+			return;
 		}
+		
+		if(this.x < handler.getWorld().getEntityManager().getPlayer().x) {
+			if(Math.abs(this.x - handler.getWorld().getEntityManager().getPlayer().x) < 5) {
+				xMove = 0;
+			} else {
+				xMove = 1;
+			}
+			
+		}
+		
+		if(this.x > handler.getWorld().getEntityManager().getPlayer().x) {
+			if(Math.abs(this.x - handler.getWorld().getEntityManager().getPlayer().x) < 5) {
+				xMove = 0;
+			} else {
+				xMove = -1;
+			}
+			
+		}
+		
+		if(this.y < handler.getWorld().getEntityManager().getPlayer().y) {
+			if(Math.abs(this.y - handler.getWorld().getEntityManager().getPlayer().y) < 20) {
+				yMove = 0;
+			} else {
+				yMove = 1;
+			}
+			
+		}
+		
+		if(this.y > handler.getWorld().getEntityManager().getPlayer().y) {
+			
+			if(Math.abs(this.y - handler.getWorld().getEntityManager().getPlayer().y) < 20) {
+				yMove = 0;
+			} else {
+				yMove = -1;
+			}
+			
+		}
+		
 		
 	}
 
