@@ -1,11 +1,20 @@
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class WizardVendor extends Creature {
+	
+	private ArrayList<Item> inventory;
+	private int width, height;
+	private BufferedImage texture;
 
 	public WizardVendor(Handler handler, float x, float y, int width, int height, ArrayList<Item> inventory) {
 		super(handler, x, y, width, height);
-		// TODO Auto-generated constructor stub
+		this.width = width * 4;
+		this.height = height * 4;
+		this.inventory = inventory;
+		this.texture = Assets.mageM_idle[3];
+		
 	}
 
 	@Override
@@ -16,7 +25,7 @@ public class WizardVendor extends Creature {
 
 	@Override
 	public void render(Graphics g) {
-		// TODO Auto-generated method stub
+		g.drawImage(texture, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
 		
 	}
 
