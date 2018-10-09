@@ -1,15 +1,17 @@
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class WizardVendor extends Creature {
+public class WizardVendor extends Vendor {
 	
 	private ArrayList<Item> inventory;
 	private int width, height;
 	private BufferedImage texture;
+	private boolean close;
 
 	public WizardVendor(Handler handler, float x, float y, int width, int height, ArrayList<Item> inventory) {
-		super(handler, x, y, width, height);
+		super(handler, x, y, width, height, inventory);
 		this.width = width * 4;
 		this.height = height * 4;
 		this.inventory = inventory;
@@ -19,7 +21,13 @@ public class WizardVendor extends Creature {
 
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
+		
+		checkPlayer();
+		
+		if(close && handler.getKeyManager().keyJustPressed(KeyEvent.VK_E)) {
+			State.setState(new VendorState(handler, this));
+			
+		}
 		
 	}
 
@@ -38,6 +46,14 @@ public class WizardVendor extends Creature {
 	@Override
 	public void interact() {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	public void checkPlayer() {
+		
+		if(Math.abs(handler.getWorld().getEntityManager().getPlayer().getX() - x + 20) < 50 && Math.abs(handler.getWorld().getEntityManager().getPlayer().getY() - y + 20) < 50) {
+			close = true;
+		}
 		
 	}
 
