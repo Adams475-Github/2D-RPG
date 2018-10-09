@@ -25,6 +25,10 @@ public class SpellFireBall extends Creature {
 	@Override
 	public void tick() {
 		
+		if(handler.getWorld().getEntityManager().getPlayer().getCollisionBounds(0, 0).contains(this.x, this.y)) {
+			handler.getWorld().getEntityManager().getPlayer().hurt(10);
+			active = false;
+		}
 		
 		right.tick();
 		left.tick();
@@ -84,48 +88,48 @@ public class SpellFireBall extends Creature {
 	
 	public void trackPlayer() {
 		
-//		if(doneTracking && Math.abs(this.x - handler.getWorld().getEntityManager().getPlayer().x) > 80 || Math.abs(this.y - handler.getWorld().getEntityManager().getPlayer().y) > 80) {
-//			active = false;
-//		}
-//		
-		if(Math.abs(this.x - handler.getWorld().getEntityManager().getPlayer().x) < 30 || Math.abs(this.y - handler.getWorld().getEntityManager().getPlayer().y) < 30 || doneTracking) {
+		if(doneTracking && Math.abs(this.x - handler.getWorld().getEntityManager().getPlayer().x) > 400 ) {
+			active = false;
+		}
+		
+		if(Math.abs(this.x - handler.getWorld().getEntityManager().getPlayer().x) < 80 && Math.abs(this.y - handler.getWorld().getEntityManager().getPlayer().y) < 80 || doneTracking) {
 			doneTracking = true;
 			return;
 		}
 		
-		if(this.x < handler.getWorld().getEntityManager().getPlayer().x) {
+		if(this.x < handler.getWorld().getEntityManager().getPlayer().x + handler.getWorld().getEntityManager().getPlayer().width/2) {
 			if(Math.abs(this.x - handler.getWorld().getEntityManager().getPlayer().x) < 5) {
 				xMove = 0;
 			} else {
-				xMove = 1;
+				xMove = 3;
 			}
 			
 		}
 		
-		if(this.x > handler.getWorld().getEntityManager().getPlayer().x) {
+		if(this.x > handler.getWorld().getEntityManager().getPlayer().x + handler.getWorld().getEntityManager().getPlayer().width/2) {
 			if(Math.abs(this.x - handler.getWorld().getEntityManager().getPlayer().x) < 5) {
 				xMove = 0;
 			} else {
-				xMove = -1;
+				xMove = -3;
 			}
 			
 		}
 		
 		if(this.y < handler.getWorld().getEntityManager().getPlayer().y) {
-			if(Math.abs(this.y - handler.getWorld().getEntityManager().getPlayer().y) < 20) {
+			if(Math.abs(this.y - handler.getWorld().getEntityManager().getPlayer().y) < 5) {
 				yMove = 0;
 			} else {
-				yMove = 1;
+				yMove = 3;
 			}
 			
 		}
 		
-		if(this.y > handler.getWorld().getEntityManager().getPlayer().y) {
+		if(this.y > handler.getWorld().getEntityManager().getPlayer().y ) {
 			
-			if(Math.abs(this.y - handler.getWorld().getEntityManager().getPlayer().y) < 20) {
+			if(Math.abs(this.y - handler.getWorld().getEntityManager().getPlayer().y) < 5) {
 				yMove = 0;
 			} else {
-				yMove = -1;
+				yMove = -3;
 			}
 			
 		}

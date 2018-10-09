@@ -1,9 +1,6 @@
 import java.awt.Graphics;
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.ConcurrentModificationException;
 import java.util.Iterator;
-import java.util.ListIterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class EntityManager {
