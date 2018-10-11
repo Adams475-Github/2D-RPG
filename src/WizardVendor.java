@@ -5,12 +5,12 @@ import java.util.ArrayList;
 
 public class WizardVendor extends Vendor {
 	
-	private ArrayList<Item> inventory;
+	private Inventory inventory;
 	private int width, height;
 	private BufferedImage texture;
 	private boolean close;
 
-	public WizardVendor(Handler handler, float x, float y, int width, int height, ArrayList<Item> inventory) {
+	public WizardVendor(Handler handler, float x, float y, int width, int height, Inventory inventory) {
 		super(handler, x, y, width, height, inventory);
 		this.width = width * 4;
 		this.height = height * 4;
@@ -53,6 +53,8 @@ public class WizardVendor extends Vendor {
 		
 		if(Math.abs(handler.getWorld().getEntityManager().getPlayer().getX() - x + 20) < 50 && Math.abs(handler.getWorld().getEntityManager().getPlayer().getY() - y + 20) < 50) {
 			close = true;
+		} else {
+			close = false;
 		}
 		
 	}

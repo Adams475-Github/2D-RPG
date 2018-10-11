@@ -6,7 +6,7 @@ public class Assets {
 	private static final int width = 16, height = 16;
 	
 	//Stand-alone
-	public static BufferedImage dirt, grass, stone, tree, rock, bush, wood, coin, chestClosed, chestOpen, displayBoxRed, speechBubble;
+	public static BufferedImage dirt, grass, stone, tree, rock, bush, wood, coin, chestClosed, chestOpen, displayBoxRed, speechBubble, vendorScreen;
 	//Player walk
 	public static BufferedImage[] player_down, player_up, player_right, player_left, player_idle;
 	//Player attack
@@ -21,6 +21,8 @@ public class Assets {
 	public static BufferedImage[] fb_left, fb_right, fb_up, fb_down;
 	//Start Menu UI
 	public static BufferedImage[] btn_start, btn_blank, btn_inc_pos;
+	//vendor UI
+	public static BufferedImage[] btn_sell, btn_buy;
 	//Inventory UI
 	public static BufferedImage inventoryScreen, itemHighlighter, nothing, heartFull, heartHalf, heartFourth, heartThreeFourths, heartEmpty;
 	public static Font font28, font28nBold, fontPlaceHolder;
@@ -48,6 +50,21 @@ public class Assets {
 		SpriteSheet mageMale = new SpriteSheet(ImageLoader.loadImage("/textures/mage_m.png"));
 		SpriteSheet castAnim = new SpriteSheet(ImageLoader.loadImage("/textures/mtt.png"));
 		SpriteSheet fireBall = new SpriteSheet(ImageLoader.loadImage("/textures/fireball_0.png"));
+		SpriteSheet vendorUI = new SpriteSheet(ImageLoader.loadImage("/textures/vendorUi.png"));
+		
+		
+		//Vendor screen
+		vendorScreen = vendorUI.crop(363, 0, 224, 139);
+		
+		//Vendor Buttons
+		btn_sell = new BufferedImage[2];
+		btn_buy = new BufferedImage[2];
+		
+		btn_sell[0] = vendorUI.crop(515, 145, 22, 11);
+		btn_sell[1] = vendorUI.crop(515, 156, 22, 11);
+		
+		btn_buy[0] = vendorUI.crop(537, 145, 22, 11);
+		btn_buy[1] = vendorUI.crop(537, 156, 22, 11);
 		
 		//Fireball
 		fb_left = new BufferedImage[8];

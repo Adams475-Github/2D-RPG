@@ -417,5 +417,21 @@ public class Inventory {
 	public int getCoins() {
 		return coins;
 	}
+	
+	public ArrayList<Item> getInventoryArmor() {
+		return inventoryArmor;
+	}
+
+	public void setInventoryArmor(ArrayList<Item> inventoryArmor) {
+		this.inventoryArmor = inventoryArmor;
+	}
+
+	public void setInventoryAttack(ArrayList<Item> inventoryAttack) {
+		this.inventoryAttack = inventoryAttack;
+	}
+
+	public void setInventoryPotions(ArrayList<Item> inventoryPotions) {
+		this.inventoryPotions = inventoryPotions;
+	}
 
 }

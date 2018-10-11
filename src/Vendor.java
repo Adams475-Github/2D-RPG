@@ -3,19 +3,19 @@ import java.util.ArrayList;
 public abstract class Vendor extends Creature{
 	
 
-	protected ArrayList<Item> inventory;
+	protected Inventory inventory;
 	
-	public Vendor(Handler handler, float x, float y, int width, int height, ArrayList<Item> inventory) {
+	public Vendor(Handler handler, float x, float y, int width, int height, Inventory inventory) {
 		super(handler, x, y, width, height);
 		this.inventory = inventory;
 	}
 	
 	//GETTERS / SETTERS
-	public ArrayList<Item> getInv(){
+	public Inventory getInv(){
 		return inventory;
 	}
 	
-	public void setInv(ArrayList<Item> i) {
+	public void setInv(Inventory i) {
 		inventory = i;
 	}
 	
