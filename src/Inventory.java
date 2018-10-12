@@ -53,7 +53,6 @@ public class Inventory {
 		invAdd = new ArrayList<Item>();
 		hotbar = new ArrayList<Item>();
 		init();
-		System.out.println("yes");
 		//Fills inventory with blanks so we don't go out of bounds when rendering things/checking if an item is there
 		
 		
@@ -62,6 +61,11 @@ public class Inventory {
 		
 		
 		//fills the hot-bar with blank items to be replaced.
+		addItem(Item.blueSword);
+		addItem(Item.blueSword);
+		addItem(Item.blueSword);
+		addItem(Item.blueSword);
+		addItem(Item.blueSword);
 		
 	}
 	

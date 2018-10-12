@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -8,8 +9,9 @@ public class VendorState extends State {
 	private Inventory inventory;
 	private int centerScreenX = 1024/2, centerScreenY = 768/2;
 	private int topLeftX = centerScreenX - (Assets.vendorScreen.getWidth() * 4 / 2), topLeftY = centerScreenY - (Assets.vendorScreen.getHeight() * 4 / 2);
-	private Rectangle clickBounds = new Rectangle(centerScreenX, 280, 340, 190);
-	private int highX = 0, highY = 0;
+	private Rectangle clickBounds = new Rectangle(centerScreenX - 1, 278, 338, 200);
+	private Rectangle clickBoundsPlayer = new Rectangle(centerScreenX - 270 - 278/2, 278, 338, 200);
+	private int highX = 0, highY = -50, highXP = 0, highYP = -50;
 	
 	public VendorState(Handler handler, Inventory inventory) {
 		super(handler);
@@ -30,8 +32,24 @@ public class VendorState extends State {
 
 			@Override
 			public void onClick() {
-				handler.getMouseManager().setUIManager(null);
-				State.setState(handler.getGame().getGameState());
+				int i = 0;
+				for(int x = 0; x < 5; x++) {
+					for(int y = 0; y < 3; y++) {
+						if(x == highXP && y == highYP) {
+							System.out.println(x + ", " + y);
+							System.out.println(handler.getWorld().getEntityManager().getPlayer().getInventory().getCurrentInv().get(i).name);
+							System.out.println(i);
+							if(handler.getWorld().getEntityManager().getPlayer().getInventory().getCurrentInv().get(i) != Item.nothing) {
+								inventory.addItem(handler.getWorld().getEntityManager().getPlayer().getInventory().getCurrentInv().get(i));
+								handler.getWorld().getEntityManager().getPlayer().getInventory().coins += handler.getWorld().getEntityManager().getPlayer().getInventory().getCurrentInv().get(i).goldValue;
+								handler.getWorld().getEntityManager().getPlayer().getInventory().setNothing(i, x, y);
+							}
+							
+						}
+						i++;
+					}
+					
+				}
 			}}));
 		
 		//BuyButton
@@ -39,35 +57,60 @@ public class VendorState extends State {
 
 			@Override
 			public void onClick() {
-				handler.getMouseManager().setUIManager(null);
-				//SettingState settingState = new SettingState(handler);
-				State.setState(handler.getGame().settingState);
+				int i = 0;
+				for(int x = 0; x < 5; x++) {
+					for(int y = 0; y < 3; y++) {
+						if(x == highX && y == highY) {
+							if(inventory.getCurrentInv().get(i) != Item.nothing && handler.getWorld().getEntityManager().getPlayer().getInventory().coins >= inventory.getCurrentInv().get(i).goldValue) {
+								handler.getWorld().getEntityManager().getPlayer().getInventory().addItem(inventory.getCurrentInv().get(i));
+								handler.getWorld().getEntityManager().getPlayer().getInventory().coins -= inventory.getCurrentInv().get(i).goldValue;
+								inventory.setNothing(i, x, y);
+							}
+							
+						}
+						i++;
+					}
+					
+				}
 			}}));
 		
+		//Sword tab
 		uiManager.addObject(new UIImageButton( (centerScreenX + 368), (topLeftY + 156), 14 * 4, 18 * 4, Assets.btn_sword, new ClickListener() {
 
 			@Override
 			public void onClick() {
 				inventory.setDisplay(0);
 				inventory.setCurrentInv(inventory.getInventoryAttack());
+				handler.getWorld().getEntityManager().getPlayer().getInventory().setDisplay(0);
+				handler.getWorld().getEntityManager().getPlayer().getInventory().setCurrentInv(handler.getWorld().getEntityManager().
+						getPlayer().getInventory().getInventoryAttack());
 			}}));
 		
+		//Armor Tab
 		uiManager.addObject(new UIImageButton( (centerScreenX + 368), (topLeftY + 156 + 18 * 4), 14 * 4, 18 * 4, Assets.btn_armor, new ClickListener() {
 
 			@Override
 			public void onClick() {
 				inventory.setDisplay(1);
 				inventory.setCurrentInv(inventory.getInventoryArmor());
+				handler.getWorld().getEntityManager().getPlayer().getInventory().setDisplay(1);
+				handler.getWorld().getEntityManager().getPlayer().getInventory().setCurrentInv(handler.getWorld().getEntityManager().
+						getPlayer().getInventory().getInventoryArmor());
 			}}));
 		
+		//Potions Tab
 		uiManager.addObject(new UIImageButton( (centerScreenX + 368), (topLeftY + 156 + 18 * 4 + 18 * 4), 14 * 4, 18 * 4, Assets.btn_potions, new ClickListener() {
 
 			@Override
 			public void onClick() {
 				inventory.setDisplay(2);
 				inventory.setCurrentInv(inventory.getInventoryPotions());
+				handler.getWorld().getEntityManager().getPlayer().getInventory().setDisplay(2);
+				handler.getWorld().getEntityManager().getPlayer().getInventory().setCurrentInv(handler.getWorld().getEntityManager().
+						getPlayer().getInventory().getInventoryPotions());
 			}}));
 		
+		//Exit button
 		uiManager.addObject(new UIImageButton(9000, 9000, 200, 50, Assets.btn_blank, new ClickListener() {
 
 			@Override
@@ -84,6 +127,7 @@ public class VendorState extends State {
 		
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_E)) {
 			handler.getWorld().getEntityManager().getPlayer().getInventory().setActive(false);
+			handler.getMouseManager().setUIManager(null);
 			State.setState(handler.getGame().gameState);
 		}
 		
@@ -92,8 +136,11 @@ public class VendorState extends State {
 				highX = (int) ( Math.floor( (handler.getMouseManager().getMouseX() - clickBounds.x) / (17 * 4) ) );
 				highY = (int) ( Math.floor( (handler.getMouseManager().getMouseY() - clickBounds.y)  / (17 * 4) ) );
 				
-				System.out.println(handler.getMouseManager().getMouseX());
-				System.out.println(highX + ", " + highY);
+			}
+			
+			if(clickBoundsPlayer.contains(handler.getMouseManager().getMouseX(), handler.getMouseManager().getMouseY())) {
+				highXP = (int) ( Math.floor( (handler.getMouseManager().getMouseX() - clickBoundsPlayer.x) / (17 * 4) ) );
+				highYP = (int) ( Math.floor( (handler.getMouseManager().getMouseY() - clickBoundsPlayer.y)  / (17 * 4) ) );
 				
 			}
 		}
@@ -123,15 +170,29 @@ public class VendorState extends State {
 			g.drawImage(Assets.btn_potions[1], centerScreenX + 368, topLeftY + 156 + 18 * 8, 14 * 4, 18 * 4, null);
 		}
 		
+		g.setColor(Color.YELLOW);
+		g.setFont(Assets.fontPlaceHolder);
+		g.drawString(Integer.toString(handler.getWorld().getEntityManager().getPlayer().getInventory().getCoins()), 420, 620);
+		g.setColor(Color.WHITE);
+		g.setFont(Assets.font28nBold);
+		g.drawString("Gold", 359, 620);
+		
 		inventory.render(g);
 		
-		for(int i = 0; i < handler.getWorld().getEntityManager().getPlayer().getInventory().getInventoryAttack().size(); i++) {
-			g.drawImage(handler.getWorld().getEntityManager().getPlayer().getInventory().getInventoryAttack().get(i).texture, 20 * i, 20 * i, 40, 40, null);
+		int i = 0;
+		for(int x = 0; x < 5; x++) {
+			for(int y = 0; y < 3; y++) {
+				g.drawImage(handler.getWorld().getEntityManager().getPlayer().getInventory().getCurrentInv().get(i).texture, 
+						clickBoundsPlayer.x + inventory.invSlotDist * x + 9, clickBoundsPlayer.y + inventory.invSlotDist * y + 9, 48, 48, null);
+				i++;
+			}
 		}
 		
-		g.drawRect(clickBounds.x, clickBounds.y, clickBounds.width, clickBounds.height);
+		//g.drawRect(clickBounds.x, clickBounds.y, clickBounds.width, clickBounds.height);
+		//g.drawRect(clickBoundsPlayer.x, clickBoundsPlayer.y, clickBoundsPlayer.width, clickBoundsPlayer.height);
 		
-		g.drawImage(Assets.itemHighlighter, ( clickBounds.x + inventory.invSlotDist * highX + 4 ), ( clickBounds.y + inventory.invSlotDist * highY + 2) , 14*4, 14*4, null);
+		g.drawImage(Assets.itemHighlighter, ( clickBounds.x + inventory.invSlotDist * highX + 4 + 1), ( clickBounds.y + inventory.invSlotDist * highY + 4) , 14*4, 14*4, null);
+		g.drawImage(Assets.itemHighlighter, ( clickBoundsPlayer.x + inventory.invSlotDist * highXP + 4 + 1), ( clickBoundsPlayer.y + inventory.invSlotDist * highYP + 4) , 14*4, 14*4, null);
 		
 		
 	}
