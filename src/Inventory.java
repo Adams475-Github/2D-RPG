@@ -9,6 +9,7 @@ public class Inventory {
 	private long time = 550;
 	private int holder = 0;
 	private long timeDone;
+	private int xOffset = 0, yOffset = 0;
 	//Handler initialization
 	private Handler handler;
 	//Whether its active or not
@@ -158,7 +159,7 @@ public class Inventory {
 		}
 		
 		//sets up correct display, ArrayList, and 2d arrays to be modified based on which display is selected
-		if(active) {
+		if(active && handler.getWorld().getEntityManager().getPlayer().getInventory() == this) {
 			if (swordBounds.contains(mouseX, mouseY) && handler.getMouseManager().isLeftPressed()) {
 				display = 0;
 				currentInv = inventoryAttack;
@@ -236,6 +237,7 @@ public class Inventory {
 			return;
 		}
 		
+		//this isn't very oop but basically this only works if it's rendering for player to circumvent the useless stuff while in vendor screen
 		if(handler.getWorld().getEntityManager().getPlayer().getInventory() == this) {
 			//text color to yellow (for gold count)
 			g.setColor(Color.YELLOW);
@@ -256,32 +258,29 @@ public class Inventory {
 			for(int i = 0; i < hotbar.size(); i++) {
 				g.drawImage(hotbar.get(i).texture, 341 + invSlotDist * i, 621, 48, 48, null);
 			}
+			
+			if(display == 0) {
+				g.drawImage(Assets.tabHighlightSword, 705, 179, 13*4, 17*4, null);
+				
+			} else if(display == 1){
+				g.drawImage(Assets.tabHighlightShield, 705, 250, 13*4, 17*4, null);
+				
+			} else if(display == 2) {
+				g.drawImage(Assets.tabHighlightPotion, 705, 322, 13*4, 17*4, null);
+				
+			} else {
+				g.drawImage(Assets.tabHighlightQuest, 705, 394, 13*4, 17*4, null);
+			}
 		}		
 		
 		//loops through array to draw the items
 		int i = 0;
 		for(int x = 0; x < 5; x++) {
 			for(int y = 0; y < 3; y++) {
-				g.drawImage(currentInv.get(i).texture, 342 + invSlotDist * x, 199 + invSlotDist * y, 48, 48, null);
+				g.drawImage(currentInv.get(i).texture, 342 + invSlotDist * x + xOffset, 199 + invSlotDist * y + yOffset, 48, 48, null);
 				i++;
 			}
-		}	
-		
-		//draws items in hot-bar
-		
-		
-		if(display == 0) {
-			g.drawImage(Assets.tabHighlightSword, 705, 179, 13*4, 17*4, null);
-			
-		} else if(display == 1){
-			g.drawImage(Assets.tabHighlightShield, 705, 250, 13*4, 17*4, null);
-			
-		} else if(display == 2) {
-			g.drawImage(Assets.tabHighlightPotion, 705, 322, 13*4, 17*4, null);
-			
-		} else {
-			g.drawImage(Assets.tabHighlightQuest, 705, 394, 13*4, 17*4, null);
-		}
+		}			
 
 	}
 
@@ -390,10 +389,10 @@ public class Inventory {
 		return inventoryAttack;
 	}
 	public ArrayList<Item> getInventoryPotions() {
-		return inventoryAttack;
+		return inventoryPotions;
 	}
 	public ArrayList<Item> getInventory() {
-		return inventoryAttack;
+		return currentInv;
 	}
 	public int getCoins() {
 		return coins;
@@ -445,6 +444,22 @@ public class Inventory {
 
 	public void setDisplay(int display) {
 		this.display = display;
+	}
+
+	public int getxOffset() {
+		return xOffset;
+	}
+
+	public void setxOffset(int xOffset) {
+		this.xOffset = xOffset;
+	}
+
+	public int getyOffset() {
+		return yOffset;
+	}
+
+	public void setyOffset(int yOffset) {
+		this.yOffset = yOffset;
 	}	
 
 }

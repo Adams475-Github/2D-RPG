@@ -21,6 +21,7 @@ public class EntityAdder {
 			addItem(Item.blueSword);
 			addItem(Item.blueSword);
 			addItem(Item.blueSword);
+			getInventoryPotions().set(0, Item.coinItem);
 			
 		}}));
 		
