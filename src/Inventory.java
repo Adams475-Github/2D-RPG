@@ -20,15 +20,11 @@ public class Inventory {
 	private ArrayList<Item> inventoryPotions;
 	private ArrayList<Item> hotbar;
 	//2d arrays for the item position storage
-	private Item[][] weapon2d = new Item[5][3];
-	private Item[][] armor2d = new Item[5][3];
-	private Item[][] potions2d = new Item[5][3];
 	//used to condense code
-	private Item[][] current2d = weapon2d;
 	private ArrayList<Item> currentInv = inventoryAttack;
 	//hard coded locations for inventory menu
 	private int invX = (1024/2) - 215, invY = 768/2 - 360, invWidth = 119, invHeight = 171;
-	private int invSlotDist = 17 * 4;
+	protected int invSlotDist = 17 * 4;
 	//movement variables for item high lighter
 	private int xMove = 0, yMove = 0;
 	//legacy code(not really)
@@ -55,53 +51,38 @@ public class Inventory {
 		inventoryPotions = new ArrayList<Item>();
 		invAdd = new ArrayList<Item>();
 		hotbar = new ArrayList<Item>();
-		
+		init();
+		System.out.println("yes");
 		//Fills inventory with blanks so we don't go out of bounds when rendering things/checking if an item is there
+		
+		
+		//Random Item adding for testing
+		
+		
+		
+		//fills the hot-bar with blank items to be replaced.
+		
+	}
+	
+	public void init() {
+		
 		for (int i = 0; i <= 15; i++) {
 			inventoryAttack.add(Item.nothing);
 		}
 		
-		//Random Item adding for testing
-		this.addItem(Item.armorStarter);
-		this.addItem(Item.swordStarter);
-		this.addItem(Item.blueSword);
+		for (int i = 0; i <= 15; i++) {
+			inventoryPotions.add(Item.nothing);
+		}
 		
-		//fills the hot-bar with blank items to be replaced.
+		for (int i = 0; i <= 15; i++) {
+			inventoryArmor.add(Item.nothing);
+		}
+		
+		
 		for (int i = 0; i <= 5; i++) {
 			hotbar.add(Item.nothing);
 		}
-	}
-	
-	/*This updates the 2d display array so items are displayed/removed properly, also yes its a capital U no I'm not fixing it.
-	 * This was added so that the user can remove an Item and not have them all shift over to the left.
-	 * now that I'm typing this out I believe I could've just set the item they threw away/used to be nothing in the ArrayList
-	 * and have gotten the same effect, actually yeah I wasted a ton of time and it's not intuitive. Hmmmm. Well I guess we still have it
-	 * here so I don't really want to refactor it. 
-	 */
-	
-	//TODO fix capital U
-	//TODO remove all of this but that's a lot of work, darn technical debt
-	public void Update() {
-		int i = 0;
-		
-		//loops through x row
-		for(int x = 0; x < 5; x++) {
-			
-			//loops through y column
-			for(int y = 0; y < 3; y++) {
-				
-				//sets the xy of the 2d array
-				if(i < currentInv.size()) {
-					current2d[x][y] = currentInv.get(i);
-					i++;
-					
-				} else {
-					current2d[x][y] = Item.nothing;
-					i++;
-					
-				}
-			}
-		}
+
 	}
 	
 	//tick method to update everything
@@ -116,19 +97,18 @@ public class Inventory {
 		if(!active) {
 			return;
 		}
-		
+
 		checkUse();
+		
 		
 		//updates correct arrays based on which one it's displaying
 		if(display == 0) {
 			currentInv = inventoryAttack;
-			Update();
 			
 		} else if(display == 1) {
-			Update();
+			
 			
 		} else if(display == 2) {
-			Update();
 			
 		}
 		
@@ -181,23 +161,20 @@ public class Inventory {
 		if(active) {
 			if (swordBounds.contains(mouseX, mouseY) && handler.getMouseManager().isLeftPressed()) {
 				display = 0;
-				current2d = weapon2d;
 				currentInv = inventoryAttack;
-				Update();
+				
 			}
 			
 			if (shieldBounds.contains(mouseX, mouseY) && handler.getMouseManager().isLeftPressed()) {
 				display = 1;
-				current2d = armor2d;
 				currentInv = inventoryArmor;
-				Update();
+				
 			}
 			
 			if (potionsBounds.contains(mouseX, mouseY) && handler.getMouseManager().isLeftPressed()) {
 				display = 2;
-				current2d = potions2d;
 				currentInv = inventoryPotions;
-				Update();
+				
 			}
 			
 			if (questBounds.contains(mouseX, mouseY) && handler.getMouseManager().isLeftPressed()) {
@@ -218,7 +195,6 @@ public class Inventory {
 								currentInv.set(i, Item.nothing);
 								
 							}
-							current2d[x][y] = Item.nothing;
 							
 						}
 						i++;
@@ -256,37 +232,43 @@ public class Inventory {
 	public void render(Graphics g) {
 		
 		//quits out of render if inventory is not active
-		if(!active) {
+		if(!active && handler.getWorld().getEntityManager().getPlayer().getInventory() == this) {
 			return;
 		}
 		
-		//text color to yellow (for gold count)
-		g.setColor(Color.YELLOW);
+		if(handler.getWorld().getEntityManager().getPlayer().getInventory() == this) {
+			//text color to yellow (for gold count)
+			g.setColor(Color.YELLOW);
+			
+			//draws inventory screen
+			g.drawImage(Assets.inventoryScreen, invX, invY, invWidth*4, invHeight*4, null);
+			
+			//draws item high-lighter
+			g.drawImage(Assets.itemHighlighter, 338 + invSlotDist * xMove, 195 + invSlotDist * yMove, 14*4, 14*4, null);
+			
+			//draws coin counter
+			g.setFont(Assets.fontPlaceHolder);
+			g.drawString(Integer.toString(coins), 650, 545);
+			g.setColor(Color.WHITE);
+			g.setFont(Assets.font28nBold);
+			g.drawString("Gold", 589, 545);
+			
+			for(int i = 0; i < hotbar.size(); i++) {
+				g.drawImage(hotbar.get(i).texture, 341 + invSlotDist * i, 621, 48, 48, null);
+			}
+		}		
 		
-		//draws inventory screen
-		g.drawImage(Assets.inventoryScreen, invX, invY, invWidth*4, invHeight*4, null);
-		
-		//draws item high-lighter
-		g.drawImage(Assets.itemHighlighter, 338 + invSlotDist * xMove, 195 + invSlotDist * yMove, 14*4, 14*4, null);
-		
-		//draws coin counter
-		g.setFont(Assets.fontPlaceHolder);
-		g.drawString(Integer.toString(coins), 650, 545);
-		g.setColor(Color.WHITE);
-		g.setFont(Assets.font28nBold);
-		g.drawString("Gold", 589, 545);
-		
-		//loops through 2d array to draw the items
+		//loops through array to draw the items
+		int i = 0;
 		for(int x = 0; x < 5; x++) {
 			for(int y = 0; y < 3; y++) {
-				g.drawImage(current2d[x][y].texture, 342 + invSlotDist * x, 199 + invSlotDist * y, 48, 48, null);
+				g.drawImage(currentInv.get(i).texture, 342 + invSlotDist * x, 199 + invSlotDist * y, 48, 48, null);
+				i++;
 			}
 		}	
 		
 		//draws items in hot-bar
-		for(int i = 0; i < hotbar.size(); i++) {
-			g.drawImage(hotbar.get(i).texture, 341 + invSlotDist * i, 621, 48, 48, null);
-		}
+		
 		
 		if(display == 0) {
 			g.drawImage(Assets.tabHighlightSword, 705, 179, 13*4, 17*4, null);
@@ -345,7 +327,6 @@ public class Inventory {
 	//just a useful method to remove an item after being used / thrown away
 	public void setNothing(int i, int x, int y) {
 		currentInv.set(i, Item.nothing);
-		current2d[x][y] = Item.nothing;
 	}
 	
 	//smart method to add items to hot-bar, although I don't know how smart it was to make this.. Maybe could've implemented into normal add
@@ -433,5 +414,37 @@ public class Inventory {
 	public void setInventoryPotions(ArrayList<Item> inventoryPotions) {
 		this.inventoryPotions = inventoryPotions;
 	}
+
+	public ArrayList<Item> getInvAdd() {
+		return invAdd;
+	}
+
+	public void setInvAdd(ArrayList<Item> invAdd) {
+		this.invAdd = invAdd;
+	}
+
+	public ArrayList<Item> getHotbar() {
+		return hotbar;
+	}
+
+	public void setHotbar(ArrayList<Item> hotbar) {
+		this.hotbar = hotbar;
+	}
+
+	public ArrayList<Item> getCurrentInv() {
+		return currentInv;
+	}
+
+	public void setCurrentInv(ArrayList<Item> currentInv) {
+		this.currentInv = currentInv;
+	}
+
+	public int getDisplay() {
+		return display;
+	}
+
+	public void setDisplay(int display) {
+		this.display = display;
+	}	
 
 }

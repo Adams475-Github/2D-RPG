@@ -4,14 +4,19 @@ import java.awt.event.KeyEvent;
 public class VendorState extends State {
 
 	private UIManager uiManager;
-	private Vendor vendor;
+	private Inventory inventory;
 	private int centerScreenX = 1024/2, centerScreenY = 768/2;
 	private int topLeftX = centerScreenX - (Assets.vendorScreen.getWidth() * 4 / 2), topLeftY = centerScreenY - (Assets.vendorScreen.getHeight() * 4 / 2);
 	
-	public VendorState(Handler handler, Vendor vendor) {
+	public VendorState(Handler handler, Inventory inventory) {
 		super(handler);
+		this.inventory = inventory;
+		inventory.init();
+		inventory.setActive(true);
+		handler.getWorld().getEntityManager().getPlayer().getInventory().setActive(true);
+		inventory.setCurrentInv(inventory.getInventoryAttack());
 		
-		this.vendor = vendor;
+		
 		uiManager = new UIManager(handler);
 		handler.getMouseManager().setUIManager(uiManager);
 		
@@ -47,11 +52,15 @@ public class VendorState extends State {
 	
 
 	public void tick() {
-
+		
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_E)) {
+			handler.getWorld().getEntityManager().getPlayer().getInventory().setActive(false);
 			State.setState(handler.getGame().gameState);
 		}
+		
 		uiManager.tick();
+		inventory.tick();
+		
 	}
 
 
@@ -64,17 +73,13 @@ public class VendorState extends State {
 		
 		//UI Buttons
 		uiManager.render(g);
+	
 		
-		//Player Items
+		inventory.render(g);
+		
 		for(int i = 0; i < handler.getWorld().getEntityManager().getPlayer().getInventory().getInventoryAttack().size(); i++) {
-			g.drawImage(handler.getWorld().getEntityManager().getPlayer().getInventory().getInventoryAttack().get(i).texture, 100*i, 10, 80, 80, null);
+			g.drawImage(handler.getWorld().getEntityManager().getPlayer().getInventory().getInventoryAttack().get(i).texture, 20 * i, 20 * i, 40, 40, null);
 		}
-		
-		//Vendor Items
-		for(int i = 0; i < vendor.getInv().getInventoryAttack().size(); i++) {
-			g.drawImage(vendor.getInv().getInventoryAttack().get(i).texture, 100*i, 10, 80, 80, null);
-		}
-		
 		
 		
 	}

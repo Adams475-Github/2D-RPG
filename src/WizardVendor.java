@@ -25,7 +25,8 @@ public class WizardVendor extends Vendor {
 		checkPlayer();
 		
 		if(close && handler.getKeyManager().keyJustPressed(KeyEvent.VK_E)) {
-			State.setState(new VendorState(handler, this));
+			this.getInv().setActive(true);
+			State.setState(new VendorState(handler, this.inventory));
 			
 		}
 		
