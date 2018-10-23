@@ -6,9 +6,11 @@ import java.util.ArrayList;
 
 public class Inventory {
 
+	//timer variables
 	private long time = 550;
 	private int holder = 0;
 	private long timeDone;
+	//don't even know what this one does
 	private int xOffset = 0, yOffset = 0;
 	//Handler initialization
 	private Handler handler;
@@ -24,10 +26,14 @@ public class Inventory {
 	private ArrayList<Item> currentInv = inventoryAttack;
 	//hard coded locations for inventory menu
 	private int invX = (1024/2) - 215, invY = 768/2 - 360, invWidth = 119, invHeight = 171;
+	//distance between inventory slots
 	protected int invSlotDist = 17 * 4;
-	//movement variables for item high lighter
-	//legacy code(not really)
+	//don't know what this does either
 	private int display = 0;
+	//Selected Item (nothing at start so no null)
+	private Item selectedItem = Item.nothing;
+	//Item description rectangle
+	Rectangle itemRect = new Rectangle(338, 425, 235, 115);
 	//Button bounding rectangles also hard coded in because I didn't use the state system for this
 	private Rectangle swordBounds = new Rectangle(invX + 409, invY + 152, 13*4, 18*4);
 	private Rectangle shieldBounds = new Rectangle(invX + 409, invY + 224, 13*4, 18*4);
@@ -36,11 +42,12 @@ public class Inventory {
 	private Rectangle use = new Rectangle(invX + 290, invY + 415, 20*4, 9*4);
 	private Rectangle drop = new Rectangle(invX + 290, invY + 460, 20*4, 9*4);
 	private Rectangle clickBounds = new Rectangle(invX + 35, invY + 165, 338, 200);
+	//throws high-lighter off screen at start so no null but also not there initially
 	private int highX = -100, highY = -100;
 	//Mouse x and y variable initialization so I don't have to type out a huge line to get mouseX and mouseY
 	private int mouseX;
 	private int mouseY;
-	//Initializes Coins
+	//coins
 	public int coins = 0;
 	
 	//constructor
@@ -53,6 +60,7 @@ public class Inventory {
 		invAdd = new ArrayList<Item>();
 		hotbar = new ArrayList<Item>();
 		init();
+		addItem(Item.swordStarter);
 		
 	}
 	
@@ -123,7 +131,20 @@ public class Inventory {
 			sort();
 		}
 		
-		//adds controls to move item high-lighter 
+	
+		int p = 0;
+		
+		for(int x = 0; x < 5; x++) {
+			
+			for(int y = 0; y < 3; y++) {
+				
+				if(x == highX && y == highY) {
+					selectedItem = currentInv.get(p);					
+				}
+				p++;
+			}
+		}
+		
 	
 		
 		//sets up correct display, ArrayList, and 2d arrays to be modified based on which display is selected
@@ -239,8 +260,7 @@ public class Inventory {
 				
 			} else {
 				g.drawImage(Assets.tabHighlightQuest, 705, 394, 13*4, 17*4, null);
-			}
-			
+			}			
 			
 		}		
 		
@@ -251,7 +271,9 @@ public class Inventory {
 				g.drawImage(currentInv.get(i).texture, 342 + invSlotDist * x + xOffset, 199 + invSlotDist * y + yOffset, 48, 48, null);
 				i++;
 			}
-		}			
+		}		
+		
+		FontHandler.drawFont(g, selectedItem.description, itemRect, FontLoader.highTower);
 
 	}
 

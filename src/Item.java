@@ -21,7 +21,6 @@ public class Item {
 	public static Item blueSword = new Item(Assets.swordBlue, "Blue Sword", 6, 14, 22, 1, 0, 100, 5, "A blue sword. It seems to shimmer when you look at it.");
 	public static Item armorStarter = new Item(Assets.chestPlate, "chestPlate", 4, 14, 22, 3, 10, 0, 5, "Standard leather armor. Comfortable but not invincible.");
 	
-	
 	//Class
 	
 	public static final int ITEMWIDTH = 2, ITEMHEIGHT = 2;
@@ -38,7 +37,6 @@ public class Item {
 	protected int attackValue;
 	protected int goldValue;
 	protected String description;
-	
 	protected int x, y, count;
 	protected boolean pickedUp = false;
 	
