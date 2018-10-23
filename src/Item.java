@@ -12,16 +12,14 @@ public class Item {
 	
 	//Item Instantiation
 	
-	//syntax for args (texture, name, id, width, height, type, armorvalue, attackvalue, goldvalue)
+	//syntax for args (texture, name, id, width, height, type, armorvalue, attackvalue, goldvalue, decription)
 	//Swords are type 1, armor is type 3, nothing type 0
 	public static Item[] items = new Item[256];
-	public static Item woodItem = new Item(Assets.wood, "Wood", 0, 14, 22, 10, 0, 0, 0);
-	public static Item rockItem = new Item(Assets.rock, "rock", 1, 14, 22, 10, 0, 0, 0);
-	public static Item coinItem = new Item(Assets.coin, "coin", 2, 10, 10, 0, 0, 0, 1);
-	public static Item nothing = new Item(Assets.nothing, "nothing", 3, 10, 10, 4, 0, 0, 0);
-	public static Item swordStarter = new Item(Assets.swordStarter, "Basic Sword", 5, 14, 22, 1, 0, 50, 5);
-	public static Item blueSword = new Item(Assets.swordBlue, "Blue Sword", 6, 14, 22, 1, 0, 100, 5);
-	public static Item armorStarter = new Item(Assets.chestPlate, "chestPlate", 4, 14, 22, 3, 10, 0, 5);
+	public static Item coinItem = new Item(Assets.coin, "coin", 2, 10, 10, 0, 0, 0, 1, "A common coin.");
+	public static Item nothing = new Item(Assets.nothing, "nothing", 3, 10, 10, 4, 0, 0, 0, "");
+	public static Item swordStarter = new Item(Assets.swordStarter, "Basic Sword", 5, 14, 22, 1, 0, 50, 5, "A rusty old thing, its seen better days.");
+	public static Item blueSword = new Item(Assets.swordBlue, "Blue Sword", 6, 14, 22, 1, 0, 100, 5, "A blue sword. It seems to shimmer when you look at it.");
+	public static Item armorStarter = new Item(Assets.chestPlate, "chestPlate", 4, 14, 22, 3, 10, 0, 5, "Standard leather armor. Comfortable but not invincible.");
 	
 	
 	//Class
@@ -39,11 +37,12 @@ public class Item {
 	protected int armorValue;
 	protected int attackValue;
 	protected int goldValue;
+	protected String description;
 	
 	protected int x, y, count;
 	protected boolean pickedUp = false;
 	
-	public Item(BufferedImage texture, String name, int id, int wid, int hei, int type, int armorValue, int attackValue, int goldValue) {
+	public Item(BufferedImage texture, String name, int id, int wid, int hei, int type, int armorValue, int attackValue, int goldValue, String description) {
 		this.texture = texture;
 		this.name = name;
 		this.id = id;
@@ -54,6 +53,7 @@ public class Item {
 		this.armorValue = armorValue;
 		this.attackValue = attackValue;
 		this.goldValue = goldValue;
+		this.description = description;
 		
 		bounds = new Rectangle(x, y, wid * ITEMWIDTH, hei * ITEMHEIGHT);		
 		
@@ -87,13 +87,13 @@ public class Item {
 	
 	
 	public Item createNew(int x, int y) {
-		Item i = new Item(texture, name, id, wid, hei, type, armorValue, attackValue, goldValue);
+		Item i = new Item(texture, name, id, wid, hei, type, armorValue, attackValue, goldValue, description);
 		i.setPosition(x, y);
 		return i;
 	}
 	
 	public Item createNew(int count) {
-		Item i = new Item(texture, name, id, wid, hei, type, armorValue, attackValue, goldValue);
+		Item i = new Item(texture, name, id, wid, hei, type, armorValue, attackValue, goldValue, description);
 		i.setPickedUp(true);
 		i.setCount(count);
 		return i;

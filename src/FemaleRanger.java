@@ -10,7 +10,7 @@ public class FemaleRanger extends Creature{
 	private Animation animLeft;
 	private Animation animRight;
 	private Animation animStill;
-	private Animation currentAnim;
+	private Animation currentAnim = animDown;
 	private int direction;
 	private int num;
 	private int forceDir;

@@ -22,7 +22,7 @@ public class Assets {
 	//Start Menu UI
 	public static BufferedImage[] btn_start, btn_blank, btn_inc_pos;
 	//vendor UI
-	public static BufferedImage[] btn_sell, btn_buy, btn_sword, btn_armor, btn_potions;
+	public static BufferedImage[] btn_sell, btn_buy, btn_sword, btn_armor, btn_potions, btn_exit;
 	//Inventory UI
 	public static BufferedImage inventoryScreen, itemHighlighter, nothing, heartFull, heartHalf, heartFourth, heartThreeFourths, heartEmpty;
 	public static Font font28, font28nBold, fontPlaceHolder;
@@ -62,6 +62,7 @@ public class Assets {
 		btn_sword = new BufferedImage[2];
 		btn_potions = new BufferedImage[2];
 		btn_armor = new BufferedImage[2];
+		btn_exit = new BufferedImage[2];
 		
 		btn_sell[0] = vendorUI.crop(515, 145, 22, 11);
 		btn_sell[1] = vendorUI.crop(515, 156, 22, 11);
@@ -77,6 +78,9 @@ public class Assets {
 		
 		btn_potions[1] = invUI.crop(467, 311, 481-467, 293-275);
 		btn_potions[0] = invUI.crop(488, 311, 481-467, 293-275);
+		
+		btn_exit[1] = vendorUI.crop(541, 168, 26, 32);
+		btn_exit[0] = vendorUI.crop(515, 168, 26, 32); 
 		
 		//Fireball
 		fb_left = new BufferedImage[8];

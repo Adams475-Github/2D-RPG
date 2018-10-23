@@ -111,12 +111,13 @@ public class VendorState extends State {
 			}}));
 		
 		//Exit button
-		uiManager.addObject(new UIImageButton(9000, 9000, 200, 50, Assets.btn_blank, new ClickListener() {
+		uiManager.addObject(new UIImageButton(852, 109, 26*4, 32*4, Assets.btn_exit, new ClickListener() {
 
 			@Override
 			public void onClick() {
+				handler.getWorld().getEntityManager().getPlayer().getInventory().setActive(false);
 				handler.getMouseManager().setUIManager(null);
-				System.exit(0);
+				State.setState(handler.getGame().gameState);
 			}}));
 		
 	}
@@ -124,6 +125,11 @@ public class VendorState extends State {
 	
 
 	public void tick() {
+		
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_S)) {
+			inventory.sort();
+			handler.getWorld().getEntityManager().getPlayer().getInventory().sort();
+		}
 		
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_E)) {
 			handler.getWorld().getEntityManager().getPlayer().getInventory().setActive(false);
@@ -188,11 +194,14 @@ public class VendorState extends State {
 			}
 		}
 		
-		//g.drawRect(clickBounds.x, clickBounds.y, clickBounds.width, clickBounds.height);
-		//g.drawRect(clickBoundsPlayer.x, clickBoundsPlayer.y, clickBoundsPlayer.width, clickBoundsPlayer.height);
-		
 		g.drawImage(Assets.itemHighlighter, ( clickBounds.x + inventory.invSlotDist * highX + 4 + 1), ( clickBounds.y + inventory.invSlotDist * highY + 4) , 14*4, 14*4, null);
 		g.drawImage(Assets.itemHighlighter, ( clickBoundsPlayer.x + inventory.invSlotDist * highXP + 4 + 1), ( clickBoundsPlayer.y + inventory.invSlotDist * highYP + 4) , 14*4, 14*4, null);
+		g.setColor(Color.black);
+		FontHandler.drawFont(g, "Hello there traveler test test test tee", new Rectangle(200, 50, 400, 50), FontLoader.highTower);
+		FontHandler.drawFont(g, "This is a mere common sword. Do not associate with it peasant.", new Rectangle(500, 0, 240, 80), FontLoader.highTower);
+		//FontHandler.drawFont(g, "People call me jeff because I am spiderman", new Rectangle(400, 0, 200, 50), FontLoader.highTower);
+		//FontHandler.drawFont(g, "test test test test", new Rectangle(200, 40, 100, 50), FontLoader.highTower);
+		//FontHandler.drawFont(g, "test test", new Rectangle(200, 60, 100, 50), FontLoader.highTower);
 		
 		
 	}

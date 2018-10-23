@@ -14,29 +14,29 @@ public class Inventory {
 	private Handler handler;
 	//Whether its active or not
 	private boolean active = false;
-	//Array lists for the 3 separate inventories
+	//Array lists for the separate inventories
 	private ArrayList<Item> inventoryAttack;
 	private ArrayList<Item> invAdd;
 	private ArrayList<Item> inventoryArmor;
 	private ArrayList<Item> inventoryPotions;
 	private ArrayList<Item> hotbar;
-	//2d arrays for the item position storage
 	//used to condense code
 	private ArrayList<Item> currentInv = inventoryAttack;
 	//hard coded locations for inventory menu
 	private int invX = (1024/2) - 215, invY = 768/2 - 360, invWidth = 119, invHeight = 171;
 	protected int invSlotDist = 17 * 4;
 	//movement variables for item high lighter
-	private int xMove = 0, yMove = 0;
 	//legacy code(not really)
 	private int display = 0;
-	//Button bounding rectangles also hard coded in
+	//Button bounding rectangles also hard coded in because I didn't use the state system for this
 	private Rectangle swordBounds = new Rectangle(invX + 409, invY + 152, 13*4, 18*4);
 	private Rectangle shieldBounds = new Rectangle(invX + 409, invY + 224, 13*4, 18*4);
 	private Rectangle potionsBounds = new Rectangle(invX + 409, invY + 296, 13*4, 18*4);
 	private Rectangle questBounds = new Rectangle(invX + 409, invY + 368, 13*4, 18*4);
 	private Rectangle use = new Rectangle(invX + 290, invY + 415, 20*4, 9*4);
 	private Rectangle drop = new Rectangle(invX + 290, invY + 460, 20*4, 9*4);
+	private Rectangle clickBounds = new Rectangle(invX + 35, invY + 165, 338, 200);
+	private int highX = -100, highY = -100;
 	//Mouse x and y variable initialization so I don't have to type out a huge line to get mouseX and mouseY
 	private int mouseX;
 	private int mouseY;
@@ -53,24 +53,13 @@ public class Inventory {
 		invAdd = new ArrayList<Item>();
 		hotbar = new ArrayList<Item>();
 		init();
-		//Fills inventory with blanks so we don't go out of bounds when rendering things/checking if an item is there
-		
-		
-		//Random Item adding for testing
-		
-		
-		
-		//fills the hot-bar with blank items to be replaced.
-		addItem(Item.blueSword);
-		addItem(Item.blueSword);
-		addItem(Item.blueSword);
-		addItem(Item.blueSword);
-		addItem(Item.blueSword);
 		
 	}
 	
 	public void init() {
 		
+		//fills up all inventories with "nothing". Seems to be easiest way to avoid 
+		//headaches with out of bounds when removing/adding if we want items to keep original positions.	
 		for (int i = 0; i <= 15; i++) {
 			inventoryAttack.add(Item.nothing);
 		}
@@ -121,46 +110,21 @@ public class Inventory {
 		mouseX = handler.getMouseManager().getMouseX();
 		mouseY = handler.getMouseManager().getMouseY();
 		
+		if(handler.getMouseManager().isLeftPressed()) {
+			if(clickBounds.contains(handler.getMouseManager().getMouseX(), handler.getMouseManager().getMouseY())) {
+				highX = (int) ( Math.floor( (handler.getMouseManager().getMouseX() - clickBounds.x) / (17 * 4) ) );
+				highY = (int) ( Math.floor( (handler.getMouseManager().getMouseY() - clickBounds.y)  / (17 * 4) ) );
+				
+			}
+			
+		}
+		
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_S)) {
+			sort();
+		}
+		
 		//adds controls to move item high-lighter 
-		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT)) {
-			if(xMove < 4) {
-				xMove += 1;
-				
-			} else {
-				return;
-				
-			}
-		}
-		
-		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_LEFT)) {
-			if(xMove > 0) {
-				xMove -= 1;
-				
-			} else {
-				return;
-				
-			}
-		}
-		
-		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_DOWN)) {
-			if(yMove < 2) {
-				yMove += 1;
-				
-			} else {
-				return;
-				
-			}
-		}
-		
-		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)) {
-			if(yMove > 0) {
-				yMove -= 1;
-				
-			} else {
-				return;
-				
-			}
-		}
+	
 		
 		//sets up correct display, ArrayList, and 2d arrays to be modified based on which display is selected
 		if(active && handler.getWorld().getEntityManager().getPlayer().getInventory() == this) {
@@ -195,7 +159,7 @@ public class Inventory {
 					
 					for(int y = 0; y < 3; y++) {
 						
-						if(x == xMove && y == yMove) {
+						if(x == highX && y == highY) {
 							if(i < inventoryAttack.size()) {
 								currentInv.set(i, Item.nothing);
 								
@@ -241,7 +205,8 @@ public class Inventory {
 			return;
 		}
 		
-		//this isn't very oop but basically this only works if it's rendering for player to circumvent the useless stuff while in vendor screen
+		//this isn't very OOP but basically this only works if it's rendering for player to circumvent the useless stuff while in vendor screen
+		//the way the if statement works is that if this get's accessed by the player, then it will be true. Else, it will be false and not draw these things.
 		if(handler.getWorld().getEntityManager().getPlayer().getInventory() == this) {
 			//text color to yellow (for gold count)
 			g.setColor(Color.YELLOW);
@@ -250,7 +215,7 @@ public class Inventory {
 			g.drawImage(Assets.inventoryScreen, invX, invY, invWidth*4, invHeight*4, null);
 			
 			//draws item high-lighter
-			g.drawImage(Assets.itemHighlighter, 338 + invSlotDist * xMove, 195 + invSlotDist * yMove, 14*4, 14*4, null);
+			g.drawImage(Assets.itemHighlighter, 338 + invSlotDist * highX, 195 + invSlotDist * highY, 14*4, 14*4, null);
 			
 			//draws coin counter
 			g.setFont(Assets.fontPlaceHolder);
@@ -275,6 +240,8 @@ public class Inventory {
 			} else {
 				g.drawImage(Assets.tabHighlightQuest, 705, 394, 13*4, 17*4, null);
 			}
+			
+			
 		}		
 		
 		//loops through array to draw the items
@@ -332,6 +299,30 @@ public class Inventory {
 		currentInv.set(i, Item.nothing);
 	}
 	
+	public void sort() {
+		for(int i = 0; i < currentInv.size(); i++) {
+			//have to be careful with zero since going left is out of bounds
+			if(i == 0) {				
+				if(currentInv.get(i) == Item.nothing  && currentInv.get(i + 1) != Item.nothing || 
+						currentInv.get(i) == Item.nothing  && currentInv.get(i + 1) == Item.nothing) {
+					//removes proper item
+					currentInv.remove(i);
+					//adds a holder item back on the end to preserve the max 15 items
+					currentInv.add(Item.nothing);
+					return;
+				}
+				
+			}
+			
+			if(currentInv.get(i) == Item.nothing && currentInv.get(i - 1) != Item.nothing && currentInv.get(i + 1) != Item.nothing) {
+				//removes proper item
+				currentInv.remove(i);
+				//preserves the 15 item max
+				currentInv.add(Item.nothing);
+			}
+		}
+	}
+	
 	//smart method to add items to hot-bar, although I don't know how smart it was to make this.. Maybe could've implemented into normal add
 	public void hotbarAdd() {
 		int i = 0;
@@ -340,7 +331,7 @@ public class Inventory {
 		for(int x = 0; x < 5; x++) {
 			
 			for(int y = 0; y < 3; y++) {
-				if(x == xMove && y == yMove) {
+				if(x == highX && y == highY) {
 					//checks which item it is so it knows where to put in hot-bar. could condense but it would be a lot of work tbh, don't even know if it really would "condense".
 					if(i < currentInv.size() && currentInv.get(i).type == 1) {
 						
