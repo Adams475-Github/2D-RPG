@@ -10,6 +10,7 @@ public class EntityAdder {
 	}
 	
 	public void addEntities() {
+		
 		entityManager.addEntity(new TallPlantPot(handler, 100, 250));
 		entityManager.addEntity(new BushSmall(handler, 150, 100));
 		entityManager.addEntity(new FemaleRanger(handler, 250, 350, 27, 33));
@@ -23,6 +24,8 @@ public class EntityAdder {
 			addItem(Item.blueSword);
 			
 		}}));
+		entityManager.addEntity(new LoadingZone(handler, 500, 100, 50, 50, "/res/worlds/world2.txt"));
+		
 		
 	}
 

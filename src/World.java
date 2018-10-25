@@ -51,6 +51,7 @@ public class World {
 		itemManager.render(g);
 		//Entities
 		entityManager.render(g);
+		
 	}
 	
 	
@@ -100,6 +101,7 @@ public class World {
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
+
 	
 	
 
