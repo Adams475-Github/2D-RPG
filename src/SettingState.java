@@ -27,6 +27,12 @@ public class SettingState extends State {
 		uiManager.render(g);
 		
 	}
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 

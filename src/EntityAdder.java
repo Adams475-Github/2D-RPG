@@ -26,7 +26,7 @@ public class EntityAdder {
 			addItem(Item.blueSword);
 			
 		}}));
-		entityManager.addEntity(new LoadingZone(handler, 500, 100, 50, 50, "/res/worlds/world2.txt", new Point(0, 0), new Point(0, 0)));
+		entityManager.addEntity(new LoadingZone(handler, 500, 100, 50, 50, "/res/worlds/world2.txt", new Point(0, 0), new Point(0, 0), new HouseState(handler, null)));
 		
 		
 	}

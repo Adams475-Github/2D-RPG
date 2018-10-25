@@ -19,8 +19,10 @@ public class Game implements Runnable {
 	public State gameState;
 	public State menuState;
 	public State settingState;
+	public State houseState;
 	
 	private World mainWorld;
+	private World tempHouse;
 	
 	//input
 	private KeyManager keyManager;
@@ -218,6 +220,14 @@ public class Game implements Runnable {
 	
 	public World getMainWorld() {
 		return mainWorld;
+	}
+	
+	public World getHouseWorld() {
+		return tempHouse;
+	}
+	
+	public void setHouseWorld(World world) {
+		tempHouse = world;
 	}
 
 

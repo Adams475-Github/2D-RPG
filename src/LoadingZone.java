@@ -9,8 +9,9 @@ public class LoadingZone extends Entity {
 	private Point enter;
 	private Point exit;
 	private boolean main;
+	private State state;
 	
-	public LoadingZone(Handler handler, float x, float y, int width, int height, String path, Point enter, Point exit) {
+	public LoadingZone(Handler handler, float x, float y, int width, int height, String path, Point enter, Point exit, State state) {
 		super(handler, x, y, width, height);
 		
 		
@@ -22,6 +23,7 @@ public class LoadingZone extends Entity {
 		this.path = path;
 		this.enter = enter;
 		this.exit = exit;
+		this.state = state;
 		
 		if(path == "") {
 			main = true;
@@ -41,7 +43,13 @@ public class LoadingZone extends Entity {
 				handler.getWorld().getEntityManager().getPlayer().x = exit.x;
 				handler.getWorld().getEntityManager().getPlayer().y = exit.y;
 			} else {
-				State.setState(new HouseState(handler, path));
+				if(state.active == false) {
+					state.init();
+					state.active = true;
+				} else {
+					handler.setWorld(handler.getGame().getHouseWorld());
+				}
+				State.setState(state);
 				handler.getWorld().getEntityManager().getPlayer().x = enter.x;
 				handler.getWorld().getEntityManager().getPlayer().y = enter.y;
 			}
