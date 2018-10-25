@@ -20,6 +20,8 @@ public class Game implements Runnable {
 	public State menuState;
 	public State settingState;
 	
+	private World mainWorld;
+	
 	//input
 	private KeyManager keyManager;
 	
@@ -79,6 +81,9 @@ public class Game implements Runnable {
 		keyManager.tick();
 		if(State.getState() != null) {
 			State.getState().tick();
+			if(State.getState() == gameState) {
+				mainWorld = handler.getWorld();
+			}
 		}
 		
 	}
@@ -209,6 +214,10 @@ public class Game implements Runnable {
 	
 	public void setMenuState(State menuState) {
 		this.menuState = menuState;
+	}
+	
+	public World getMainWorld() {
+		return mainWorld;
 	}
 
 

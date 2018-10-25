@@ -15,7 +15,7 @@ public class World {
 		this.handler = handler;
 		itemManager = new ItemManager(handler);
 		entityManager = new EntityManager(handler, new Player(handler, 100, 100));
-		new EntityAdder(handler, entityManager);
+		
 		
 		loadWorld(path);
 		
