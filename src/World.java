@@ -6,6 +6,8 @@ public class World {
 	private int width, height;
 	private int spawnX, spawnY;
 	private int[][] tiles;
+	private boolean raining;
+	private RainDrop drops[] = new RainDrop[1000];
 	//Entities
 	private EntityManager entityManager;
 	
@@ -15,7 +17,9 @@ public class World {
 		this.handler = handler;
 		itemManager = new ItemManager(handler);
 		entityManager = new EntityManager(handler, new Player(handler, 100, 100));
-		
+		for(int i = 0; i < drops.length; i++) {
+			drops[i] = new RainDrop();
+		}
 		
 		loadWorld(path);
 		
@@ -31,6 +35,12 @@ public class World {
 	public void tick() {
 		itemManager.tick();		
 		entityManager.tick();
+		
+		if(raining) {
+			for(int i = 0; i < drops.length; i++) {
+				drops[i].tick();
+			}
+		}
 		
 	}
 	
@@ -51,6 +61,12 @@ public class World {
 		itemManager.render(g);
 		//Entities
 		entityManager.render(g);
+		
+		if(raining) {
+			for(int i = 0; i < drops.length; i++) {
+				drops[i].render(g);
+			}
+		}
 		
 	}
 	
@@ -100,6 +116,14 @@ public class World {
 
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
+	}
+
+	public boolean isRaining() {
+		return raining;
+	}
+
+	public void setRaining(boolean raining) {
+		this.raining = raining;
 	}
 
 	

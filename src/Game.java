@@ -35,7 +35,6 @@ public class Game implements Runnable {
 	
 	//Handler
 	private Handler handler;
-	private RainDrop drops[] = new RainDrop[1000];
 	
 	//Example for importing image:
 	//private BufferedImage testImage; 
@@ -76,11 +75,6 @@ public class Game implements Runnable {
 		
 		State.setState(menuState);
 		
-		
-		for(int i = 0; i < drops.length; i++) {
-			drops[i] = new RainDrop();
-		}
-		
 	}
 	
 	private void tick() {
@@ -111,11 +105,6 @@ public class Game implements Runnable {
 		if(State.getState() != null) {
 			State.getState().render(g);
 		} 
-		
-		for(int i = 0; i < drops.length; i++) {
-			drops[i].tick();
-			drops[i].render(g);
-		}
 		
 		//End Draw
 		bs.show();

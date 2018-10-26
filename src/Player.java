@@ -256,6 +256,14 @@ public class Player extends Creature {
 				currentAttack = animAttackRightB;
 			}
 		}
+		
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_R)) {
+			if(handler.getWorld().isRaining()) {
+				handler.getWorld().setRaining(false);
+			} else {
+				handler.getWorld().setRaining(true);
+			}
+		}
 	}
 	
 	private void checkAttacks() {
