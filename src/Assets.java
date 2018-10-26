@@ -6,7 +6,9 @@ public class Assets {
 	private static final int width = 16, height = 16;
 	
 	//Stand-alone
-	public static BufferedImage dirt, grass, stone, tree, rock, bush, wood, coin, chestClosed, chestOpen, displayBoxRed, speechBubble, vendorScreen;
+	public static BufferedImage dirt, grass, stone, tree, rock, bush, 
+	wood, coin, chestClosed, chestOpen, displayBoxRed, speechBubble, 
+	vendorScreen, floorWood, stoneWall, stairs;
 	//Player walk
 	public static BufferedImage[] player_down, player_up, player_right, player_left, player_idle;
 	//Player attack
@@ -51,7 +53,13 @@ public class Assets {
 		SpriteSheet castAnim = new SpriteSheet(ImageLoader.loadImage("/textures/mtt.png"));
 		SpriteSheet fireBall = new SpriteSheet(ImageLoader.loadImage("/textures/fireball_0.png"));
 		SpriteSheet vendorUI = new SpriteSheet(ImageLoader.loadImage("/textures/vendorUi.png"));
+		SpriteSheet indoors = new SpriteSheet(ImageLoader.loadImage("/textures/Inner.png"));
 		
+		
+		//Floor Tiles
+		floorWood = indoors.crop(0, 16, 16, 16);
+		stoneWall = sheetWorld.crop(367, 15, 16, 16);
+		stairs = indoors.crop(0, 240, 32, 32);
 		
 		//Vendor screen
 		vendorScreen = vendorUI.crop(363, 0, 224, 139);

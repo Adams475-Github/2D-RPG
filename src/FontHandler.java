@@ -11,6 +11,7 @@ public class FontHandler {
 	 *
 	 * @param g The Graphics instance.
 	 * @param text The String toe to center the text in.
+	 * 
 	 */
 	public static void drawFont(Graphics g, String text, Rectangle rect, Font font) {
 		FontMetrics metrics = g.getFontMetrics(font);

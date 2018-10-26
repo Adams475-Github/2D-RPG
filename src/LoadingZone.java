@@ -1,17 +1,19 @@
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 public class LoadingZone extends Entity {
 
 	private Rectangle r;
-	private String path;
 	private Point enter;
 	private Point exit;
-	private boolean main;
-	private State state;
+	private World previousWorld;
+	private World world;
+	private BufferedImage enterTexture;
+	private BufferedImage exitTexture;
 	
-	public LoadingZone(Handler handler, float x, float y, int width, int height, String path, Point enter, Point exit, State state) {
+	public LoadingZone(Handler handler, float x, float y, int width, int height, Point enter, Point exit, World world) {
 		super(handler, x, y, width, height);
 		
 		
@@ -20,39 +22,28 @@ public class LoadingZone extends Entity {
 		//removes hitbox
 		bounds.width = 0;
 		bounds.height = 0;
-		this.path = path;
 		this.enter = enter;
 		this.exit = exit;
-		this.state = state;
+		this.world = world;
+		previousWorld = handler.getWorld();
 		
-		if(path == "") {
-			main = true;
-		} else {
-			main = false;
-		}
 		
 	}
 
 	@Override
 	public void tick() {
+		
 		if(handler.getWorld().getEntityManager().getPlayer().getCollisionBounds(0, 0).intersects(r)) {
-			
-			if(main) {
-				State.setState(handler.getGame().gameState);
-				handler.setWorld(handler.getGame().getMainWorld());
-				handler.getWorld().getEntityManager().getPlayer().x = exit.x;
-				handler.getWorld().getEntityManager().getPlayer().y = exit.y;
-			} else {
-				if(state.active == false) {
-					state.init();
-					state.active = true;
-				} else {
-					handler.setWorld(handler.getGame().getHouseWorld());
+			handler.setWorld(world);
+			world.getEntityManager().addEntity(new LoadingZone(handler, exit.x, exit.y,  100, 100, new Point((int) x + width/2 - 24 , (int) y + height/2), new Point(-100, -100), previousWorld) {{
+				if(exitTexture != null) {
+					setEnterTexture(Assets.stairs);
 				}
-				State.setState(state);
-				handler.getWorld().getEntityManager().getPlayer().x = enter.x;
-				handler.getWorld().getEntityManager().getPlayer().y = enter.y;
 			}
+			});
+			
+			handler.getWorld().getEntityManager().getPlayer().x = enter.x;
+			handler.getWorld().getEntityManager().getPlayer().y = enter.y;			
 			
 		}
 		
@@ -60,7 +51,12 @@ public class LoadingZone extends Entity {
 
 	@Override
 	public void render(Graphics g) {
-		g.fillRect((int)(x - handler.getGameCamera().getxOffset()), (int)(y - handler.getGameCamera().getyOffset()), width, height);
+		
+		if(enterTexture != null) {
+			g.drawImage(enterTexture, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, width, null);
+		} else {
+			g.fillRect((int)(x - handler.getGameCamera().getxOffset()), (int)(y - handler.getGameCamera().getyOffset()), width, height);
+		}
 		
 	}
 
@@ -75,5 +71,25 @@ public class LoadingZone extends Entity {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public BufferedImage getEnterTexture() {
+		return enterTexture;
+	}
+
+	public void setEnterTexture(BufferedImage enterTexture) {
+		this.enterTexture = enterTexture;
+	}
+
+	public BufferedImage getExitTexture() {
+		return exitTexture;
+	}
+
+	public void setExitTexture(BufferedImage exitTexture) {
+		this.exitTexture = exitTexture;
+	}
+
+	
+	
+	
 
 }

@@ -33,7 +33,13 @@ public class RainDrop {
 	
 	public void render(Graphics g) {
 		g.setColor(Color.BLUE);
-		g.drawLine(x, y, x, y + length);
+		if(yspeed > 8) {
+			g.drawLine(x, y, x, y + length);
+			g.drawLine(x + 1, y, x + 1, y + length);
+		} else {
+			g.drawLine(x, y, x, y + length);
+		}
+		
 		
 	}
 

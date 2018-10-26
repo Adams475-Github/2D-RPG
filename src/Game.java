@@ -21,9 +21,6 @@ public class Game implements Runnable {
 	public State settingState;
 	public State houseState;
 	
-	private World mainWorld;
-	private World tempHouse;
-	
 	//input
 	private KeyManager keyManager;
 	
@@ -82,9 +79,6 @@ public class Game implements Runnable {
 		keyManager.tick();
 		if(State.getState() != null) {
 			State.getState().tick();
-			if(State.getState() == gameState) {
-				mainWorld = handler.getWorld();
-			}
 		}
 		
 	}
@@ -215,18 +209,7 @@ public class Game implements Runnable {
 	public void setMenuState(State menuState) {
 		this.menuState = menuState;
 	}
-	
-	public World getMainWorld() {
-		return mainWorld;
-	}
-	
-	public World getHouseWorld() {
-		return tempHouse;
-	}
-	
-	public void setHouseWorld(World world) {
-		tempHouse = world;
-	}
+
 
 
 }

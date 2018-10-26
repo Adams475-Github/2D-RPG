@@ -26,7 +26,18 @@ public class EntityAdder {
 			addItem(Item.blueSword);
 			
 		}}));
-		entityManager.addEntity(new LoadingZone(handler, 500, 100, 50, 50, "/res/worlds/world2.txt", new Point(0, 0), new Point(0, 0), new HouseState(handler, null)));
+		
+		World houseWorld = new World(handler, "res/worlds/world2.txt");
+		EntityManager houseEntityManager = new EntityManager(handler, handler.getWorld().getEntityManager().getPlayer());
+		houseEntityManager.addEntity(new Chest(handler, 100, 100, 50, 50, Item.blueSword));
+		houseEntityManager.addEntity(new TallPlantPot(handler, 400, 80));
+		houseEntityManager.setPlayer(handler.getWorld().getEntityManager().getPlayer());
+		houseWorld.setEntityManager(houseEntityManager);
+		entityManager.addEntity(new LoadingZone(handler, 600, 100, 100, 100, new Point(470 + 25, 680), new Point(480, 894 - 100), houseWorld) {{
+			setEnterTexture(Assets.stairs);
+			setExitTexture(Assets.stairs);
+		}
+		});
 		
 		
 	}

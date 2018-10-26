@@ -12,6 +12,8 @@ public class Tile {
 	public static Tile stoneTile = new StoneTile(4);
 	public static Tile rockTile = new RockTile(2);
 	public static Tile bushTile = new BushTile(3);
+	public static Tile FloorTile = new FloorTile(Assets.floorWood, 5);
+	public static Tile StoneWallTile = new StoneWallTile(Assets.stoneWall, 6);
 	
 	//Class
 	
