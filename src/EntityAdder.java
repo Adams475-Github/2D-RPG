@@ -27,6 +27,7 @@ public class EntityAdder {
 			
 		}}));
 		
+		//Kind of messy instantiation but this is how you make a loading zone.
 		World houseWorld = new World(handler, "res/worlds/world2.txt");
 		EntityManager houseEntityManager = new EntityManager(handler, handler.getWorld().getEntityManager().getPlayer());
 		houseEntityManager.addEntity(new Chest(handler, 100, 100, 50, 50, Item.blueSword));

@@ -5,32 +5,28 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 public class FontHandler {
-	/** draw.
-	 * @param rect The Rectangle
-	 * Draw a String centered in the middle of a Rectangle.
-	 *
-	 * @param g The Graphics instance.
-	 * @param text The String toe to center the text in.
-	 * 
-	 */
+	
 	public static void drawFont(Graphics g, String text, Rectangle rect, Font font) {
+		
 		FontMetrics metrics = g.getFontMetrics(font);
+	
+		//makes a list of words and then moves them into an array list
 		ArrayList<String> words = new ArrayList<String>();
 		String temp[] = text.split(" ");
-		
 		for(int i = 0; i < temp.length; i++) {
 			words.add(temp[i]);
 		}
 		
-		//lance was here
+		//finds how many times text needs to wrap
 	    int wrapAmount = 0;
-		
 		if(metrics.stringWidth(text) > rect.width) {
 			wrapAmount = (int) Math.ceil( (double) metrics.stringWidth(text) / (double) rect.width );	
 		}
 		
-		int newStarting = 0;
+		//initialize array of lines
 		String lines[] = new String[wrapAmount];
+		
+		int newStarting = 0;
 		
 		for(int i = 0; i < lines.length; i++) {
 			String tempW = "";
@@ -50,6 +46,8 @@ public class FontHandler {
 			lines[i] = tempW;
 			
 		}
+		
+		//draws lines (could put this in for loop)
 		for(int i = 0; i < lines.length; i++) {
 			g.drawString(lines[i], rect.x, ( rect.y + 24 * i + metrics.getAscent() ) );
 		}
