@@ -8,7 +8,7 @@ public class Assets {
 	//Stand-alone
 	public static BufferedImage dirt, grass, stone, tree, rock, bush, 
 	wood, coin, chestClosed, chestOpen, displayBoxRed, speechBubble, 
-	vendorScreen, floorWood, stoneWall, stairs;
+	vendorScreen, floorWood, stoneWall, stairs, tableTop;
 	//Player walk
 	public static BufferedImage[] player_down, player_up, player_right, player_left, player_idle;
 	//Player attack
@@ -60,6 +60,7 @@ public class Assets {
 		floorWood = indoors.crop(0, 16, 16, 16);
 		stoneWall = sheetWorld.crop(367, 15, 16, 16);
 		stairs = indoors.crop(0, 240, 32, 32);
+		tableTop = indoors.crop(225, 112, 27, 45);
 		
 		//Vendor screen
 		vendorScreen = vendorUI.crop(363, 0, 224, 139);

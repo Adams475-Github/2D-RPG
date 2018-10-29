@@ -28,13 +28,27 @@ public class EntityAdder {
 		}}));
 		
 		//Kind of messy instantiation but this is how you make a loading zone.
+		
+		//Make world
 		World houseWorld = new World(handler, "res/worlds/world2.txt");
+		//make new manager to set
 		EntityManager houseEntityManager = new EntityManager(handler, handler.getWorld().getEntityManager().getPlayer());
+		//add entities
 		houseEntityManager.addEntity(new Chest(handler, 100, 100, 50, 50, Item.blueSword));
 		houseEntityManager.addEntity(new TallPlantPot(handler, 400, 80));
+		houseEntityManager.addEntity(new WizardVendor(handler, 600, 50, 20, 23, new Inventory(handler) {{ 
+			
+			addItem(Item.swordStarter);
+			
+		}}));
+		//set player with current player
 		houseEntityManager.setPlayer(handler.getWorld().getEntityManager().getPlayer());
+		//set manager
 		houseWorld.setEntityManager(houseEntityManager);
+		//make loading zone with specific world
+		//arguments are x, y, width, height, entering position, exit position for new loading zone, world
 		entityManager.addEntity(new LoadingZone(handler, 600, 100, 100, 100, new Point(470 + 25, 680), new Point(480, 894 - 100), houseWorld) {{
+			//set textures for loading zone
 			setEnterTexture(Assets.stairs);
 			setExitTexture(Assets.stairs);
 		}
