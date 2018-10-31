@@ -8,17 +8,63 @@ public class QuestState extends State {
 
 	public QuestState(Handler handler) {
 		super(handler);
-		System.out.println("yeyeye");
 		uiManager = new UIManager(handler);
 		handler.getMouseManager().setUIManager(uiManager);
 		
-		uiManager.addObject(new UIImageButton(100, 100, 19 * 4, 8 * 4, Assets.questLeft, new ClickListener() {
+		uiManager.addObject(new UIImageButton(160, 215, 19 * 4, 8 * 4, Assets.questLeft, new ClickListener() {
 
 			@Override
 			public void onClick() {
-				handler.getMouseManager().setUIManager(null);
+				
 				
 			}}));
+		
+		uiManager.addObject(new UIImageButton(795, 215, 19 * 4, 8 * 4, Assets.questRight, new ClickListener() {
+
+			@Override
+			public void onClick() {
+				
+				
+			}}));
+		
+		for(int i = 0; i < 3; i++) {
+			uiManager.addObject(new UIImageButton(150, 298 + 104 * i, 10 * 4, 10 * 4, Assets.questButton, new ClickListener() {
+				
+				@Override
+				public void onClick() {
+					
+					
+				}}));
+		}
+		
+		for(int i = 3; i < 6; i++) {
+			uiManager.addObject(new UIImageButton(524, 298 + 104 * i, 10 * 4, 10 * 4, Assets.questButton, new ClickListener() {
+				
+				@Override
+				public void onClick() {
+//					if(handler.getWorld().getEntityManager().getPlayer().getQuests().size() >= (i + 1) ) {
+//						State.setState(new QuestDisplayState(handler, handler.getWorld().getEntityManager().getPlayer().getQuests().get(i)));
+//					}
+					
+				}}));
+		}
+		
+//		uiManager.addObject(new UIImageButton(150, 402, 10 * 4, 10 * 4, Assets.questButton, new ClickListener() {
+//
+//			@Override
+//			public void onClick() {
+//				
+//				
+//			}}));
+//		
+//		uiManager.addObject(new UIImageButton(150, 506, 10 * 4, 10 * 4, Assets.questButton, new ClickListener() {
+//
+//			@Override
+//			public void onClick() {
+//				
+//				
+//			}}));
+		
 	}
 
 	@Override
@@ -32,14 +78,15 @@ public class QuestState extends State {
 		
 		g.drawImage(Assets.questScreen, centerScreen.x - Assets.questScreen.getWidth() * 4 / 2, 
 				centerScreen.y - Assets.questScreen.getWidth() - 20,
-				Assets.questScreen.getWidth() * 4, Assets.questScreen.getHeight() * 4, null);
+				Assets.questScreen.getWidth() * 4 + 1, Assets.questScreen.getHeight() * 4 + 1, null);
 		uiManager.render(g);
 	}
 
 	@Override
 	public void init() {
-		// TODO Auto-generated method stub
+		
 		handler.getMouseManager().setUIManager(uiManager);
+	
 	}
 
 }

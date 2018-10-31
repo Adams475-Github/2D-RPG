@@ -15,6 +15,7 @@ public class SettingState extends State {
 			public void onClick() {
 				handler.getMouseManager().setUIManager(null);
 				State.setState(handler.getGame().getMenuState());
+				State.getState().init();
 			}}));
 	}
 		
@@ -30,7 +31,7 @@ public class SettingState extends State {
 
 	@Override
 	public void init() {
-		// TODO Auto-generated method stub
+		handler.getMouseManager().setUIManager(uiManager);
 		
 	}
 	

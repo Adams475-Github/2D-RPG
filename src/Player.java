@@ -3,6 +3,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Player extends Creature {
 	
@@ -16,6 +17,10 @@ public class Player extends Creature {
 	private Item chestPlate;
 	private Item bobble;
 	private Item shield;	
+	
+	//Quests
+	//TODO change back to private
+	private ArrayList<Quest> quests = new ArrayList<Quest>();
 	
 	//Interaction Rectangle
 	Rectangle interactionBounds;
@@ -97,6 +102,8 @@ public class Player extends Creature {
 		//inventory initialization
 		inventory = new Inventory(handler);
 		escapeMenu = new EscapeMenu(handler);
+		
+		
 	}
 	
 	public void tick() {
@@ -309,6 +316,11 @@ public class Player extends Creature {
 		
 	}
 	
+	public void removeQuest(Quest quest) {
+		quests.remove(quest);
+		
+	}
+	
 	public void die() {
 		//TODO
 		System.out.println("You lose");
@@ -363,6 +375,9 @@ public class Player extends Creature {
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_E)) {
 			ar.x = cb.x - 30;
 			ar.y = cb.y - 30;
+			for(int i = 0; i < quests.size(); i++) {
+				quests.get(i).checkCompleted();
+			}
 		} else {
 			return;
 		}
@@ -433,6 +448,18 @@ public class Player extends Creature {
 	public int getExp() {
 		return exp;
 	}
+
+	public ArrayList<Quest> getQuests() {
+		return quests;
+	}
+
+	public void setQuests(ArrayList<Quest> quests) {
+		this.quests = quests;
+	}
+
+	
+
+	
 
 
 

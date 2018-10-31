@@ -63,13 +63,16 @@ public class Assets {
 		questRight = new BufferedImage[2];
 		questButton = new BufferedImage[2];
 		
-		questLeft[0] = indoors.crop(313, 206, 19, 8);
-		questLeft[1] = indoors.crop(313, 215, 19, 8);
+		questLeft[0] = indoors.crop(313, 206, 20, 9);
+		questLeft[1] = indoors.crop(313, 215, 20, 9);
 		
-		questRight[0] = indoors.crop(335, 206, 19, 8);
-		questRight[1] = indoors.crop(335, 215, 19, 8);
+		questRight[0] = indoors.crop(335, 206, 20, 9);
+		questRight[1] = indoors.crop(335, 215, 20, 9);
 		
-		questScreen = indoors.crop(303, 225, 199, 114);
+		questButton[0] = indoors.crop(359, 204, 10, 10);
+		questButton[1] = indoors.crop(359, 214, 10, 10);
+		
+		questScreen = indoors.crop(303, 225, 200, 115);
 		
 		
 		//Floor Tiles
