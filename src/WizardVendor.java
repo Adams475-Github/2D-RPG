@@ -13,6 +13,8 @@ public class WizardVendor extends Vendor {
 		super(handler, x, y, width, height, inventory);
 		this.width = width * 4;
 		this.height = height * 4;
+		this.bounds.width = width * 4;
+		this.bounds.height = height * 4;
 		this.inventory = inventory;
 		this.texture = Assets.mageM_idle[3];
 		
@@ -34,7 +36,6 @@ public class WizardVendor extends Vendor {
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(texture, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
-		
 	}
 
 	@Override
@@ -51,7 +52,7 @@ public class WizardVendor extends Vendor {
 	
 	public void checkPlayer() {
 		
-		if(Math.abs(handler.getWorld().getEntityManager().getPlayer().getX() - x + 20) < 50 && Math.abs(handler.getWorld().getEntityManager().getPlayer().getY() - y + 20) < 50) {
+		if(Math.abs(handler.getWorld().getEntityManager().getPlayer().getX() - x + 20) < 100 && Math.abs(handler.getWorld().getEntityManager().getPlayer().getY() - y + 20) < 150) {
 			close = true;
 		} else {
 			close = false;

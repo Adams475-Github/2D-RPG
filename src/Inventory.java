@@ -169,6 +169,9 @@ public class Inventory {
 			
 			if (questBounds.contains(mouseX, mouseY) && handler.getMouseManager().isLeftPressed()) {
 				display = 3;
+				State.setState(handler.getGame().questState);
+				handler.getGame().questState.init();
+
 			}
 			
 			//code to drop items(should be refactored to junk but again not going to happen for now)
@@ -197,6 +200,8 @@ public class Inventory {
 				hotbarAdd();
 				holder = 1;
 			}
+			
+			
 			
 			
 		}

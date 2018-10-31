@@ -1,3 +1,6 @@
+import java.awt.Color;
+import java.awt.Graphics;
+
 public abstract class Creature extends Entity{
 	
 	public static final float DEFAULT_SPEED = 3.0f;
@@ -12,6 +15,8 @@ public abstract class Creature extends Entity{
 		speed = DEFAULT_SPEED;
 		xMove = 0;
 		yMove = 0;
+		health = 100;
+		
 	}
 	
 	public void move() {
@@ -73,6 +78,16 @@ public abstract class Creature extends Entity{
 	protected boolean collisionWithTile(int x, int y) {
 		
 		return handler.getWorld().getTile(x, y).isSolid();
+		
+	}
+	
+	protected void drawHealth(Graphics g) {
+//		g.setColor(Color.red);
+//		g.fillRect((int) (x - handler.getGameCamera().getxOffset()), (int) (y - 40 - handler.getGameCamera().getyOffset()), 100, 20);
+//		g.setColor(Color.green);
+//		g.fillRect((int) (x - handler.getGameCamera().getxOffset()), (int) (y - 40 - handler.getGameCamera().getyOffset()), health, 20);
+		
+		
 		
 	}
 	

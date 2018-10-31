@@ -20,7 +20,6 @@ public class EntityAdder {
 		entityManager.addEntity(new Chest(handler, 300, 100, 22, 17, Item.blueSword));
 		//entityManager.addEntity(new LongWall(handler, 100, 500));
 		entityManager.addEntity(new WizardVendor(handler, 100, 400, 20, 23, new Inventory(handler) {{
-			
 			addItem(Item.blueSword);
 			addItem(Item.blueSword);
 			addItem(Item.blueSword);
@@ -36,11 +35,14 @@ public class EntityAdder {
 		//add entities
 		houseEntityManager.addEntity(new Chest(handler, 100, 100, 50, 50, Item.blueSword));
 		houseEntityManager.addEntity(new TallPlantPot(handler, 400, 80));
-		houseEntityManager.addEntity(new WizardVendor(handler, 600, 50, 20, 23, new Inventory(handler) {{ 
-			
+		houseEntityManager.addEntity(new WizardVendor(handler, 620, 80, 20, 23, new Inventory(handler) {{ 
 			addItem(Item.swordStarter);
 			
 		}}));
+		houseEntityManager.addEntity(new BushSmall(handler, 570, 170));
+		houseEntityManager.addEntity(new BushSmall(handler, 625, 170));
+		houseEntityManager.addEntity(new BushSmall(handler, 680, 170));
+		houseEntityManager.addEntity(new BushSmall(handler, 735, 170));
 		//set player with current player
 		houseEntityManager.setPlayer(handler.getWorld().getEntityManager().getPlayer());
 		//set manager
@@ -51,8 +53,7 @@ public class EntityAdder {
 			//set textures for loading zone
 			setEnterTexture(Assets.stairs);
 			setExitTexture(Assets.stairs);
-		}
-		});
+		}});
 		
 		
 	}

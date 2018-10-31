@@ -19,7 +19,7 @@ public class Game implements Runnable {
 	public State gameState;
 	public State menuState;
 	public State settingState;
-	public State houseState;
+	public State questState;
 	
 	//input
 	private KeyManager keyManager;
@@ -66,6 +66,7 @@ public class Game implements Runnable {
 		gameCamera = new GameCamera(handler, 0, 0);
 		
 		setGameState(new GameState(handler));
+		questState = new QuestState(handler);
 		setSettingState(new SettingState(handler));
 		setMenuState(new MenuState(handler));
 		

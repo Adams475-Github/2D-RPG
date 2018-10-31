@@ -22,15 +22,17 @@ public class Assets {
 	//Fireball
 	public static BufferedImage[] fb_left, fb_right, fb_up, fb_down;
 	//Start Menu UI
-	public static BufferedImage[] btn_start, btn_blank, btn_inc_pos;
+	public static BufferedImage[] btn_start, btn_blank, btn_inc_pos, questLeft, questRight, questButton;
 	//vendor UI
 	public static BufferedImage[] btn_sell, btn_buy, btn_sword, btn_armor, btn_potions, btn_exit;
 	//Inventory UI
+
 	public static BufferedImage inventoryScreen, itemHighlighter, nothing, heartFull, heartHalf, heartFourth, heartThreeFourths, heartEmpty;
 	public static Font font28, font28nBold, fontPlaceHolder;
 	public static BufferedImage parchment, tlCorner, trCorner, blCorner, brCorner, vertLine, horzLine;
 	public static BufferedImage swordStarter, test, chestPlate, swordBlue, swordRed, swordGreen, swordBlack;
 	public static BufferedImage tabHighlightSword, tabHighlightShield, tabHighlightPotion, tabHighlightQuest;
+	public static BufferedImage questScreen;
 	
 	
 	public static void init() {
@@ -54,6 +56,20 @@ public class Assets {
 		SpriteSheet fireBall = new SpriteSheet(ImageLoader.loadImage("/textures/fireball_0.png"));
 		SpriteSheet vendorUI = new SpriteSheet(ImageLoader.loadImage("/textures/vendorUi.png"));
 		SpriteSheet indoors = new SpriteSheet(ImageLoader.loadImage("/textures/Inner.png"));
+		//303 225
+		
+		//Quest Menu
+		questLeft = new BufferedImage[2];
+		questRight = new BufferedImage[2];
+		questButton = new BufferedImage[2];
+		
+		questLeft[0] = indoors.crop(313, 206, 19, 8);
+		questLeft[1] = indoors.crop(313, 215, 19, 8);
+		
+		questRight[0] = indoors.crop(335, 206, 19, 8);
+		questRight[1] = indoors.crop(335, 215, 19, 8);
+		
+		questScreen = indoors.crop(303, 225, 199, 114);
 		
 		
 		//Floor Tiles

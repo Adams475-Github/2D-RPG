@@ -17,7 +17,7 @@ public class Item {
 	public static Item[] items = new Item[256];
 	public static Item coinItem = new Item(Assets.coin, "coin", 2, 10, 10, 0, 0, 0, 1, "A common coin.");
 	public static Item nothing = new Item(Assets.nothing, "nothing", 3, 10, 10, 4, 0, 0, 0, "");
-	public static Item swordStarter = new Item(Assets.swordStarter, "Basic Sword", 5, 14, 22, 1, 0, 50, 5, "A rusty old thing, its seen better days. This is alex's sword. Wooohoo");
+	public static Item swordStarter = new Item(Assets.swordStarter, "Basic Sword", 5, 14, 22, 1, 0, 5, 5, "A rusty old thing, its seen better days. This is alex's sword. Wooohoo");
 	public static Item blueSword = new Item(Assets.swordBlue, "Blue Sword", 6, 14, 22, 1, 0, 100, 5, "A blue sword. It seems to shimmer when you look at it.");
 	public static Item armorStarter = new Item(Assets.chestPlate, "chestPlate", 4, 14, 22, 3, 10, 0, 5, "Standard leather armor. Comfortable but not invincible.");
 	
