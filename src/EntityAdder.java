@@ -58,6 +58,9 @@ public class EntityAdder {
 		handler.getWorld().getEntityManager().getPlayer().getQuests().add(new TalkingQuest(handler, 
 				"Talking quest test", "go talk", handler.getWorld().getEntityManager().getEntities().get(3), 
 				Item.blueSword, "talking Quest", handler.getWorld().getEntityManager().getPlayer()));
+		handler.getWorld().getEntityManager().getPlayer().getQuests().add(new TalkingQuest(handler, 
+				"Talking quest test", "go talk", handler.getWorld().getEntityManager().getEntities().get(3), 
+				Item.blueSword, "talking Quest", handler.getWorld().getEntityManager().getPlayer()));
 		
 		
 	}

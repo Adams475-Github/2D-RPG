@@ -2,9 +2,12 @@ import java.awt.Graphics;
 
 public class QuestDisplayState extends State {
 
+	private Quest quest;
+
 	public QuestDisplayState(Handler handler, Quest quest) {
 		super(handler);
-		// TODO Auto-generated constructor stub
+		this.quest = quest;
+		
 	}
 
 	@Override
@@ -15,7 +18,8 @@ public class QuestDisplayState extends State {
 
 	@Override
 	public void render(Graphics g) {
-		// TODO Auto-generated method stub
+		g.drawString(quest.title, 0, 20);
+		g.drawString(quest.description, 0, 40);
 
 	}
 

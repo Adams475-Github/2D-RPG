@@ -72,7 +72,7 @@ public class Assets {
 		questButton[0] = indoors.crop(359, 204, 10, 10);
 		questButton[1] = indoors.crop(359, 214, 10, 10);
 		
-		questScreen = indoors.crop(303, 225, 200, 115);
+		questScreen = indoors.crop(303, 225, 200, 135);
 		
 		
 		//Floor Tiles
