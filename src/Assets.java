@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 public class Assets {
 
 	private static final int width = 16, height = 16;
+	//public static final Font titleFont = new Font("High Tower Text", Font.BOLD, 60);
 	
 	//Stand-alone
 	public static BufferedImage dirt, grass, stone, tree, rock, bush, 
@@ -32,7 +33,7 @@ public class Assets {
 	public static BufferedImage parchment, tlCorner, trCorner, blCorner, brCorner, vertLine, horzLine;
 	public static BufferedImage swordStarter, test, chestPlate, swordBlue, swordRed, swordGreen, swordBlack;
 	public static BufferedImage tabHighlightSword, tabHighlightShield, tabHighlightPotion, tabHighlightQuest;
-	public static BufferedImage questScreen;
+	public static BufferedImage questScreen, bookPage;
 	
 	
 	public static void init() {
@@ -56,6 +57,8 @@ public class Assets {
 		SpriteSheet fireBall = new SpriteSheet(ImageLoader.loadImage("/textures/fireball_0.png"));
 		SpriteSheet vendorUI = new SpriteSheet(ImageLoader.loadImage("/textures/vendorUi.png"));
 		SpriteSheet indoors = new SpriteSheet(ImageLoader.loadImage("/textures/Inner.png"));
+		SpriteSheet bookPageSheet = new SpriteSheet(ImageLoader.loadImage("/textures/bookPage.png"));
+		SpriteSheet invUIpat2 = new SpriteSheet(ImageLoader.loadImage("/textures/invUi.png"));
 		//303 225
 		
 		//Quest Menu
@@ -71,6 +74,8 @@ public class Assets {
 		
 		questButton[0] = indoors.crop(359, 204, 10, 10);
 		questButton[1] = indoors.crop(359, 214, 10, 10);
+		
+		bookPage = bookPageSheet.crop(0, 0, 627, 409);
 		
 		questScreen = indoors.crop(303, 225, 200, 135);
 		
@@ -160,7 +165,7 @@ public class Assets {
 		chestOpen = objectSheet.crop(229, 23, 22, 17);
 		
 		//Display text box
-		displayBoxRed = invUI.crop(6, 13, 76, 37);
+		displayBoxRed = invUIpat2.crop(387, 98, 102, 39);
 		
 		//Highlighters for tabs
 		tabHighlightSword = invUI.crop(144, 138, 13, 17);

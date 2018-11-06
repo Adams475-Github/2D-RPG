@@ -18,6 +18,10 @@ public class Player extends Creature {
 	private Item bobble;
 	private Item shield;	
 	
+	//displayboxcode
+	private boolean drawDisplayBox = false;
+	private Item displayBoxItem;
+	
 	//Quests
 	//TODO change back to private
 	private ArrayList<Quest> quests = new ArrayList<Quest>();
@@ -117,6 +121,11 @@ public class Player extends Creature {
 		animLeft.tick();
 		animRight.tick();
 		
+		if(drawDisplayBox && handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
+			drawDisplayBox = false;
+			displayBoxItem = null;
+		}
+		
 		if(this.sword == Item.swordStarter) {
 			//Basic Sword
 			animAttackDown.tick();
@@ -207,11 +216,20 @@ public class Player extends Creature {
 		inventory.render(g);
 		
 	}
+	
+	public void renderDisplayBox(Graphics g) {
+		g.drawImage(Assets.displayBoxRed, 0, 0, Assets.displayBoxRed.getWidth() * 4, Assets.displayBoxRed.getHeight() * 4, null);
+		g.drawImage(displayBoxItem.texture, 40, 40, 16, 16, null);
+	}
 
 	public void postRender(Graphics g) {
 		playerO.render(g);
 		inventory.render(g);
 		escapeMenu.render(g);
+		
+		if(drawDisplayBox) {
+			renderDisplayBox(g);
+		}
 	}
 	
 	private void getInput() {
@@ -271,6 +289,11 @@ public class Player extends Creature {
 				handler.getWorld().setRaining(true);
 			}
 		}
+	}
+	
+	public void setDisplayBox(Item item) {
+		drawDisplayBox = true;
+		displayBoxItem = item;
 	}
 	
 	private void checkAttacks() {

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class FontHandler {
 	
 	public static void drawFont(Graphics g, String text, Rectangle rect, Font font) {
-		
+		g.setFont(font);
 		FontMetrics metrics = g.getFontMetrics(font);
 	
 		//makes a list of words and then moves them into an array list
@@ -51,6 +51,7 @@ public class FontHandler {
 		
 		//draws lines (could put this in for loop)
 		for(int i = 0; i < lines.length; i++) {
+			
 			g.drawString(lines[i], rect.x, ( rect.y + 24 * i + metrics.getAscent() ) );
 		}
 		

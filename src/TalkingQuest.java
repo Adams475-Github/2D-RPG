@@ -33,6 +33,7 @@ public class TalkingQuest extends Quest {
 			System.out.println("quest complete");
 			completeQuest();
 		}
+		player.setDisplayBox(reward);
 		
 	}
 

@@ -207,6 +207,16 @@ public class Inventory {
 		}
 	}
 	
+	public boolean contains(Item item) {
+		if(inventoryAttack.contains(item) || inventoryArmor.contains(item) || inventoryPotions.contains(item)) {
+			return true;
+			
+		} else {
+			return false;
+			
+		}
+	}
+	
 	public void checkUse() {
 		time += System.currentTimeMillis() - timeDone;
 		timeDone = System.currentTimeMillis();

@@ -56,7 +56,7 @@ public class EntityAdder {
 		}});
 		
 		handler.getWorld().getEntityManager().getPlayer().getQuests().add(new TalkingQuest(handler, 
-				"Talking quest test", "go talk", handler.getWorld().getEntityManager().getEntities().get(3), 
+				"Talk to the Chest", "Go talk to the wonderful brown chest in the main world. If you do, you might even recieve a reward!", handler.getWorld().getEntityManager().getEntities().get(3), 
 				Item.blueSword, "talking Quest", handler.getWorld().getEntityManager().getPlayer()));
 		handler.getWorld().getEntityManager().getPlayer().getQuests().add(new TalkingQuest(handler, 
 				"Talking quest test", "go talk", handler.getWorld().getEntityManager().getEntities().get(3), 

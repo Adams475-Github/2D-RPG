@@ -10,7 +10,6 @@ public class QuestState extends State {
 	private int pageIndex = 0;
 	private boolean active[] = new boolean[30];
 	private int buttonNums[] = new int[30];
-	private Rectangle pageDisplay = new Rectangle(centerScreen.x - 78, centerScreen.y + 240, 1550, 60);
 	
 	public QuestState(Handler handler) {
 		super(handler);
@@ -138,7 +137,7 @@ public class QuestState extends State {
 				Assets.questScreen.getWidth() * 4 + 1, Assets.questScreen.getHeight() * 4 + 1, null);
 		uiManager.render(g);
 		
-		g.setColor(Color.WHITE);
+		g.setColor(Color.BLACK);
 		
 		g.setFont(Assets.font28nBold);
 		g.drawString("Page: " + (pageIndex + 1), centerScreen.x - 45, centerScreen.y + 276);
