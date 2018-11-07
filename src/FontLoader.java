@@ -6,6 +6,7 @@ import java.io.IOException;
 public class FontLoader {
 	
 	public static final Font highTower = new Font("High Tower Text", Font.BOLD, 28);
+	public static final Font highTowerSmall = new Font("High Tower Text", 0, 22);
 	public static final Font highTowernBold = new Font("High Tower Text", 0, 28);
 	
 	

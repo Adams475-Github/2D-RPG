@@ -31,7 +31,7 @@ public class Chest extends Entity {
 			
 		} else {
 			g.drawImage(Assets.chestOpen, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width * 4, height * 4, null);
-			
+			g.drawRect((int)x, (int)y, width * 4, height * 4);
 		}
 		
 	}
@@ -44,6 +44,7 @@ public class Chest extends Entity {
 
 	@Override
 	public void interact() {
+		
 		if(!opened) {
 			opened = !opened;
 

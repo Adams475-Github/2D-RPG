@@ -234,8 +234,8 @@ public class FemaleRanger extends Creature{
 
 	@Override
 	public void interact() {
-		
-		
+		this.isTalkedTo = true;
+		System.out.println("hello");
 	}
 
 	

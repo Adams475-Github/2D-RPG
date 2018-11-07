@@ -15,7 +15,7 @@ public class EntityAdder {
 		
 		entityManager.addEntity(new TallPlantPot(handler, 100, 250));
 		entityManager.addEntity(new BushSmall(handler, 150, 100));
-		//entityManager.addEntity(new FemaleRanger(handler, 250, 350, 27, 33));
+		entityManager.addEntity(new FemaleRanger(handler, 250, 350, 27, 33));
 		//entityManager.addEntity(new EnemyMageM(handler, 500, 350, 27, 33));
 		entityManager.addEntity(new Chest(handler, 300, 100, 22, 17, Item.blueSword));
 		//entityManager.addEntity(new LongWall(handler, 100, 500));
@@ -56,12 +56,10 @@ public class EntityAdder {
 		}});
 		
 		handler.getWorld().getEntityManager().getPlayer().getQuests().add(new TalkingQuest(handler, 
-				"Talk to the Chest", "Go talk to the wonderful brown chest in the main world. If you do, you might even recieve a reward!", handler.getWorld().getEntityManager().getEntities().get(3), 
+				"Talk to the Chest", "Go talk to the wonderful brown chest in the main world. If you do, you might even recieve a reward!", 
+				(Creature)handler.getWorld().getEntityManager().getEntities().get(3), 
 				Item.blueSword, "talking Quest", handler.getWorld().getEntityManager().getPlayer()));
-		handler.getWorld().getEntityManager().getPlayer().getQuests().add(new TalkingQuest(handler, 
-				"Talking quest test", "go talk", handler.getWorld().getEntityManager().getEntities().get(3), 
-				Item.blueSword, "talking Quest", handler.getWorld().getEntityManager().getPlayer()));
-		
+
 		
 	}
 

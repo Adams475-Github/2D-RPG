@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -21,6 +22,9 @@ public class Player extends Creature {
 	//displayboxcode
 	private boolean drawDisplayBox = false;
 	private Item displayBoxItem;
+	private Rectangle displayRect = new Rectangle(30 + Launcher.SCREEN_WIDTH / 2 - Assets.displayBoxRed.getWidth() * 2,
+			Launcher.SCREEN_HEIGHT / 2 - Assets.displayBoxRed.getHeight() * 2 + 38, Assets.displayBoxRed.getWidth() * 4 - 200, 60);
+	private Quest displayQuest;
 	
 	//Quests
 	//TODO change back to private
@@ -112,7 +116,9 @@ public class Player extends Creature {
 	
 	public void tick() {
 		
-		
+		for(int i = 0; i < quests.size(); i++) {
+			quests.get(i).checkCompleted();
+		}
 		//Animations
 		
 		//Walking
@@ -121,10 +127,7 @@ public class Player extends Creature {
 		animLeft.tick();
 		animRight.tick();
 		
-		if(drawDisplayBox && handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
-			drawDisplayBox = false;
-			displayBoxItem = null;
-		}
+		
 		
 		if(this.sword == Item.swordStarter) {
 			//Basic Sword
@@ -195,7 +198,14 @@ public class Player extends Creature {
 		}
 		
 		inventory.tick();
-		escapeMenu.tick();
+		
+		if(drawDisplayBox && handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
+			drawDisplayBox = false;
+			displayBoxItem = null;
+			displayQuest = null;
+		} else {
+			escapeMenu.tick();
+		}
 	}
 	
 	public void render(Graphics g) {
@@ -211,6 +221,8 @@ public class Player extends Creature {
 			g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset() - 7), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
 		}
 		
+		//g.fillRect((int)(x - 20), (int)(y - 20), 100, 100);
+		
 		escapeMenu.render(g);
 		playerO.render(g);
 		inventory.render(g);
@@ -218,8 +230,14 @@ public class Player extends Creature {
 	}
 	
 	public void renderDisplayBox(Graphics g) {
-		g.drawImage(Assets.displayBoxRed, 0, 0, Assets.displayBoxRed.getWidth() * 4, Assets.displayBoxRed.getHeight() * 4, null);
-		g.drawImage(displayBoxItem.texture, 40, 40, 16, 16, null);
+		g.drawImage(Assets.displayBoxRed, (Launcher.SCREEN_WIDTH / 2) - (Assets.displayBoxRed.getWidth() * 2), 
+				(Launcher.SCREEN_HEIGHT / 2) - (Assets.displayBoxRed.getHeight() * 2), Assets.displayBoxRed.getWidth() * 4, 
+				Assets.displayBoxRed.getHeight() * 4, null);
+		
+		g.drawImage(displayBoxItem.texture, (Launcher.SCREEN_WIDTH / 2) + 88, (Launcher.SCREEN_HEIGHT / 2) - 43, 80, 80, null);
+		g.setColor(Color.white);
+		FontHandler.drawFont(g, "You completed the \"" + displayQuest.title + "\" quest. Here is your reward: ", displayRect, FontLoader.highTowerSmall);
+		
 	}
 
 	public void postRender(Graphics g) {
@@ -291,9 +309,10 @@ public class Player extends Creature {
 		}
 	}
 	
-	public void setDisplayBox(Item item) {
+	public void setDisplayBox(Item item, Quest quest) {
 		drawDisplayBox = true;
 		displayBoxItem = item;
+		displayQuest = quest;
 	}
 	
 	private void checkAttacks() {
@@ -398,9 +417,7 @@ public class Player extends Creature {
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_E)) {
 			ar.x = cb.x - 30;
 			ar.y = cb.y - 30;
-			for(int i = 0; i < quests.size(); i++) {
-				quests.get(i).checkCompleted();
-			}
+			interactionBounds = new Rectangle((int)(this.x - 20), (int)(this.y - 20), 100, 130);
 		} else {
 			return;
 		}

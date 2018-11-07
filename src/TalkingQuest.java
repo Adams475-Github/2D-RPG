@@ -1,12 +1,13 @@
+import java.awt.Rectangle;
 
 public class TalkingQuest extends Quest {
 
-	private Entity creature;
+	private Creature creature;
 	private Item reward;
 	private String description;
 	private String type;
 	
-	public TalkingQuest(Handler handler, String title, String description, Entity creature, Item reward, String type, Player player) {
+	public TalkingQuest(Handler handler, String title, String description, Creature creature, Item reward, String type, Player player) {
 		super(handler, title, description, type, player);
 		this.creature = creature;
 		this.reward = reward;
@@ -29,20 +30,15 @@ public class TalkingQuest extends Quest {
 
 	@Override
 	public void checkCompleted() {
-		if(Math.abs(player.x - creature.x) < 20 && Math.abs(player.y - creature.y) < 20) {
+		
+		if(creature.isTalkedTo) {
 			System.out.println("quest complete");
+			player.setDisplayBox(reward, this);
 			completeQuest();
 		}
-		player.setDisplayBox(reward);
+		
+		
 		
 	}
-
-	
-	
-	
-
-	
-	
-	
 
 }
