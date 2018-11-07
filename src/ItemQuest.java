@@ -15,6 +15,7 @@ public class ItemQuest extends Quest{
 	public void checkCompleted() {
 		if(player.getInventory().contains(item)) {
 			completeQuest();
+			player.setDisplayBox(reward, this);
 		}
 		
 	}
