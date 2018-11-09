@@ -9,7 +9,7 @@ public class Assets {
 	//Stand-alone
 	public static BufferedImage dirt, grass, stone, tree, rock, bush, 
 	wood, coin, chestClosed, chestOpen, displayBoxRed, speechBubble, 
-	vendorScreen, floorWood, stoneWall, stairs, tableTop;
+	vendorScreen, floorWood, stoneWall, stairs, tableTop, conversationUI;
 	//Player walk
 	public static BufferedImage[] player_down, player_up, player_right, player_left, player_idle;
 	//Player attack
@@ -25,7 +25,7 @@ public class Assets {
 	//Start Menu UI
 	public static BufferedImage[] btn_start, btn_blank, btn_inc_pos, questLeft, questRight, questButton;
 	//vendor UI
-	public static BufferedImage[] btn_sell, btn_buy, btn_sword, btn_armor, btn_potions, btn_exit;
+	public static BufferedImage[] btn_sell, btn_buy, btn_sword, btn_armor, btn_potions, btn_exit, btn_text;
 	//Inventory UI
 
 	public static BufferedImage inventoryScreen, itemHighlighter, nothing, heartFull, heartHalf, heartFourth, heartThreeFourths, heartEmpty;
@@ -33,7 +33,7 @@ public class Assets {
 	public static BufferedImage parchment, tlCorner, trCorner, blCorner, brCorner, vertLine, horzLine;
 	public static BufferedImage swordStarter, test, chestPlate, swordBlue, swordRed, swordGreen, swordBlack;
 	public static BufferedImage tabHighlightSword, tabHighlightShield, tabHighlightPotion, tabHighlightQuest;
-	public static BufferedImage questScreen, bookPage;
+	public static BufferedImage questScreen, bookPage, questMark;
 	
 	
 	public static void init() {
@@ -59,9 +59,15 @@ public class Assets {
 		SpriteSheet indoors = new SpriteSheet(ImageLoader.loadImage("/textures/Inner.png"));
 		SpriteSheet bookPageSheet = new SpriteSheet(ImageLoader.loadImage("/textures/bookPage.png"));
 		SpriteSheet invUIpat2 = new SpriteSheet(ImageLoader.loadImage("/textures/invUi.png"));
+		SpriteSheet cvUI = new SpriteSheet(ImageLoader.loadImage("/textures/converstionUI.png"));
 		//303 225
 		
 		//Quest Menu
+		questMark = indoors.crop(380, 204, 7, 17);
+		btn_text = new BufferedImage[2];
+		btn_text[1] = bookPageSheet.crop(77, 555, 794, 66);
+		btn_text[0] = bookPageSheet.crop(77, 632, 794, 66);
+		conversationUI = cvUI.crop(0, 0, Launcher.SCREEN_WIDTH, Launcher.SCREEN_HEIGHT);
 		questLeft = new BufferedImage[2];
 		questRight = new BufferedImage[2];
 		questButton = new BufferedImage[2];

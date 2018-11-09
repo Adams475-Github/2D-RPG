@@ -1,5 +1,5 @@
-import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 public abstract class Creature extends Entity{
 	
@@ -10,6 +10,9 @@ public abstract class Creature extends Entity{
 	protected float speed;
 	protected float xMove, yMove;
 	protected boolean isTalkedTo = false;
+	protected ArrayList<String> dialogueList = new ArrayList<String>();
+	protected ArrayList<Quest> giveableQuests = new ArrayList<Quest>();
+	protected boolean hasQuest = false;
 	
 	
 	public Creature(Handler handler, float x, float y, int width, int height) {

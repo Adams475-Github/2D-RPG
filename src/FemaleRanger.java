@@ -27,8 +27,14 @@ public class FemaleRanger extends Creature{
 		this.width = width;
 		this.handler = handler;
 		this.height = height;
-		this.y = y;
+		this.y = y;		
 		this.x = x;
+		
+		giveableQuests.add(new BountyQuest(handler, "Kill the elf", "Just kill me lol",
+				"0", this, 
+				Item.swordStarter,  handler.getWorld().getEntityManager().getPlayer(), handler.getWorld()));
+		
+		dialogueList.add("Hello and welcome to chilis");
 		
 		bounds.width = 20*4;
 		bounds.height = 23*4;
@@ -45,11 +51,67 @@ public class FemaleRanger extends Creature{
 	@Override
 	public void tick() {
 		
+		checkQuest();
+		tickAnimations();
+		findDirection();		
+		npcWanderLogic();
+		checkBounds();
+		checkPlayer();
+		move();		
+
+	}
+	
+	
+
+	@Override
+	public void render(Graphics g) {
+		
+		if(currentAnim != animStill) {
+			g.drawImage(currentAnim.getCurrentFrame(), (int)(x - handler.getGameCamera().getxOffset()), (int)(y - handler.getGameCamera().getyOffset()), 77, 93, null);
+			
+		} else {
+			g.drawImage(Assets.archF_idle[direction], (int)(x - handler.getGameCamera().getxOffset()), (int)(y - handler.getGameCamera().getyOffset()), 77, 93, null);
+			
+		}
+		
+//		if(!moving) {
+//			g.setFont(Assets.font28);
+//			g.drawImage(Assets.speechBubble, (int) (x - handler.getGameCamera().getxOffset()) - 10, (int) (y - handler.getGameCamera().getyOffset()) - 100, 52 * 2, 47 * 2, null);
+//			g.drawString("Hello!", (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()) - 50);
+//		}
+		
+		if(hasQuest) {
+			g.drawImage(Assets.questMark, (int)(x + 25 - handler.getGameCamera().getxOffset()),  
+					(int)(y - 75 - handler.getGameCamera().getyOffset()), 7 * 4, 17 * 4, null);
+		}
+		
+		//g.drawRect( (int) (walkingArea.x - handler.getGameCamera().getxOffset()),(int) (walkingArea.y - handler.getGameCamera().getyOffset()), walkingArea.width, walkingArea.height);
+	}
+
+	@Override
+	public void die() {
+		
+		
+	}
+	
+	private void tickAnimations() {
 		animRight.tick();
 		animLeft.tick();
 		animUp.tick();
 		animDown.tick();
-		  
+	}
+	
+	
+	
+	private void checkQuest() {
+		if(!giveableQuests.isEmpty()) {
+			hasQuest = true;
+		} else {
+			hasQuest = false;
+		}
+	}
+	
+	private void findDirection() {
 		if(xMove > 0) {
 			currentAnim = animRight;
 			direction = 0;
@@ -69,43 +131,6 @@ public class FemaleRanger extends Creature{
 		} else {
 			currentAnim = animStill;
 		}
-		
-		
-		npcWanderLogic();
-		checkBounds();
-		checkPlayer();
-		move();
-		
-		
-		
-	}
-	
-	
-
-	@Override
-	public void render(Graphics g) {
-		
-		if(currentAnim != animStill) {
-			g.drawImage(currentAnim.getCurrentFrame(), (int)(x - handler.getGameCamera().getxOffset()), (int)(y - handler.getGameCamera().getyOffset()), 77, 93, null);
-			
-		} else {
-			g.drawImage(Assets.archF_idle[direction], (int)(x - handler.getGameCamera().getxOffset()), (int)(y - handler.getGameCamera().getyOffset()), 77, 93, null);
-			
-		}
-		
-		if(!moving) {
-			g.setFont(Assets.font28);
-			g.drawImage(Assets.speechBubble, (int) (x - handler.getGameCamera().getxOffset()) - 10, (int) (y - handler.getGameCamera().getyOffset()) - 100, 52 * 2, 47 * 2, null);
-			g.drawString("Hello!", (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()) - 50);
-		}
-		
-		//g.drawRect( (int) (walkingArea.x - handler.getGameCamera().getxOffset()),(int) (walkingArea.y - handler.getGameCamera().getyOffset()), walkingArea.width, walkingArea.height);
-	}
-
-	@Override
-	public void die() {
-		
-		
 	}
 	
 	private void npcWanderLogic(){
@@ -235,6 +260,7 @@ public class FemaleRanger extends Creature{
 	@Override
 	public void interact() {
 		this.isTalkedTo = true;
+		State.setState(new DialogueState(handler, this, null, giveableQuests));
 		System.out.println("hello");
 	}
 

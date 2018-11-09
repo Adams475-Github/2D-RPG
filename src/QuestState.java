@@ -20,6 +20,17 @@ public class QuestState extends State {
 			buttonNums[i] = i;
 		}
 		
+		//exit button
+		uiManager.addObject(new UIImageButton(20, Launcher.SCREEN_HEIGHT - 8 * 4, 19 * 4, 8 * 4, Assets.questLeft, new ClickListener() {
+			
+			@Override
+			public void onClick() {
+				State.setState(handler.getGame().gameState);
+				handler.getWorld().getEntityManager().getPlayer().getInventory()
+				.setCurrentInv(handler.getWorld().getEntityManager().getPlayer().getInventory().getInventoryAttack());
+				
+			}}));
+		
 		//Left Arrow
 		
 		uiManager.addObject(new UIImageButton(160, 215, 19 * 4, 8 * 4, Assets.questLeft, new ClickListener() {

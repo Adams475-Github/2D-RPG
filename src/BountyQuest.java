@@ -26,6 +26,7 @@ public class BountyQuest extends Quest{
 
 	@Override
 	public void completeQuest() {
+		player.getCompletedQuests().add(this);
 		player.removeQuest(this);
 		giveReward();
 		

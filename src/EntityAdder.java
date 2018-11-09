@@ -65,9 +65,9 @@ public class EntityAdder {
 				Item.blueSword, Item.swordStarter, "", handler.getWorld().getEntityManager().getPlayer()));
 		
 		//Handler handler, String title, String description, String type, Entity target, Item reward, Player player, World world
-		handler.getWorld().getEntityManager().getPlayer().getQuests().add(new BountyQuest(handler, "Kill the elf", "You must go and fetch the mystical blue sword",
-				"", handler.getWorld().getEntityManager().getEntities().get(3), 
-				Item.swordStarter,  handler.getWorld().getEntityManager().getPlayer(), handler.getWorld()));
+//		handler.getWorld().getEntityManager().getPlayer().getQuests().add(new BountyQuest(handler, "Kill the elf", "You must go and fetch the mystical blue sword",
+//				"", handler.getWorld().getEntityManager().getEntities().get(3), 
+//				Item.swordStarter,  handler.getWorld().getEntityManager().getPlayer(), handler.getWorld()));
 		
 	}
 

@@ -20,6 +20,7 @@ public class QuestDisplayState extends State {
 			@Override
 			public void onClick() {
 				State.setState(handler.getGame().questState);
+				handler.getMouseManager().setUIManager(null);
 				handler.getGame().questState.init();
 				
 			}}));

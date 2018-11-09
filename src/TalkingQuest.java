@@ -1,5 +1,3 @@
-import java.awt.Rectangle;
-
 public class TalkingQuest extends Quest {
 
 	private Creature creature;
@@ -16,9 +14,8 @@ public class TalkingQuest extends Quest {
 
 	@Override
 	public void completeQuest() {
-		System.out.println("removing " + title);
+		player.getCompletedQuests().add(this);
 		player.removeQuest(this);
-		
 		giveReward();
 	}
 
@@ -32,7 +29,6 @@ public class TalkingQuest extends Quest {
 	public void checkCompleted() {
 		
 		if(creature.isTalkedTo) {
-			System.out.println("quest complete");
 			player.setDisplayBox(reward, this);
 			completeQuest();
 		}

@@ -19,7 +19,7 @@ public class Player extends Creature {
 	private Item bobble;
 	private Item shield;	
 	
-	//displayboxcode
+	//display box code
 	private boolean drawDisplayBox = false;
 	private Item displayBoxItem;
 	private Rectangle displayRect = new Rectangle(30 + Launcher.SCREEN_WIDTH / 2 - Assets.displayBoxRed.getWidth() * 2,
@@ -27,8 +27,8 @@ public class Player extends Creature {
 	private Quest displayQuest;
 	
 	//Quests
-	//TODO change back to private
 	private ArrayList<Quest> quests = new ArrayList<Quest>();
+	private ArrayList<Quest> completedQuests = new ArrayList<Quest>();
 	
 	//Interaction Rectangle
 	Rectangle interactionBounds;
@@ -115,102 +115,26 @@ public class Player extends Creature {
 	}
 	
 	public void tick() {
-		
-		for(int i = 0; i < quests.size(); i++) {
-			quests.get(i).checkCompleted();
-		}
-		//Animations
-		
-		//Walking
-		animDown.tick();
-		animUp.tick();
-		animLeft.tick();
-		animRight.tick();
-		
-		
-		
-		if(this.sword == Item.swordStarter) {
-			//Basic Sword
-			animAttackDown.tick();
-			animAttackUp.tick();
-			animAttackRight.tick();
-			animAttackLeft.tick();
-		} else {
-			//Blue Sword
-			animAttackDownB.tick();
-			animAttackUpB.tick();
-			animAttackRightB.tick();
-			animAttackLeftB.tick();
-		}
-		
-		//overlay
+		tickAnimations();
+		checkQuests();
+		manageSword();
 		playerO.tick();
-		
-		//this is useless code once I refactor how attack animations are treated
-		//Resets Attack Frame so animation always starts on first frame.
-		if(!attacking) {
-			animAttackUp.set(0);
-			animAttackDown.set(0);
-			animAttackRight.set(0);
-			animAttackLeft.set(0);
-			
-			animAttackUpB.set(0);
-			animAttackDownB.set(0);
-			animAttackRightB.set(0);
-			animAttackLeftB.set(0);
-		}
-
-		//Checks if the player is attacking or interacting with an object
+		resetAnimations();
 		checkAttacks();
 		interactWith();
-		
-		
-		if(this.getInventory().isActive()) {
-			inv = true;
-		} else {
-			inv = false;
-		}
-		if(this.getEscapeMenu().isActive()) {
-			esc = true;
-		} else {
-			esc = false;
-		}
-		
-		
-		//Move
+		manageMenus();
 		getInput();
 		move();
-		
-		//Fixes Resizing if player sprite is bigger for animations
-		if(attacking && (xMove + yMove) == 0) {
-			
-			if(currentAttack == animAttackRight || currentAttack == animAttackLeft || currentAttack == animAttackLeftB || currentAttack == animAttackRightB) {
-				//attack left or right resizing
-				setDimension(86, 122);
-			}else {
-				//attack up or down resizing
-				setDimension(64, 122);
-			}
-		}else{
-			//base size
-			setDimension(60, 98);
-			handler.getGameCamera().centerOnEntity(this);
-		}
-		
+		resize();
 		inventory.tick();
+		removeEscapeMenu();
 		
-		if(drawDisplayBox && handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
-			drawDisplayBox = false;
-			displayBoxItem = null;
-			displayQuest = null;
-		} else {
-			escapeMenu.tick();
-		}
 	}
 	
 	public void render(Graphics g) {
 
 		//forces render to loop through attack if called, else draws normally
+		//TODO refactor this garbage code
 		if(attacking) {
 			g.drawImage(currentAttack.getCurrentFrame(), (int) (x - handler.getGameCamera().getxOffset() - 7), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
 			if(currentAttack.hasPlayedOnce() && !handler.getKeyManager().attackDown && !handler.getKeyManager().attackUp && !handler.getKeyManager().attackRight && !handler.getKeyManager().attackLeft) {
@@ -220,8 +144,6 @@ public class Player extends Creature {
 		} else {
 			g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset() - 7), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
 		}
-		
-		//g.fillRect((int)(x - 20), (int)(y - 20), 100, 100);
 		
 		escapeMenu.render(g);
 		playerO.render(g);
@@ -247,6 +169,90 @@ public class Player extends Creature {
 		
 		if(drawDisplayBox) {
 			renderDisplayBox(g);
+		}
+	}
+	
+	private void checkQuests() {
+		for(int i = 0; i < quests.size(); i++) {
+			quests.get(i).checkCompleted();
+		}
+	}
+	
+	private void resetAnimations() {
+		if(!attacking) {
+			animAttackUp.set(0);
+			animAttackDown.set(0);
+			animAttackRight.set(0);
+			animAttackLeft.set(0);
+			
+			animAttackUpB.set(0);
+			animAttackDownB.set(0);
+			animAttackRightB.set(0);
+			animAttackLeftB.set(0);
+		}
+	}
+	
+	private void resize() {
+		//Fixes Resizing if player sprite is bigger for animations
+		if(attacking && (xMove + yMove) == 0) {
+			
+			if(currentAttack == animAttackRight || currentAttack == animAttackLeft || currentAttack == animAttackLeftB || currentAttack == animAttackRightB) {
+				//attack left or right resizing
+				setDimension(86, 122);
+			}else {
+				//attack up or down resizing
+				setDimension(64, 122);
+			}
+		}else{
+			//base size
+			setDimension(60, 98);
+			handler.getGameCamera().centerOnEntity(this);
+		}
+	}
+	
+	private void removeEscapeMenu() {
+		if(drawDisplayBox && handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
+			drawDisplayBox = false;
+			displayBoxItem = null;
+			displayQuest = null;
+		} else {
+			escapeMenu.tick();
+		}
+	}
+	
+	private void manageMenus() {
+		if(this.getInventory().isActive()) {
+			inv = true;
+		} else {
+			inv = false;
+		}
+		if(this.getEscapeMenu().isActive()) {
+			esc = true;
+		} else {
+			esc = false;
+		}
+	}
+	
+	private void tickAnimations() {
+		animDown.tick();
+		animUp.tick();
+		animLeft.tick();
+		animRight.tick();
+	}
+	
+	private void manageSword() {
+		if(this.sword == Item.swordStarter) {
+			//Basic Sword
+			animAttackDown.tick();
+			animAttackUp.tick();
+			animAttackRight.tick();
+			animAttackLeft.tick();
+		} else {
+			//Blue Sword
+			animAttackDownB.tick();
+			animAttackUpB.tick();
+			animAttackRightB.tick();
+			animAttackLeftB.tick();
 		}
 	}
 	
@@ -463,6 +469,14 @@ public class Player extends Creature {
 
 	public Item getHelmet() {
 		return helmet;
+	}
+	
+	public ArrayList<Quest> getCompletedQuests() {
+		return completedQuests;
+	}
+
+	public void setCompletedQuests(ArrayList<Quest> completedQuests) {
+		this.completedQuests = completedQuests;
 	}
 
 	public void setHelmet(Item helmet) {
