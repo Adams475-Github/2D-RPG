@@ -4,8 +4,8 @@ public class ItemQuest extends Quest{
 	private Item item;
 	private Item reward;
 
-	public ItemQuest(Handler handler, String title, String description, Item item, Item reward, String type, Player player) {
-		super(handler, title, description, type, player);
+	public ItemQuest(Handler handler, String title, String description, Item item, Item reward, String type, Player player, int exp) {
+		super(handler, title, description, type, player, exp);
 		this.item = item;
 		this.reward = reward;
 		

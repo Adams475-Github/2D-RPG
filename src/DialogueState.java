@@ -83,17 +83,16 @@ public class DialogueState extends State {
 	public void render(Graphics g) {
 		//first layer
 		//g.drawImage(background, 0, 0, Launcher.SCREEN_WIDTH, Launcher.SCREEN_HEIGHT, null);
-		
-		
-		//last layer (excluding font)
-		
+
 		g.drawImage(Assets.conversationUI, 0, 0, Launcher.SCREEN_WIDTH, Launcher.SCREEN_HEIGHT, null);
 		g.setColor(Color.WHITE);
+		
 		if(giveableQuests.isEmpty()) {
 			FontHandler.drawFont(g, creature.dialogueList.get(dialogueIndex), dialogueBox, FontLoader.highTower);
 		} else {
 			FontHandler.drawFont(g, "I have a quest for you. " + giveableQuests.get(0).description + ". Would you like to accept?   ", dialogueBox, FontLoader.highTower);
 		}
+		
 		uiManager.render(g);
 	}
 

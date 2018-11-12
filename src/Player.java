@@ -17,7 +17,8 @@ public class Player extends Creature {
 	private Item helmet;
 	private Item chestPlate;
 	private Item bobble;
-	private Item shield;	
+	private Item shield;
+
 	
 	//display box code
 	private boolean drawDisplayBox = false;
@@ -33,8 +34,11 @@ public class Player extends Creature {
 	//Interaction Rectangle
 	Rectangle interactionBounds;
 	
-	//Experience (unused for now)
+	//Overlay stuff
+	private int expL;
 	private int exp;
+	private int maxHealth;
+	
 	
 	//Animations
 	
@@ -78,6 +82,8 @@ public class Player extends Creature {
 		bounds.y = 60;
 		bounds.width = 23;
 		bounds.height = 32;	 
+		exp = 29;
+		maxHealth = 16;
 		
 		//Animation Initialization
 		
@@ -105,7 +111,7 @@ public class Player extends Creature {
 		//Initializing stats/gear
 		chestPlate = Item.nothing;
 		sword = Item.nothing;
-		this.health = 12;
+		this.health = 7;
 		
 		//inventory initialization
 		inventory = new Inventory(handler);
@@ -118,6 +124,7 @@ public class Player extends Creature {
 		tickAnimations();
 		checkQuests();
 		manageSword();
+		updateExp();
 		playerO.tick();
 		resetAnimations();
 		checkAttacks();
@@ -192,6 +199,14 @@ public class Player extends Creature {
 		}
 	}
 	
+	private void updateExp() {
+		if(exp > 50) {
+			exp = exp - 50;
+			expL++;
+		}
+		
+	}
+	
 	private void resize() {
 		//Fixes Resizing if player sprite is bigger for animations
 		if(attacking && (xMove + yMove) == 0) {
@@ -263,6 +278,7 @@ public class Player extends Creature {
 		//gets key presses
 		if(handler.getKeyManager().up && !attacking && !inv) {
 			yMove = -speed;
+			
 		}
 		if(handler.getKeyManager().down && !attacking && !inv) {
 			yMove = speed;
@@ -272,6 +288,7 @@ public class Player extends Creature {
 		}
 		if(handler.getKeyManager().right&& !attacking && !inv) {
 			xMove = speed;
+			
 		}
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_DOWN) && !inv && sword != Item.nothing) {
 			attacking = true;
@@ -309,6 +326,7 @@ public class Player extends Creature {
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_R)) {
 			if(handler.getWorld().isRaining()) {
 				handler.getWorld().setRaining(false);
+				exp++;
 			} else {
 				handler.getWorld().setRaining(true);
 			}
@@ -319,6 +337,10 @@ public class Player extends Creature {
 		drawDisplayBox = true;
 		displayBoxItem = item;
 		displayQuest = quest;
+	}
+	
+	public void addExp(int exp) {
+		this.exp += exp;
 	}
 	
 	private void checkAttacks() {
@@ -511,6 +533,23 @@ public class Player extends Creature {
 		this.quests = quests;
 	}
 
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+
+	public void setMaxHealth(int maxHealth) {
+		this.maxHealth = maxHealth;
+	}
+
+	public int getExpL() {
+		return expL;
+	}
+
+	public void setExpL(int expL) {
+		this.expL = expL;
+	}
+
+	
 	
 
 	

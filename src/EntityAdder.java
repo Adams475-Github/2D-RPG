@@ -56,13 +56,13 @@ public class EntityAdder {
 		}});
 		
 		//Handler handler, String title, String description, Item item, Item reward, String type, Player player
-		handler.getWorld().getEntityManager().getPlayer().getQuests().add(new TalkingQuest(handler, 
-				"Talk to the Chest", "Go talk to the wonderful brown chest in the main world. If you do, you might even recieve a reward!", 
-				(Creature)handler.getWorld().getEntityManager().getEntities().get(3), 
-				Item.blueSword, "talking Quest", handler.getWorld().getEntityManager().getPlayer()));
+//		handler.getWorld().getEntityManager().getPlayer().getQuests().add(new TalkingQuest(handler, 
+//				"Talk to the Chest", "Go talk to the wonderful brown chest in the main world. If you do, you might even recieve a reward!", 
+//				(Creature)handler.getWorld().getEntityManager().getEntities().get(3), 
+//				Item.blueSword, "talking Quest", handler.getWorld().getEntityManager().getPlayer()));
 		
-		handler.getWorld().getEntityManager().getPlayer().getQuests().add(new ItemQuest(handler, "Fetch the Sword", "You must go and fetch the mystical blue sword",
-				Item.blueSword, Item.swordStarter, "", handler.getWorld().getEntityManager().getPlayer()));
+//		handler.getWorld().getEntityManager().getPlayer().getQuests().add(new ItemQuest(handler, "Fetch the Sword", "You must go and fetch the mystical blue sword",
+//				Item.blueSword, Item.swordStarter, "", handler.getWorld().getEntityManager().getPlayer()));
 		
 		//Handler handler, String title, String description, String type, Entity target, Item reward, Player player, World world
 //		handler.getWorld().getEntityManager().getPlayer().getQuests().add(new BountyQuest(handler, "Kill the elf", "You must go and fetch the mystical blue sword",

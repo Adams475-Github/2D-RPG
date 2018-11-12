@@ -13,6 +13,7 @@ public abstract class Creature extends Entity{
 	protected ArrayList<String> dialogueList = new ArrayList<String>();
 	protected ArrayList<Quest> giveableQuests = new ArrayList<Quest>();
 	protected boolean hasQuest = false;
+	protected int expGive;
 	
 	
 	public Creature(Handler handler, float x, float y, int width, int height) {

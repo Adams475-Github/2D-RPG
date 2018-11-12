@@ -32,7 +32,7 @@ public class FemaleRanger extends Creature{
 		
 		giveableQuests.add(new BountyQuest(handler, "Kill the elf", "Just kill me lol",
 				"0", this, 
-				Item.swordStarter,  handler.getWorld().getEntityManager().getPlayer(), handler.getWorld()));
+				Item.swordStarter,  handler.getWorld().getEntityManager().getPlayer(), handler.getWorld(), 300));
 		
 		dialogueList.add("Hello and welcome to chilis");
 		
@@ -44,7 +44,7 @@ public class FemaleRanger extends Creature{
 		animLeft = new Animation(250, Assets.archF_left);
 		animRight = new Animation(250, Assets.archF_right);
 		animStill = new Animation(250, Assets.archF_idle);
-
+		expGive = 100;
 	
 	}
 
@@ -90,7 +90,7 @@ public class FemaleRanger extends Creature{
 
 	@Override
 	public void die() {
-		
+		handler.getWorld().getEntityManager().getPlayer().addExp(expGive);
 		
 	}
 	

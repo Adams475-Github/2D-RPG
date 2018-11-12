@@ -5,8 +5,8 @@ public class TalkingQuest extends Quest {
 	private String description;
 	private String type;
 	
-	public TalkingQuest(Handler handler, String title, String description, Creature creature, Item reward, String type, Player player) {
-		super(handler, title, description, type, player);
+	public TalkingQuest(Handler handler, String title, String description, Creature creature, Item reward, String type, Player player, int exp) {
+		super(handler, title, description, type, player, exp);
 		this.creature = creature;
 		this.reward = reward;
 		System.out.println(creature);

@@ -33,7 +33,7 @@ public class Assets {
 	public static BufferedImage parchment, tlCorner, trCorner, blCorner, brCorner, vertLine, horzLine;
 	public static BufferedImage swordStarter, test, chestPlate, swordBlue, swordRed, swordGreen, swordBlack;
 	public static BufferedImage tabHighlightSword, tabHighlightShield, tabHighlightPotion, tabHighlightQuest;
-	public static BufferedImage questScreen, bookPage, questMark;
+	public static BufferedImage questScreen, bookPage, questMark, expBar, face, expLeft, expMid, expRight;
 	
 	
 	public static void init() {
@@ -61,6 +61,13 @@ public class Assets {
 		SpriteSheet invUIpat2 = new SpriteSheet(ImageLoader.loadImage("/textures/invUi.png"));
 		SpriteSheet cvUI = new SpriteSheet(ImageLoader.loadImage("/textures/converstionUI.png"));
 		//303 225
+		
+		//more overlay
+		expBar = objectSheet.crop(0, 226, 78, 53);
+		face = objectSheet.crop(0, 280, 15, 15);
+		expLeft = objectSheet.crop(22, 280, 3, 4);
+		expMid = objectSheet.crop(25, 280, 2, 4);
+		expRight = objectSheet.crop(27, 280, 3, 4);
 		
 		//Quest Menu
 		questMark = indoors.crop(380, 204, 7, 17);
@@ -388,7 +395,7 @@ public class Assets {
 		
 		//Items
 		wood = sheetWorld.crop(433, 320, 14, 22);
-		coin = objectSheet.crop(2, 66, 10, 10);
+		coin = objectSheet.crop(2, 66, 11, 11);
 	}
 
 }

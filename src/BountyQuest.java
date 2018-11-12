@@ -5,8 +5,8 @@ public class BountyQuest extends Quest{
 	private Item reward;
 	private Entity target;
 	
-	public BountyQuest(Handler handler, String title, String description, String type, Entity target, Item reward, Player player, World world) {
-		super(handler, title, description, type, player);
+	public BountyQuest(Handler handler, String title, String description, String type, Entity target, Item reward, Player player, World world, int exp) {
+		super(handler, title, description, type, player, exp);
 		this.world = world;
 		this.target = target;
 		this.reward = reward;
@@ -35,7 +35,7 @@ public class BountyQuest extends Quest{
 	@Override
 	public void giveReward() {
 		player.getInventory().addItem(reward);
-		
+		player.addExp(exp);
 	}
 
 }

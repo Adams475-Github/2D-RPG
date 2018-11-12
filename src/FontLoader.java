@@ -8,6 +8,8 @@ public class FontLoader {
 	public static final Font highTower = new Font("High Tower Text", Font.BOLD, 28);
 	public static final Font highTowerSmall = new Font("High Tower Text", 0, 22);
 	public static final Font highTowernBold = new Font("High Tower Text", 0, 28);
+	public static final Font bigF = new Font("High Tower Text", 0, 40);
+	public static final Font bigF2 = new Font("High Tower Text", 0, 42);
 	
 	
 	
