@@ -287,7 +287,7 @@ public class Inventory {
 				i++;
 			}
 		}		
-		
+	
 		FontHandler.drawFont(g, selectedItem.description, itemRect, FontLoader.highTower);
 
 	}

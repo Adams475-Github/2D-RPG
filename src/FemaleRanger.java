@@ -1,6 +1,6 @@
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class FemaleRanger extends Creature{
@@ -30,11 +30,13 @@ public class FemaleRanger extends Creature{
 		this.y = y;		
 		this.x = x;
 		
-		giveableQuests.add(new BountyQuest(handler, "Kill the elf", "Just kill me lol",
+		talks = true;
+		
+		giveableQuests.add(new BountyQuest(handler, "placeholder", "placeholder",
 				"0", this, 
 				Item.swordStarter,  handler.getWorld().getEntityManager().getPlayer(), handler.getWorld(), 300));
 		
-		dialogueList.add("Hello and welcome to chilis");
+		
 		
 		bounds.width = 20*4;
 		bounds.height = 23*4;
@@ -45,12 +47,15 @@ public class FemaleRanger extends Creature{
 		animRight = new Animation(250, Assets.archF_right);
 		animStill = new Animation(250, Assets.archF_idle);
 		expGive = 100;
+		
+		initialize();
 	
 	}
 
 	@Override
 	public void tick() {
 		
+		updateQuests();
 		checkQuest();
 		tickAnimations();
 		findDirection();		
@@ -261,7 +266,70 @@ public class FemaleRanger extends Creature{
 	public void interact() {
 		this.isTalkedTo = true;
 		State.setState(new DialogueState(handler, this, null, giveableQuests));
-		System.out.println("hello");
+		
+	}
+	
+	public void initialize() {
+		//Dialogue Options
+		dialogueList.clear();
+		ArrayList<String> dl0, dl1, dl2, dl3, dl4;
+		dl0 = new ArrayList<String>();
+		dl1 = new ArrayList<String>();
+		dl2 = new ArrayList<String>();
+		dl3 = new ArrayList<String>();
+		dl4 = new ArrayList<String>();
+		
+		dl0.add("Any Ideas how to acquire one?");
+		dl0.add("");
+		dl0.add("(Walk Away)");
+		
+		dl0.add("Thanks.");
+		dl0.add("");
+		dl0.add("(Walk Away)");
+		//
+		dl1.add("Yup");
+		dl1.add("");
+		dl1.add("(Walk Away)");
+		
+		dl1.add("What was that quest again?");
+		dl1.add("");
+		dl1.add("(Walk Away)");
+		
+		dl1.add("d");
+		dl1.add("");
+		dl1.add("(Walk Away)");
+		
+		dl1.add("d");
+		dl1.add("");
+		dl1.add("(Walk Away)");
+		
+		
+		
+		masterListD.add(dl0);
+		masterListD.add(dl1);
+		
+		//Dialogue
+		ArrayList<String> d0, d1, d2, d3, d4;
+		d0 = new ArrayList<String>();
+		d1 = new ArrayList<String>();
+		d2 = new ArrayList<String>();
+		d3 = new ArrayList<String>();
+		d4 = new ArrayList<String>();
+		
+		d0.add("Hello, you are in the tutorial. Acquire a sword to progress.");
+		d0.add("My best bet would be that chest up north. Try that.");
+		d0.add("No problem");
+		
+		d1.add("You've gotten a sword eh?");
+		d1.add("Great, you should try to go and complete the quest now.");
+		d1.add("Yeah no lol");
+
+		
+		d2.add("you have completed a quest");
+		
+		masterList.add(d0);
+		masterList.add(d1);
+		masterList.add(d2);
 	}
 
 	

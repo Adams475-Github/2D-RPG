@@ -277,8 +277,8 @@ public class Assets {
 		heartFull = overlayItems.crop(65, 3, 12, 11);
 		heartThreeFourths = overlayItems.crop(81, 3, 12, 11);
 		heartHalf = overlayItems.crop(97, 3, 12, 11);
-		heartFourth = overlayItems.crop(113, 3, 11, 11);
-		heartEmpty = overlayItems.crop(129, 3, 11, 11);
+		heartFourth = overlayItems.crop(113, 3, 12, 11);
+		heartEmpty = overlayItems.crop(129, 3, 12, 11);
 		
 		//Weapons
 		swordStarter = sw.crop(65, 0, width, height);

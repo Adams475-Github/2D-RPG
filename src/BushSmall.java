@@ -1,5 +1,4 @@
 import java.awt.Graphics;
-import java.awt.Point;
 import java.util.Random;
 
 public class BushSmall extends StaticEntity {

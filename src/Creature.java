@@ -10,8 +10,18 @@ public abstract class Creature extends Entity{
 	protected float speed;
 	protected float xMove, yMove;
 	protected boolean isTalkedTo = false;
+	protected boolean talks = false;
+	protected ArrayList<ArrayList<String>> masterList = new ArrayList<ArrayList<String>>();
+	protected ArrayList<ArrayList<String>> masterListD = new ArrayList<ArrayList<String>>();
 	protected ArrayList<String> dialogueList = new ArrayList<String>();
 	protected ArrayList<Quest> giveableQuests = new ArrayList<Quest>();
+	protected ArrayList<String> dialogueOptions = new ArrayList<String>() {{
+		add("placeholder");
+		add("placeholder");
+		add("placeholder");
+		
+	}};
+	
 	protected boolean hasQuest = false;
 	protected int expGive;
 	
@@ -95,6 +105,31 @@ public abstract class Creature extends Entity{
 		
 		
 		
+	}
+	
+	protected void updateQuests() {
+		
+		if(!talks) {
+			return;
+		}
+		
+		switch(handler.getGPM().getGameStage()) {
+		case "tutorial":
+			this.dialogueList = masterList.get(0);
+			this.dialogueOptions = masterListD.get(0);
+			break;
+			
+		case "sword stage":
+			this.dialogueList = masterList.get(1);
+			this.dialogueOptions = masterListD.get(1);
+			break;
+			
+		case "post quest stage":
+			this.dialogueList = masterList.get(2);
+			this.dialogueOptions = masterListD.get(2);
+			break;
+			
+		}
 	}
 	
 	//GETTERS / SETTERS

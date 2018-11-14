@@ -11,6 +11,7 @@ public class Game implements Runnable {
 	
 	private boolean running = false;
 	private Thread thread;
+	private GPM gpm;
 	
 	private BufferStrategy bs;
 	private Graphics g;
@@ -64,7 +65,7 @@ public class Game implements Runnable {
 		handler = new Handler(this);
 		
 		gameCamera = new GameCamera(handler, 0, 0);
-		
+		gpm = new GPM(handler);
 		setGameState(new GameState(handler));
 		questState = new QuestState(handler);
 		setSettingState(new SettingState(handler));
@@ -212,5 +213,17 @@ public class Game implements Runnable {
 	}
 
 
+
+	public GPM getGpm() {
+		return gpm;
+	}
+
+
+
+	public void setGpm(GPM gpm) {
+		this.gpm = gpm;
+	}
+
+	
 
 }

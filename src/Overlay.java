@@ -9,7 +9,7 @@ public class Overlay {
 	private Handler handler;
 	private boolean active;
 	private ArrayList<BufferedImage> hearts = new ArrayList<BufferedImage>();
-	private Rectangle coinRect = new Rectangle(924, 705, 200, 0);
+	private Rectangle coinRect = new Rectangle(964, 705, 200, 0);
 
 	public Overlay(Handler handler) {
 		this.handler = handler;
@@ -28,8 +28,14 @@ public class Overlay {
 	
 	private void checkHearts() {
 
+		//Make a local variable with the amount of hearts the player has lost
 		int heartDown = handler.getWorld().getEntityManager().getPlayer().getMaxHealth() - handler.getWorld().getEntityManager().getPlayer().health;
 		
+		/* 
+		 * Basically the logic behind this is that it will subtract 4 until the heartDown is < 4. For how many times it 
+		 * can subtract 4, it then replaces full hearts with empty hearts. Then, once heart down has reached a number
+		 * less than 4, it then sets the last heart to the remaining sliver based on heart down, with 1 corresponding to 3/4, and so on.
+		 */
 		for(int i = 0; heartDown > 0; i++) {
 			
 			if(i > 0) {
@@ -61,7 +67,7 @@ public class Overlay {
 	}	
 	
 	private void checkActive() {
-		if(!handler.getWorld().getEntityManager().getPlayer().getEscapeMenu().isActive() && !handler.getWorld().getEntityManager().getPlayer().getInventory().isActive()) {
+		if(!handler.getWorld().getEntityManager().getPlayer().getEscapeMenu().isActive() ) {
 			active = true;
 		} else {
 			active = false;
@@ -74,13 +80,16 @@ public class Overlay {
 			return;
 		}
 		
+		//Hearts
 		for(int i = 0; i < hearts.size(); i++) {
-			g.drawImage(hearts.get(i), 148 - 48 * i, 0, Assets.heartEmpty.getWidth() * 4, Assets.heartEmpty.getHeight() * 4, null);
+			g.drawImage(hearts.get(i), 164 - 52 * i, 8, Assets.heartEmpty.getWidth() * 4, Assets.heartEmpty.getHeight() * 4, null);
 		}		
 		
+		//Exp Bar
 		g.drawImage(Assets.expBar, 0, Launcher.SCREEN_HEIGHT - Assets.expBar.getHeight() * 4, Assets.expBar.getWidth() * 4, Assets.expBar.getHeight() * 4, null);
 		g.drawImage(Assets.face, 28, Launcher.SCREEN_HEIGHT - 180, Assets.face.getWidth() * 4, Assets.face.getHeight() * 4, null);
 		
+		//Actual Exp to fill bar
 		if(handler.getWorld().getEntityManager().getPlayer().getExp() > 0) {
 			g.drawImage(Assets.expLeft, 88, 712, Assets.expLeft.getWidth() * 4, Assets.expLeft.getHeight() * 4, null);
 			
@@ -93,16 +102,23 @@ public class Overlay {
 			}
 		}
 		
+		//Player Level
+//		g.setColor(Color.black);
+//		g.setFont(FontLoader.bigF2);
+//		g.drawString(Integer.toString(handler.getWorld().getEntityManager().getPlayer().getExpL()), 47, 712);
 		g.setColor(Color.yellow);
+		g.setFont(FontLoader.bigF);
 		g.drawString(Integer.toString(handler.getWorld().getEntityManager().getPlayer().getExpL()), 47, 712);
 		
 		
+		//Outline for coin counter
 		g.setColor(Color.BLACK);
 		FontHandler.drawFont(g, Integer.toString(handler.getWorld().getEntityManager().getPlayer().getInventory().coins),
 				coinRect, FontLoader.bigF2);
 		
+		//Coin counter
 		g.setColor(Color.WHITE);
-		g.drawImage(Assets.coin, 850, 710, Assets.coin.getWidth() * 4, Assets.coin.getHeight() * 4, null);
+		g.drawImage(Assets.coin, 890, 710, Assets.coin.getWidth() * 4, Assets.coin.getHeight() * 4, null);
 		FontHandler.drawFont(g, Integer.toString(handler.getWorld().getEntityManager().getPlayer().getInventory().coins),
 				coinRect, FontLoader.bigF);
 		

@@ -121,6 +121,7 @@ public class Player extends Creature {
 	}
 	
 	public void tick() {
+		System.out.println(completedQuests.size());
 		tickAnimations();
 		checkQuests();
 		manageSword();

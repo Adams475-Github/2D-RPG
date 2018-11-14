@@ -9,8 +9,18 @@ public class DialogueState extends State {
 	private Creature creature;
 	private BufferedImage background;
 	private Rectangle dialogueBox = new Rectangle(468, 135, 418, 100);
+	private Rectangle text1 = new Rectangle(115, 702 - Assets.btn_text[0].getHeight() * 2, 
+			Assets.btn_text[0].getWidth(),  Assets.btn_text[0].getHeight());
+	private Rectangle text2 = new Rectangle(115, 702 - Assets.btn_text[0].getHeight(), Assets.btn_text[0].getWidth(),  Assets.btn_text[0].getHeight());
+	private Rectangle text3 = new Rectangle(115, 702, Assets.btn_text[0].getWidth(),  Assets.btn_text[0].getHeight());
+	private Rectangle[] options = {text1, text2, text3};
 	private UIManager uiManager;
 	private ArrayList<Quest> giveableQuests;
+	private ArrayList<String> questOptions = new ArrayList<String>() {{		
+		add("Yes");
+		add("No");
+		add("(Walk away)");
+	}};
 	private int dialogueIndex = 0;
 	
 	public DialogueState(Handler handler, Creature creature, BufferedImage background, ArrayList<Quest> giveableQuests) {
@@ -23,36 +33,46 @@ public class DialogueState extends State {
 		this.giveableQuests = giveableQuests;
 		
 		//left arrow		
-		uiManager.addObject(new UIImageButton(475, 360, 19 * 4, 8 * 4, Assets.questLeft, new ClickListener() {
-			
-		
-			@Override
-			public void onClick() {
-				if(dialogueIndex > 0) {
-					dialogueIndex--;
-				}
-				
-			}}));
-		
-		//Right Arrow
-		
-		uiManager.addObject(new UIImageButton(800, 360, 19 * 4, 8 * 4, Assets.questRight, new ClickListener() {
-
-			@Override
-			public void onClick() {
-				if(dialogueIndex < creature.dialogueList.size() - 1) {
-					dialogueIndex++;
-				}
-				
-			}}));
+//		uiManager.addObject(new UIImageButton(475, 360, 19 * 4, 8 * 4, Assets.questLeft, new ClickListener() {
+//			
+//		
+//			@Override
+//			public void onClick() {
+//				if(dialogueIndex > 0) {
+//					dialogueIndex--;
+//				}
+//				
+//			}}));
+//		
+//		//Right Arrow
+//		uiManager.addObject(new UIImageButton(800, 360, 19 * 4, 8 * 4, Assets.questRight, new ClickListener() {
+//
+//			@Override
+//			public void onClick() {
+//				if(dialogueIndex < creature.dialogueList.size() - 1) {
+//					dialogueIndex++;
+//				}
+//				
+//			}}));
 		
 		//top text
-		uiManager.addObject(new UIImageButton(115, 702 - Assets.btn_text[0].getHeight() * 2, Assets.btn_text[0].getWidth(),  Assets.btn_text[0].getHeight(), Assets.btn_text, new ClickListener() {
+		uiManager.addObject(new UIImageButton(115, 702 - Assets.btn_text[0].getHeight() * 2, 
+				Assets.btn_text[0].getWidth(),  Assets.btn_text[0].getHeight(), Assets.btn_text, new ClickListener() {
 
 			@Override
 			public void onClick() {
-				handler.getWorld().getEntityManager().getPlayer().getQuests().add(giveableQuests.get(0));
-				creature.giveableQuests.clear();
+				if(!giveableQuests.isEmpty()) {
+					handler.getWorld().getEntityManager().getPlayer().getQuests().add(giveableQuests.get(0));
+					creature.giveableQuests.clear();
+				} else {
+					if(dialogueIndex < creature.dialogueList.size() - 2) {
+						dialogueIndex++;
+					} else {
+						State.setState(handler.getGame().gameState);
+						handler.getMouseManager().setUIManager(null);
+					}
+				}
+				
 			}}));
 		//middle text
 		uiManager.addObject(new UIImageButton(115, 702 - Assets.btn_text[0].getHeight(), Assets.btn_text[0].getWidth(),  Assets.btn_text[0].getHeight(), Assets.btn_text, new ClickListener() {
@@ -94,6 +114,15 @@ public class DialogueState extends State {
 		}
 		
 		uiManager.render(g);
+		if(giveableQuests.isEmpty()) {
+			for(int i = 0; i < 3; i++) {
+				FontHandler.drawFont(g, creature.dialogueOptions.get(i + dialogueIndex * 3), options[i], FontLoader.bigF);
+			}
+		} else {
+			for(int i = 0; i < 3; i++) {
+				FontHandler.drawFont(g, questOptions.get(i), options[i], FontLoader.bigF);
+			}
+		}
 	}
 
 	@Override

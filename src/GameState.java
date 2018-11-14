@@ -14,6 +14,7 @@ public class GameState extends State {
 	
 	public void tick() {
 		handler.getWorld().tick();
+		handler.getGPM().tick();
 
 	}
 
