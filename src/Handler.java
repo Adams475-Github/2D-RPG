@@ -8,7 +8,6 @@ public class Handler {
 		this.game = game;
 		
 	}
-
 	
 	public GameCamera getGameCamera() {
 		return game.getGameCamera();

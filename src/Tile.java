@@ -36,8 +36,8 @@ public class Tile {
 	}
 	
 	//renders tiles
-	public void render(Graphics g, int x, int y) {
-		g.drawImage(texture, x, y, TILE_WIDTH, TILE_HEIGHT, null);
+	public void render(Graphics g, int x, int y, int width, int height) {
+		g.drawImage(texture, x, y, width, height, null);
 	}
 	
 	//getters

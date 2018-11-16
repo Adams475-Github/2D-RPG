@@ -54,7 +54,7 @@ public class World {
 		for (int y = yStart; y < yEnd; y++) {
 			for (int x = xStart; x < xEnd; x++) {
 				getTile(x, y).render(g, (int) (x * Tile.TILE_WIDTH - handler.getGameCamera().getxOffset()), 
-						(int) (y * Tile.TILE_HEIGHT - handler.getGameCamera().getyOffset()));
+						(int) (y * Tile.TILE_HEIGHT - handler.getGameCamera().getyOffset()), Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
 			}
 		}
 		//Items
@@ -63,9 +63,11 @@ public class World {
 		entityManager.render(g);
 		
 		if(raining) {
-			for(int i = 0; i < drops.length; i++) {
-				drops[i].render(g);
-			}
+//			for(int i = 0; i < drops.length; i++) {
+//				drops[i].render(g);
+//			}
+			
+			State.setState(handler.getGame().worldMapState);
 		}
 		
 	}
