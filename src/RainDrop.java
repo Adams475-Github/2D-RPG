@@ -1,9 +1,14 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.util.Random;
 
-public class RainDrop {
+public class RainDrop implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3055537654019903787L;
 	int x;
 	int y;
 	int yspeed;

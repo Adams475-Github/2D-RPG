@@ -1,16 +1,21 @@
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class FemaleRanger extends Creature{
+public class FemaleRanger extends Creature implements Serializable{
 	
-	private Animation animDown;
-	private Animation animUp;
-	private Animation animLeft;
-	private Animation animRight;
-	private Animation animStill;
-	private Animation currentAnim = animDown;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -155178062881772475L;
+	private transient Animation animDown;
+	private transient Animation animUp;
+	private transient Animation animLeft;
+	private transient Animation animRight;
+	private transient Animation animStill;
+	private transient Animation currentAnim = animDown;
 	private int direction;
 	private int num;
 	private int forceDir;

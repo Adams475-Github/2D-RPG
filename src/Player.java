@@ -1,18 +1,22 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Player extends Creature {
+public class Player extends Creature implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3519735914463066053L;
 	//Instance variable initialization
 	
 	//Inventory
 	private Inventory inventory;
-	private EscapeMenu escapeMenu;
+	private transient EscapeMenu escapeMenu;
 	private Item sword;
 	private Item helmet;
 	private Item chestPlate;
@@ -43,36 +47,36 @@ public class Player extends Creature {
 	//Animations
 	
 	//Walking
-	private Animation animDown;
-	private Animation animUp;
-	private Animation animLeft;
-	private Animation animRight;
+	private transient Animation animDown;
+	private transient Animation animUp;
+	private transient Animation animLeft;
+	private transient Animation animRight;
 	
 	//Attacking with a normal sword
-	private Animation animAttackDown;
-	private Animation animAttackUp;
-	private Animation animAttackLeft;
-	private Animation animAttackRight;
+	private transient Animation animAttackDown;
+	private transient Animation animAttackUp;
+	private transient Animation animAttackLeft;
+	private transient Animation animAttackRight;
 	
 	//Attacking with a blue sword
-	private Animation animAttackDownB;
-	private Animation animAttackUpB;
-	private Animation animAttackLeftB;
-	private Animation animAttackRightB;
+	private transient Animation animAttackDownB;
+	private transient Animation animAttackUpB;
+	private transient Animation animAttackLeftB;
+	private transient Animation animAttackRightB;
 
 	//Array for still sprites
-	private BufferedImage still[];
+	private transient BufferedImage still[];
 	
 	//Miscellaneous Variables from ongoing implementation (will refactor)
 	private int lastAnim = 0;
-	private Animation currentAttack = animAttackDown;
+	private transient Animation currentAttack = animAttackDown;
 	private boolean attacking;
 	private long lastAttackTimer, attackCooldown = 550, attackTimer = attackCooldown;
 	private boolean inv = false;
 	private boolean esc = false;
 	
 	//Overlay (Might not need this but for now I'm doing it this way)
-	Overlay playerO = new Overlay(handler);	
+	transient Overlay playerO = new Overlay(handler);	
 	
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, 60, 98);

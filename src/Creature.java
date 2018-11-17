@@ -1,8 +1,13 @@
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Creature extends Entity{
+public abstract class Creature extends Entity implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3121256062980048132L;
 	public static final float DEFAULT_SPEED = 3.0f;
 	public static final int DEFAULT_CREATURE_WIDTH = 64,
 							DEFAULT_CREATURE_HEIGHT = 64;
@@ -15,7 +20,12 @@ public abstract class Creature extends Entity{
 	protected ArrayList<ArrayList<String>> masterListD = new ArrayList<ArrayList<String>>();
 	protected ArrayList<String> dialogueList = new ArrayList<String>();
 	protected ArrayList<Quest> giveableQuests = new ArrayList<Quest>();
-	protected ArrayList<String> dialogueOptions = new ArrayList<String>() {{
+	protected ArrayList<String> dialogueOptions = new ArrayList<String>() {/**
+		 * 
+		 */
+		private static final long serialVersionUID = 5515189782192590234L;
+
+	{
 		add("placeholder");
 		add("placeholder");
 		add("placeholder");

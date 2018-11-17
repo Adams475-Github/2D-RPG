@@ -1,20 +1,25 @@
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
-public class Game implements Runnable {
+public class Game implements Runnable, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2876973920364048982L;
+
 	//TODO add jump scare with ear-rape
-	private Display display;
+	private transient Display display;
 	
 	private String title;
 	private int width, height;
 	
 	private boolean running = false;
-	private Thread thread;
+	private transient Thread thread;
 	private GPM gpm;
 
 	
-	private BufferStrategy bs;
+	private transient BufferStrategy bs;
 	private Graphics g;
 	
 	//States
@@ -34,7 +39,7 @@ public class Game implements Runnable {
 	private GameCamera gameCamera;
 	
 	//Handler
-	private Handler handler;
+	private transient Handler handler;
 	
 	//Example for importing image:
 	//private BufferedImage testImage; 
@@ -219,6 +224,20 @@ public class Game implements Runnable {
 
 	public GPM getGpm() {
 		return gpm;
+	}
+	
+	
+
+
+
+	public Graphics getG() {
+		return g;
+	}
+
+
+
+	public void setG(Graphics g) {
+		this.g = g;
 	}
 
 

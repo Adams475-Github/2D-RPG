@@ -2,10 +2,16 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class FontHandler {
+public class FontHandler implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8054738958766190061L;
+
 	public static void drawFont(Graphics g, String text, Rectangle rect, Font font) {
 		g.setFont(font);
 		FontMetrics metrics = g.getFontMetrics(font);

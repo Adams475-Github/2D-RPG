@@ -1,7 +1,12 @@
 import java.awt.Graphics;
+import java.io.Serializable;
 
-public class GameState extends State {
+public class GameState extends State implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6274011441332270906L;
 	private World world;
 	
 	public GameState(Handler handler) {

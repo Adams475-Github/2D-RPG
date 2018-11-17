@@ -1,7 +1,12 @@
 import java.awt.Graphics;
-import java.awt.Point;
+import java.io.Serializable;
 
-public class TallPlantPot extends StaticEntity{
+public class TallPlantPot extends StaticEntity implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8902122612665181870L;
 
 	public TallPlantPot(Handler handler, float x, float y) {
 		super(handler, x, y, 15 * 4, 30 * 4);

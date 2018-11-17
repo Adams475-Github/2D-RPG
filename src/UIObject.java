@@ -1,9 +1,14 @@
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import java.io.Serializable;
 
-public abstract class UIObject {
+public abstract class UIObject implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4738611511619933644L;
 	protected float x, y;
 	protected int width, height;
 	protected Rectangle bounds;

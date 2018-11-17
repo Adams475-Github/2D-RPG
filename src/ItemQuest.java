@@ -1,6 +1,11 @@
+import java.io.Serializable;
 
-public class ItemQuest extends Quest{
+public class ItemQuest extends Quest implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4764841542791528160L;
 	private Item item;
 	private Item reward;
 

@@ -2,9 +2,14 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 
-public class VendorState extends State {
+public class VendorState extends State implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5759118731862727095L;
 	private UIManager uiManager;
 	private Inventory inventory;
 	private int centerScreenX = 1024/2, centerScreenY = 768/2;

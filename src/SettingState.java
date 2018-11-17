@@ -1,7 +1,12 @@
 import java.awt.Graphics;
+import java.io.Serializable;
 
-public class SettingState extends State {
+public class SettingState extends State implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1800723601701893477L;
 	private UIManager uiManager;
 
 	public SettingState(Handler handler) {

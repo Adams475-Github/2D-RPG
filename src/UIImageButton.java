@@ -1,8 +1,13 @@
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
-public class UIImageButton extends UIObject{
+public class UIImageButton extends UIObject implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3273771391866789156L;
 	private BufferedImage[] images;
 	private ClickListener clicker;
 	

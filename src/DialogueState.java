@@ -2,10 +2,15 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class DialogueState extends State {
+public class DialogueState extends State implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6853112787133431152L;
 	private Creature creature;
 	private BufferedImage background;
 	private Rectangle dialogueBox = new Rectangle(468, 135, 418, 100);
@@ -16,7 +21,12 @@ public class DialogueState extends State {
 	private Rectangle[] options = {text1, text2, text3};
 	private UIManager uiManager;
 	private ArrayList<Quest> giveableQuests;
-	private ArrayList<String> questOptions = new ArrayList<String>() {{		
+	private ArrayList<String> questOptions = new ArrayList<String>() {/**
+		 * 
+		 */
+		private static final long serialVersionUID = -3203183283527586242L;
+
+	{		
 		add("Yes");
 		add("No");
 		add("(Walk away)");

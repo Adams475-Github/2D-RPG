@@ -1,12 +1,17 @@
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
-public class WizardVendor extends Vendor {
+public class WizardVendor extends Vendor implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6773429649239157818L;
 	private Inventory inventory;
 	private int width, height;
-	private BufferedImage texture;
+	private transient BufferedImage texture;
 	private boolean close;
 
 	public WizardVendor(Handler handler, float x, float y, int width, int height, Inventory inventory) {

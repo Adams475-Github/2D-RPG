@@ -1,10 +1,15 @@
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ItemManager {
+public class ItemManager implements Serializable{
 	
-	private Handler handler;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1604314578129263752L;
+	private transient Handler handler;
 	private ArrayList<Item> items;
 	
 	public ItemManager(Handler handler) {

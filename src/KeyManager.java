@@ -1,13 +1,18 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.Serializable;
 
-public class KeyManager implements KeyListener{
+public class KeyManager implements KeyListener, Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2871542074448460297L;
 	private boolean[] keys, justPressed, cantPress;
 	public boolean up, down, left, right, attackDown, attackUp, attackLeft, attackRight;
 	public boolean leftClick;
 	MouseManager mouseManager;
-	public Handler handler;
+	public transient Handler handler;
 	
 	public KeyManager(MouseManager mouseManager, Handler handler) {
 		this.handler = handler;

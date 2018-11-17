@@ -1,10 +1,15 @@
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class UIManager {
+public class UIManager implements Serializable{
 	
-	private Handler handler;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8121310717415624874L;
+	private transient Handler handler;
 	private ArrayList<UIObject> objects;
 	
 	public UIManager(Handler handler) {

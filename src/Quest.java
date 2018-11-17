@@ -1,11 +1,16 @@
+import java.io.Serializable;
 
-public abstract class Quest {
+public abstract class Quest implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7877968936271144861L;
 	protected String title;
 	protected String description;
 	protected String type;
 	protected Player player;
-	protected Handler handler;
+	protected transient Handler handler;
 	protected int exp;
 	
 	public Quest(Handler handler, String title, String description, String type, Player player, int exp) {

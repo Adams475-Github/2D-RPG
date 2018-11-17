@@ -1,15 +1,20 @@
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class EntityManager {
+public class EntityManager implements Serializable{
 	
-	private Handler handler;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6226591941073465890L;
+	private transient Handler handler;
 	private Player player;
 	private CopyOnWriteArrayList<Entity> entities;
 
-	private Comparator<Entity> renderSorter = new Comparator<Entity>() {
+	private transient Comparator<Entity> renderSorter = new Comparator<Entity>() {
 
 		
 		

@@ -1,9 +1,13 @@
 import java.awt.Graphics;
-import java.awt.Point;
+import java.io.Serializable;
 import java.util.Random;
 
-public class LongWall extends StaticEntity {
+public class LongWall extends StaticEntity implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6962304384035089403L;
 	private Random rand;
 
 	public LongWall(Handler handler, float x, float y) {

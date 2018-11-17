@@ -1,8 +1,13 @@
 import java.awt.Graphics;
+import java.io.Serializable;
 
-public class WorldMap extends State {
+public class WorldMap extends State implements Serializable {
 	
-	private Handler handler;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7712914976732503077L;
+	private transient Handler handler;
 	private int width;
 	private int height;
 	private int[][] tiles;

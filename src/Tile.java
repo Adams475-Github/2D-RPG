@@ -1,9 +1,14 @@
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
-public class Tile {
+public class Tile implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1147827366269609042L;
 	//Static Variables
 	
 	public static Tile[] tiles = new Tile[256];
@@ -19,7 +24,7 @@ public class Tile {
 	
 	public static final int TILE_WIDTH = 64, TILE_HEIGHT = 64;
 	
-	protected BufferedImage texture;
+	protected transient BufferedImage texture;
 	protected final int id;
 
 	//assigns ids to the tiles

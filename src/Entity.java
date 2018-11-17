@@ -1,12 +1,17 @@
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.Rectangle;
+import java.io.Serializable;
 
-public abstract class Entity {
+public abstract class Entity implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4519781510053469163L;
+
 	public static final int DEFAULT_HEALTH = 100;
 	
-	protected Handler handler;
+	protected transient Handler handler;
 	protected float x, y;
 	protected int width, height;
 	protected Rectangle bounds;

@@ -1,6 +1,12 @@
-public abstract class Vendor extends Creature{
+import java.io.Serializable;
+
+public abstract class Vendor extends Creature implements Serializable{
 	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5539251797163630112L;
 	protected Inventory inventory;
 	
 	public Vendor(Handler handler, float x, float y, int width, int height, Inventory inventory) {

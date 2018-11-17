@@ -2,9 +2,14 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
-public class FontLoader {
+public class FontLoader implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8294281667435489361L;
 	public static final Font highTower = new Font("High Tower Text", Font.BOLD, 28);
 	public static final Font highTowerSmall = new Font("High Tower Text", 0, 22);
 	public static final Font highTowernBold = new Font("High Tower Text", 0, 28);

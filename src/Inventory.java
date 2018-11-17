@@ -2,10 +2,15 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Inventory {
+public class Inventory implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2464666426241643982L;
 	//timer variables
 	private long time = 550;
 	private int holder = 0;
@@ -13,7 +18,7 @@ public class Inventory {
 	//don't even know what this one does
 	private int xOffset = 0, yOffset = 0;
 	//Handler initialization
-	private Handler handler;
+	private transient Handler handler;
 	//Whether its active or not
 	private boolean active = false;
 	//Array lists for the separate inventories
@@ -23,7 +28,7 @@ public class Inventory {
 	private ArrayList<Item> inventoryPotions;
 	private ArrayList<Item> hotbar;
 	//used to condense code
-	private ArrayList<Item> currentInv = inventoryAttack;
+	private transient ArrayList<Item> currentInv = inventoryAttack;
 	//hard coded locations for inventory menu
 	private int invX = (1024/2) - 215, invY = 768/2 - 360, invWidth = 119, invHeight = 171;
 	//distance between inventory slots
@@ -33,15 +38,15 @@ public class Inventory {
 	//Selected Item (nothing at start so no null)
 	private Item selectedItem = Item.nothing;
 	//Item description rectangle
-	Rectangle itemRect = new Rectangle(338, 425, 235, 115);
+	transient Rectangle itemRect = new Rectangle(338, 425, 235, 115);
 	//Button bounding rectangles also hard coded in because I didn't use the state system for this
-	private Rectangle swordBounds = new Rectangle(invX + 409, invY + 152, 13*4, 18*4);
-	private Rectangle shieldBounds = new Rectangle(invX + 409, invY + 224, 13*4, 18*4);
-	private Rectangle potionsBounds = new Rectangle(invX + 409, invY + 296, 13*4, 18*4);
-	private Rectangle questBounds = new Rectangle(invX + 409, invY + 368, 13*4, 18*4);
-	private Rectangle use = new Rectangle(invX + 290, invY + 415, 20*4, 9*4);
-	private Rectangle drop = new Rectangle(invX + 290, invY + 460, 20*4, 9*4);
-	private Rectangle clickBounds = new Rectangle(invX + 35, invY + 165, 338, 200);
+	private transient Rectangle swordBounds = new Rectangle(invX + 409, invY + 152, 13*4, 18*4);
+	private transient Rectangle shieldBounds = new Rectangle(invX + 409, invY + 224, 13*4, 18*4);
+	private transient Rectangle potionsBounds = new Rectangle(invX + 409, invY + 296, 13*4, 18*4);
+	private transient Rectangle questBounds = new Rectangle(invX + 409, invY + 368, 13*4, 18*4);
+	private transient Rectangle use = new Rectangle(invX + 290, invY + 415, 20*4, 9*4);
+	private transient Rectangle drop = new Rectangle(invX + 290, invY + 460, 20*4, 9*4);
+	private transient Rectangle clickBounds = new Rectangle(invX + 35, invY + 165, 338, 200);
 	//throws high-lighter off screen at start so no null but also not there initially
 	private int highX = -100, highY = -100;
 	//Mouse x and y variable initialization so I don't have to type out a huge line to get mouseX and mouseY

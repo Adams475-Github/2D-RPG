@@ -2,11 +2,16 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Overlay {
+public class Overlay implements Serializable{
 
-	private Handler handler;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8543430481319475467L;
+	private transient Handler handler;
 	private boolean active;
 	private ArrayList<BufferedImage> hearts = new ArrayList<BufferedImage>();
 	private Rectangle coinRect = new Rectangle(964, 705, 200, 0);

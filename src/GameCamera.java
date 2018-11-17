@@ -1,7 +1,13 @@
-public class GameCamera {
+import java.io.Serializable;
+
+public class GameCamera implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6922785843667158691L;
 	private float xOffset, yOffset;
-	private Handler handler;
+	private transient Handler handler;
 	
 	public GameCamera(Handler handler, float xOffset, float yOffset) {
 		this.handler = handler;

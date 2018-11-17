@@ -1,17 +1,18 @@
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.util.ConcurrentModificationException;
-import java.util.Random;
-import java.util.Vector;
+import java.io.Serializable;
 
 /*
  * Please don't look at this I beg you, it's bad, really bad.
  * If you insist, bless your soul.
  */
-public class EnemyMageM extends Creature{
+public class EnemyMageM extends Creature implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3092905600688269094L;
 	private Animation animDown, animUp, animLeft, animRight, animStill;
 	private Animation castDown, castUp, castLeft, castRight;
 	private Animation currentAnim;

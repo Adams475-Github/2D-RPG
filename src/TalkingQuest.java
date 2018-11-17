@@ -1,5 +1,11 @@
-public class TalkingQuest extends Quest {
+import java.io.Serializable;
 
+public class TalkingQuest extends Quest implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5531148279930888878L;
 	private Creature creature;
 	private Item reward;
 	private String description;

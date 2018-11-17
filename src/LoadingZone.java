@@ -2,9 +2,14 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
-public class LoadingZone extends Entity {
+public class LoadingZone extends Entity implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4966275475769257799L;
 	//rectangle for loading zone
 	private Rectangle r;
 	//enter point for player
@@ -16,9 +21,9 @@ public class LoadingZone extends Entity {
 	//world moving too
 	private World world;
 	//enter texture
-	private BufferedImage enterTexture;
+	private transient BufferedImage enterTexture;
 	//exit texture
-	private BufferedImage exitTexture;
+	private transient BufferedImage exitTexture;
 	
 	public LoadingZone(Handler handler, float x, float y, int width, int height, Point enter, Point exit, World world) {
 		super(handler, x, y, width, height);
@@ -45,7 +50,12 @@ public class LoadingZone extends Entity {
 			//sets to new world
 			handler.setWorld(world);
 			//adds a loading zone to exit the new world
-			world.getEntityManager().addEntity(new LoadingZone(handler, exit.x, exit.y,  100, 100, new Point((int) x + width/2 - 24 , (int) y + height/2), new Point(-100, -100), previousWorld) {{
+			world.getEntityManager().addEntity(new LoadingZone(handler, exit.x, exit.y,  100, 100, new Point((int) x + width/2 - 24 , (int) y + height/2), new Point(-100, -100), previousWorld) {/**
+				 * 
+				 */
+				private static final long serialVersionUID = 6221521699129413690L;
+
+			{
 				if(exitTexture != null) {
 					setEnterTexture(Assets.stairs);
 				}

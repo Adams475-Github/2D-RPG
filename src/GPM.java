@@ -1,9 +1,14 @@
+import java.io.Serializable;
 
-public class GPM {
+public class GPM implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2148012873154725813L;
 	//Stands for game progression manager
 	
 	private String gameStage = "tutorial";
-	private Handler handler;
+	private transient Handler handler;
 	
 	public GPM(Handler handler) {
 		this.handler = handler;

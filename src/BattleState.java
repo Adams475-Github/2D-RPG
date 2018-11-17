@@ -1,8 +1,13 @@
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
-public class BattleState extends State {
+public class BattleState extends State implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9033691757489186046L;
 	private Player player;
 	private Creature enemy;
 	private BufferedImage background;

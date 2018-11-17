@@ -1,7 +1,12 @@
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
-public class SpriteSheet {
+public class SpriteSheet implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8285647099821811541L;
 	private BufferedImage sheet;
 	
 	public SpriteSheet(BufferedImage sheet) {

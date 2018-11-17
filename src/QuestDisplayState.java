@@ -1,8 +1,13 @@
 import java.awt.Graphics;
-import java.awt.Rectangle;	
+import java.awt.Rectangle;
+import java.io.Serializable;	
 
-public class QuestDisplayState extends State {
+public class QuestDisplayState extends State implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5816228678404178602L;
 	private UIManager uiManager;
 	private Quest quest;
 	private Rectangle titleRect = new Rectangle(175, 70, 300, 50);

@@ -2,9 +2,14 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.io.Serializable;
 
-public class QuestState extends State {
+public class QuestState extends State implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8065244158744841032L;
 	public Point centerScreen = new Point(Launcher.SCREEN_WIDTH/2, Launcher.SCREEN_HEIGHT/2);
 	private UIManager uiManager;
 	private int pageIndex = 0;

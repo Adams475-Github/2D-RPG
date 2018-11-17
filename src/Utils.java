@@ -1,9 +1,15 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serializable;
 
-public class Utils {
+public class Utils implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7363440071532560786L;
+
 	public static String loadFileAsString(String path) {
 		StringBuilder builder = new StringBuilder();
 		

@@ -1,6 +1,11 @@
+import java.io.Serializable;
 
-public class BountyQuest extends Quest{
+public class BountyQuest extends Quest implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 915924677073733272L;
 	private World world;
 	private Item reward;
 	private Entity target;

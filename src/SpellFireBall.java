@@ -1,7 +1,12 @@
 import java.awt.Graphics;
+import java.io.Serializable;
 
-public class SpellFireBall extends Creature {
+public class SpellFireBall extends Creature implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1971804220179129277L;
 	private Animation right, left, up, down;
 	private Animation currentAnim;
 	private int direction;

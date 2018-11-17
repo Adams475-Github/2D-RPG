@@ -1,9 +1,14 @@
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 
-public class Chest extends Entity {
+public class Chest extends Entity implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4095869842042066014L;
 	private boolean opened = false;
 	private boolean display = false;
 	Item item;

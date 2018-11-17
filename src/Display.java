@@ -1,10 +1,15 @@
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.io.Serializable;
 
 import javax.swing.JFrame;
 
-public class Display {
+public class Display implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2189741358120952651L;
 	private JFrame frame;
 	private Canvas canvas;
 	

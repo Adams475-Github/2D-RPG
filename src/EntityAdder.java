@@ -1,8 +1,14 @@
 import java.awt.Point;
+import java.io.Serializable;
 
-public class EntityAdder {
+public class EntityAdder implements Serializable {
 	
-	private Handler handler;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5058635342248588421L;
+
+	private transient Handler handler;
 	private EntityManager entityManager;
 	
 	public EntityAdder(Handler handler, EntityManager entityManager) {
@@ -19,7 +25,12 @@ public class EntityAdder {
 		//entityManager.addEntity(new EnemyMageM(handler, 500, 350, 27, 33));
 		entityManager.addEntity(new Chest(handler, 300, 100, 22, 17, Item.blueSword));
 		//entityManager.addEntity(new LongWall(handler, 100, 500));
-		entityManager.addEntity(new WizardVendor(handler, 100, 400, 20, 23, new Inventory(handler) {{
+		entityManager.addEntity(new WizardVendor(handler, 100, 400, 20, 23, new Inventory(handler) {/**
+			 * 
+			 */
+			private static final long serialVersionUID = 5805117551690706112L;
+
+		{
 			addItem(Item.blueSword);
 			addItem(Item.blueSword);
 			addItem(Item.blueSword);
@@ -35,7 +46,12 @@ public class EntityAdder {
 		//add entities
 		houseEntityManager.addEntity(new Chest(handler, 100, 100, 50, 50, Item.blueSword));
 		houseEntityManager.addEntity(new TallPlantPot(handler, 400, 80));
-		houseEntityManager.addEntity(new WizardVendor(handler, 620, 80, 20, 23, new Inventory(handler) {{ 
+		houseEntityManager.addEntity(new WizardVendor(handler, 620, 80, 20, 23, new Inventory(handler) {/**
+			 * 
+			 */
+			private static final long serialVersionUID = -1487865884482170112L;
+
+		{ 
 			addItem(Item.swordStarter);
 			
 		}}));
@@ -49,7 +65,12 @@ public class EntityAdder {
 		houseWorld.setEntityManager(houseEntityManager);
 		//make loading zone with specific world
 		//arguments are x, y, width, height, entering position, exit position for new loading zone, world
-		entityManager.addEntity(new LoadingZone(handler, 600, 100, 100, 100, new Point(470 + 25, 680), new Point(480, 894 - 100), houseWorld) {{
+		entityManager.addEntity(new LoadingZone(handler, 600, 100, 100, 100, new Point(470 + 25, 680), new Point(480, 894 - 100), houseWorld) {/**
+			 * 
+			 */
+			private static final long serialVersionUID = -1407943046033333916L;
+
+		{
 			//set textures for loading zone
 			setEnterTexture(Assets.stairs);
 			setExitTexture(Assets.stairs);

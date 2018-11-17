@@ -1,13 +1,19 @@
 import java.awt.Graphics;
+import java.io.Serializable;
 
-public class World {
+public class World implements Serializable{
+
 	
-	private Handler handler;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6832396738974790262L;
+	private transient Handler handler;
 	private int width, height;
 	private int spawnX, spawnY;
 	private int[][] tiles;
 	private boolean raining;
-	private RainDrop drops[] = new RainDrop[1000];
+	//private RainDrop drops[] = new RainDrop[1000];
 	//Entities
 	private EntityManager entityManager;
 	
@@ -17,9 +23,9 @@ public class World {
 		this.handler = handler;
 		itemManager = new ItemManager(handler);
 		entityManager = new EntityManager(handler, new Player(handler, 100, 100));
-		for(int i = 0; i < drops.length; i++) {
-			drops[i] = new RainDrop();
-		}
+		//for(int i = 0; i < drops.length; i++) {
+			//drops[i] = new RainDrop();
+		//}
 		
 		loadWorld(path);
 		
@@ -37,9 +43,9 @@ public class World {
 		entityManager.tick();
 		
 		if(raining) {
-			for(int i = 0; i < drops.length; i++) {
-				drops[i].tick();
-			}
+//			for(int i = 0; i < drops.length; i++) {
+//				drops[i].tick();
+//			}
 		}
 		
 	}

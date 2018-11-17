@@ -2,9 +2,15 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.io.Serializable;
 
-public class Text {
+public class Text implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8636344867250167300L;
+
 	public static void drawString(Graphics g, String text, int xPos, int yPos, boolean center, Color c, Font font) {
 		g.setColor(c);
 		g.setFont(font);

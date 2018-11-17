@@ -1,9 +1,14 @@
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
-public class Item {
+public class Item implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -154986130137370073L;
 	//Universal Item Types
 	public static int nothingType = 0;
 	public static int swordType = 1;
@@ -25,13 +30,13 @@ public class Item {
 	
 	public static final int ITEMWIDTH = 2, ITEMHEIGHT = 2;
 
-	protected Handler handler;
-	protected BufferedImage texture;
+	protected transient Handler handler;
+	protected transient BufferedImage texture;
 	protected String name;
 	protected final int id;
 	protected int wid, hei;
 	protected Rectangle bounds;
-	protected Animation anim;
+	protected transient Animation anim;
 	protected int type;
 	protected int armorValue;
 	protected int attackValue;

@@ -1,8 +1,14 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.io.Serializable;
 //Dimension of screen(for me) = 1024, 762
-public class MenuState extends State {
+public class MenuState extends State implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5133242982803095355L;
 
 	private UIManager uiManager;
 	
