@@ -16,7 +16,7 @@ public class Player extends Creature implements Serializable {
 	
 	//Inventory
 	private Inventory inventory;
-	private transient EscapeMenu escapeMenu;
+	private EscapeMenu escapeMenu;
 	private Item sword;
 	private Item helmet;
 	private Item chestPlate;
@@ -47,29 +47,29 @@ public class Player extends Creature implements Serializable {
 	//Animations
 	
 	//Walking
-	private transient Animation animDown;
-	private transient Animation animUp;
-	private transient Animation animLeft;
-	private transient Animation animRight;
+	private Animation animDown = new Animation(250, Assets.player_down);
+	private Animation animUp = new Animation(250, Assets.player_up);
+	private Animation animLeft = new Animation(250, Assets.player_left);
+	private Animation animRight = new Animation(250, Assets.player_right);
 	
 	//Attacking with a normal sword
-	private transient Animation animAttackDown;
-	private transient Animation animAttackUp;
-	private transient Animation animAttackLeft;
-	private transient Animation animAttackRight;
+	private Animation animAttackDown = new Animation(125, Assets.player_attack_down);
+	private Animation animAttackUp = new Animation(125, Assets.player_attack_up);
+	private Animation animAttackLeft = new Animation(125, Assets.player_attack_left);
+	private Animation animAttackRight = new Animation(125, Assets.player_attack_right);
 	
 	//Attacking with a blue sword
-	private transient Animation animAttackDownB;
-	private transient Animation animAttackUpB;
-	private transient Animation animAttackLeftB;
-	private transient Animation animAttackRightB;
+	private Animation animAttackDownB = new Animation(125, Assets.player_attack_downB);
+	private Animation animAttackUpB = new Animation(125, Assets.player_attack_upB);
+	private Animation animAttackLeftB = new Animation(125, Assets.player_attack_leftB);
+	private Animation animAttackRightB = new Animation(125, Assets.player_attack_rightB);
 
 	//Array for still sprites
-	private transient BufferedImage still[];
+	private transient BufferedImage still[] = Assets.player_idle;
 	
 	//Miscellaneous Variables from ongoing implementation (will refactor)
 	private int lastAnim = 0;
-	private transient Animation currentAttack = animAttackDown;
+	private Animation currentAttack = animAttackDown;
 	private boolean attacking;
 	private long lastAttackTimer, attackCooldown = 550, attackTimer = attackCooldown;
 	private boolean inv = false;
@@ -88,29 +88,6 @@ public class Player extends Creature implements Serializable {
 		bounds.height = 32;	 
 		exp = 29;
 		maxHealth = 16;
-		
-		//Animation Initialization
-		
-		//Walking
-		animDown = new Animation(250, Assets.player_down);
-		animUp = new Animation(250, Assets.player_up);	
-		animLeft = new Animation(250, Assets.player_left);
-		animRight = new Animation(250, Assets.player_right);
-		
-		//Starter sword swing
-		animAttackDown = new Animation(125, Assets.player_attack_down);
-		animAttackUp = new Animation(125, Assets.player_attack_up);
-		animAttackLeft = new Animation(125, Assets.player_attack_left);
-		animAttackRight = new Animation(125, Assets.player_attack_right);
-		
-		//Blue sword swing
-		animAttackDownB = new Animation(125, Assets.player_attack_downB);
-		animAttackUpB = new Animation(125, Assets.player_attack_upB);
-		animAttackLeftB = new Animation(125, Assets.player_attack_leftB);
-		animAttackRightB = new Animation(125, Assets.player_attack_rightB);
-		
-		//standing still asset setting
-		still = Assets.player_idle;
 		
 		//Initializing stats/gear
 		chestPlate = Item.nothing;

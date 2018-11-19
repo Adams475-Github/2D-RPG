@@ -11,7 +11,7 @@ public abstract class Entity implements Serializable {
 
 	public static final int DEFAULT_HEALTH = 100;
 	
-	protected transient Handler handler;
+	protected Handler handler;
 	protected float x, y;
 	protected int width, height;
 	protected Rectangle bounds;

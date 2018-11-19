@@ -12,33 +12,33 @@ public class Assets implements Serializable {
 	//public static final Font titleFont = new Font("High Tower Text", Font.BOLD, 60);
 	
 	//Stand-alone
-	public static transient BufferedImage dirt, grass, stone, tree, rock, bush, 
+	public static BufferedImage dirt, grass, stone, tree, rock, bush, 
 	wood, coin, chestClosed, chestOpen, displayBoxRed, speechBubble, 
 	vendorScreen, floorWood, stoneWall, stairs, tableTop, conversationUI;
 	//Player walk
-	public static transient BufferedImage[] player_down, player_up, player_right, player_left, player_idle;
+	public static BufferedImage[] player_down, player_up, player_right, player_left, player_idle;
 	//Player attack
-	public static transient BufferedImage[] player_attack_down, player_attack_up, player_attack_right, player_attack_left;
-	public static transient BufferedImage[] player_attack_downB, player_attack_rightB,  player_attack_upB,  player_attack_leftB;
+	public static BufferedImage[] player_attack_down, player_attack_up, player_attack_right, player_attack_left;
+	public static BufferedImage[] player_attack_downB, player_attack_rightB,  player_attack_upB,  player_attack_leftB;
 	//Archer Female
-	public static transient BufferedImage[] archF_down, archF_up, archF_right, archF_left, archF_idle;
+	public static BufferedImage[] archF_down, archF_up, archF_right, archF_left, archF_idle;
 	//Mage Male
-	public static transient BufferedImage[] mageM_down, mageM_up, mageM_right, mageM_left, mageM_idle;
-	public static transient BufferedImage[] mageM_downA, mageM_upA, mageM_rightA, mageM_leftA, mageM_idleA;
+	public static BufferedImage[] mageM_down, mageM_up, mageM_right, mageM_left, mageM_idle;
+	public static BufferedImage[] mageM_downA, mageM_upA, mageM_rightA, mageM_leftA, mageM_idleA;
 	//Fireball
-	public static transient BufferedImage[] fb_left, fb_right, fb_up, fb_down;
+	public static BufferedImage[] fb_left, fb_right, fb_up, fb_down;
 	//Start Menu UI
-	public static transient BufferedImage[] btn_start, btn_blank, btn_inc_pos, questLeft, questRight, questButton;
+	public static BufferedImage[] btn_start, btn_blank, btn_inc_pos, questLeft, questRight, questButton;
 	//vendor UI
-	public static transient BufferedImage[] btn_sell, btn_buy, btn_sword, btn_armor, btn_potions, btn_exit, btn_text;
+	public static BufferedImage[] btn_sell, btn_buy, btn_sword, btn_armor, btn_potions, btn_exit, btn_text;
 	//Inventory UI
 
-	public static transient BufferedImage inventoryScreen, itemHighlighter, nothing, heartFull, heartHalf, heartFourth, heartThreeFourths, heartEmpty;
-	public static transient Font font28, font28nBold, fontPlaceHolder;
-	public static transient BufferedImage parchment, tlCorner, trCorner, blCorner, brCorner, vertLine, horzLine;
-	public static transient BufferedImage swordStarter, test, chestPlate, swordBlue, swordRed, swordGreen, swordBlack;
-	public static transient BufferedImage tabHighlightSword, tabHighlightShield, tabHighlightPotion, tabHighlightQuest;
-	public static transient BufferedImage questScreen, bookPage, questMark, expBar, face, expLeft, expMid, expRight;
+	public static BufferedImage inventoryScreen, itemHighlighter, nothing, heartFull, heartHalf, heartFourth, heartThreeFourths, heartEmpty;
+	public static Font font28, font28nBold, fontPlaceHolder;
+	public static BufferedImage parchment, tlCorner, trCorner, blCorner, brCorner, vertLine, horzLine;
+	public static BufferedImage swordStarter, test, chestPlate, swordBlue, swordRed, swordGreen, swordBlack;
+	public static BufferedImage tabHighlightSword, tabHighlightShield, tabHighlightPotion, tabHighlightQuest;
+	public static BufferedImage questScreen, bookPage, questMark, expBar, face, expLeft, expMid, expRight;
 	
 	
 	public static void init() {

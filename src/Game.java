@@ -20,14 +20,14 @@ public class Game implements Runnable, Serializable {
 
 	
 	private transient BufferStrategy bs;
-	private Graphics g;
+	private transient Graphics g;
 	
 	//States
-	public State gameState;
-	public State menuState;
-	public State settingState;
-	public State questState;
-	public State worldMapState;
+	public transient State gameState;
+	public transient State menuState;
+	public transient State settingState;
+	public transient State questState;
+	public transient State worldMapState;
 	
 	//input
 	private KeyManager keyManager;
@@ -39,7 +39,7 @@ public class Game implements Runnable, Serializable {
 	private GameCamera gameCamera;
 	
 	//Handler
-	private transient Handler handler;
+	private Handler handler;
 	
 	//Example for importing image:
 	//private BufferedImage testImage; 

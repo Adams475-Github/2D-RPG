@@ -34,8 +34,10 @@ public class MenuState extends State implements Serializable{
 			public void onClick() {
 				handler.getMouseManager().setUIManager(null);
 				//SettingState settingState = new SettingState(handler);
-				State.setState(handler.getGame().settingState);
-				handler.getGame().settingState.init();
+				LoadGame l = new LoadGame(handler);
+				l.loadGame();
+				State.setState(handler.getGame().gameState);
+				
 			}}));
 		
 		uiManager.addObject(new UIImageButton(400, 440, 200, 50, Assets.btn_blank, new ClickListener() {
