@@ -38,7 +38,7 @@ public class Inventory implements Serializable{
 	//Selected Item (nothing at start so no null)
 	private Item selectedItem = Item.nothing;
 	//Item description rectangle
-	transient Rectangle itemRect = new Rectangle(338, 425, 235, 115);
+	transient Rectangle itemRect = new Rectangle(338, 425, 190, 115);
 	//Button bounding rectangles also hard coded in because I didn't use the state system for this
 	private transient Rectangle swordBounds = new Rectangle(invX + 409, invY + 152, 13*4, 18*4);
 	private transient Rectangle shieldBounds = new Rectangle(invX + 409, invY + 224, 13*4, 18*4);
@@ -293,7 +293,7 @@ public class Inventory implements Serializable{
 			}
 		}		
 	
-		FontHandler.drawFont(g, selectedItem.description, itemRect, FontLoader.highTower);
+		FontHandler.drawFont(g, selectedItem.description, itemRect, FontLoader.highTowerSmall);
 
 	}
 

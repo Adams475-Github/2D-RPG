@@ -31,7 +31,9 @@ public class Assets implements Serializable {
 	public static BufferedImage[] btn_start, btn_blank, btn_inc_pos, questLeft, questRight, questButton;
 	//vendor UI
 	public static BufferedImage[] btn_sell, btn_buy, btn_sword, btn_armor, btn_potions, btn_exit, btn_text;
-	//Inventory UI
+	//Coin Spin :))
+	public static BufferedImage[] coin_spin;
+	
 
 	public static BufferedImage inventoryScreen, itemHighlighter, nothing, heartFull, heartHalf, heartFourth, heartThreeFourths, heartEmpty;
 	public static Font font28, font28nBold, fontPlaceHolder;
@@ -39,6 +41,7 @@ public class Assets implements Serializable {
 	public static BufferedImage swordStarter, test, chestPlate, swordBlue, swordRed, swordGreen, swordBlack;
 	public static BufferedImage tabHighlightSword, tabHighlightShield, tabHighlightPotion, tabHighlightQuest;
 	public static BufferedImage questScreen, bookPage, questMark, expBar, face, expLeft, expMid, expRight;
+	public static BufferedImage coin1, coin2, coin3, coin4;
 	
 	
 	public static void init() {

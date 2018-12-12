@@ -57,7 +57,7 @@ public class FontHandler implements Serializable{
 		
 		//draws lines (could put this in for loop)
 		for(int i = 0; i < lines.length; i++) {
-			
+			g.setFont(font);
 			g.drawString(lines[i], rect.x, ( rect.y + 24 * i + metrics.getAscent() ) );
 		}
 		

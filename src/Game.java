@@ -28,6 +28,7 @@ public class Game implements Runnable, Serializable {
 	public transient State settingState;
 	public transient State questState;
 	public transient State worldMapState;
+	public transient State skillState;
 	
 	//input
 	private KeyManager keyManager;
@@ -73,6 +74,7 @@ public class Game implements Runnable, Serializable {
 		
 		gameCamera = new GameCamera(handler, 0, 0);
 		gpm = new GPM(handler);
+		skillState = new SkillState(handler);
 		worldMapState = new WorldMap(handler);
 		setGameState(new GameState(handler));
 		questState = new QuestState(handler);

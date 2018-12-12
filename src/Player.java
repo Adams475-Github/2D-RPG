@@ -15,6 +15,7 @@ public class Player extends Creature implements Serializable {
 	//Instance variable initialization
 	
 	//Inventory
+	private float baseSpeed = 4;
 	private Inventory inventory;
 	private EscapeMenu escapeMenu;
 	private Item sword;
@@ -22,6 +23,14 @@ public class Player extends Creature implements Serializable {
 	private Item chestPlate;
 	private Item bobble;
 	private Item shield;
+	
+	//Post control variables
+	private int damageFinal;
+	private int critChanceFinal;
+	private int healthFinal;
+	private float moveSpeedFinal;
+	private int resistanceFinal;
+	
 
 	
 	//display box code
@@ -42,6 +51,14 @@ public class Player extends Creature implements Serializable {
 	private int expL;
 	private int exp;
 	private int maxHealth;
+	
+	//Skills
+	private SkillManager skillManager;
+	private int skillAttack;
+	private int skillCrit;
+	private int skillHealth;
+	private int skillMS;
+	private int skillAnim;
 	
 	
 	//Animations
@@ -96,6 +113,7 @@ public class Player extends Creature implements Serializable {
 		
 		//inventory initialization
 		inventory = new Inventory(handler);
+		skillManager = new SkillManager(handler);
 		escapeMenu = new EscapeMenu(handler);
 		
 		
@@ -103,6 +121,9 @@ public class Player extends Creature implements Serializable {
 	
 	public void tick() {
 		
+		skillManager.tick();
+		calculateFinalValues();
+		setValues();
 		tickAnimations();
 		checkQuests();
 		manageSword();
@@ -159,6 +180,17 @@ public class Player extends Creature implements Serializable {
 		if(drawDisplayBox) {
 			renderDisplayBox(g);
 		}
+	}
+	
+	private void calculateFinalValues() {
+		damageFinal = sword.attackValue + skillAttack;
+		healthFinal = health + skillHealth;
+		moveSpeedFinal = baseSpeed + skillMS;
+		
+	}
+	
+	private void setValues() {
+		this.speed = moveSpeedFinal;
 	}
 	
 	private void checkQuests() {
@@ -262,6 +294,10 @@ public class Player extends Creature implements Serializable {
 			yMove = -speed;
 			
 		}
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_P)) {
+			State.setState(handler.getGame().skillState);
+			handler.getGame().skillState.init();
+		}
 		if(handler.getKeyManager().down && !attacking && !inv) {
 			yMove = speed;
 		}
@@ -362,7 +398,7 @@ public class Player extends Creature implements Serializable {
 				continue;
 			}
 			if(e.getCollisionBounds(0, 0).intersects(ar)) {
-				e.hurt(sword.attackValue);
+				e.hurt(damageFinal);
 			}
 		}
 		
@@ -529,6 +565,94 @@ public class Player extends Creature implements Serializable {
 
 	public void setExpL(int expL) {
 		this.expL = expL;
+	}
+
+	public SkillManager getSkillManager() {
+		return skillManager;
+	}
+
+	public void setSkillManager(SkillManager skillManager) {
+		this.skillManager = skillManager;
+	}
+
+	public int getDamageFinal() {
+		return damageFinal;
+	}
+
+	public void setDamageFinal(int damageFinal) {
+		this.damageFinal = damageFinal;
+	}
+
+	public int getCritChanceFinal() {
+		return critChanceFinal;
+	}
+
+	public void setCritChanceFinal(int critChanceFinal) {
+		this.critChanceFinal = critChanceFinal;
+	}
+
+	public int getHealthFinal() {
+		return healthFinal;
+	}
+
+	public void setHealthFinal(int healthFinal) {
+		this.healthFinal = healthFinal;
+	}
+
+	public float getMoveSpeedFinal() {
+		return moveSpeedFinal;
+	}
+
+	public void setMoveSpeedFinal(float moveSpeedFinal) {
+		this.moveSpeedFinal = moveSpeedFinal;
+	}
+
+	public int getResistanceFinal() {
+		return resistanceFinal;
+	}
+
+	public void setResistanceFinal(int resistanceFinal) {
+		this.resistanceFinal = resistanceFinal;
+	}
+
+	public int getSkillAttack() {
+		return skillAttack;
+	}
+
+	public void setSkillAttack(int skillAttack) {
+		this.skillAttack = skillAttack;
+	}
+
+	public int getSkillCrit() {
+		return skillCrit;
+	}
+
+	public void setSkillCrit(int skillCrit) {
+		this.skillCrit = skillCrit;
+	}
+
+	public int getSkillHealth() {
+		return skillHealth;
+	}
+
+	public void setSkillHealth(int skillHealth) {
+		this.skillHealth = skillHealth;
+	}
+
+	public int getSkillMS() {
+		return skillMS;
+	}
+
+	public void setSkillMS(int skillMS) {
+		this.skillMS = skillMS;
+	}
+
+	public int getSkillAnim() {
+		return skillAnim;
+	}
+
+	public void setSkillAnim(int skillAnim) {
+		this.skillAnim = skillAnim;
 	}
 
 	
