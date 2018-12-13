@@ -138,7 +138,7 @@ public class Player extends Creature implements Serializable {
 		resize();
 		inventory.tick();
 		removeEscapeMenu();
-		
+		System.out.println(damageFinal);
 	}
 	
 	public void render(Graphics g) {

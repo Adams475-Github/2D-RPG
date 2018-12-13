@@ -15,7 +15,11 @@ public class SkillState extends State{
 
 			@Override
 			public void onClick() {
-				
+				if(handler.getWorld().getEntityManager().getPlayer().getSkillManager().getSkillPoints() > 0) {
+					handler.getWorld().getEntityManager().getPlayer().getSkillManager().setSkillPoints(handler.getWorld().getEntityManager().getPlayer().getSkillManager().getSkillPoints() - 1);
+					handler.getWorld().getEntityManager().getPlayer().getSkillManager().addMeleeSkill();
+					State.setState(handler.getGame().gameState);
+				}
 			}}));
 		
 		
