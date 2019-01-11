@@ -22,11 +22,11 @@ public class SkillManager {
 		for(int i = 0; i < skills.size(); i++) {
 			
 			if(skills.get(i).type.equals("melee")) {
-				handler.getWorld().getEntityManager().getPlayer().setSkillAttack(skills.get(i).damageInc);
+				handler.getWorld().getEntityManager().getPlayer().setSkillAttack(skills.get(i).damageInc + i * 5);
 			}
 			
 			if(skills.get(i).type.equals("crit")) {
-				handler.getWorld().getEntityManager().getPlayer().setSkillCrit(skills.get(i).critInc);
+				handler.getWorld().getEntityManager().getPlayer().setSkillCrit(skills.get(i).critInc + i * 1);
 			}
 			
 			
@@ -35,6 +35,10 @@ public class SkillManager {
 	
 	public void addMeleeSkill() {
 		skills.add(skillList.melee1);
+	}
+	
+	public void addCritSkill() {
+		skills.add(skillList.crit1);
 	}
 
 	public int getSkillPoints() {

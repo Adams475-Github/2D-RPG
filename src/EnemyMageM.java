@@ -127,10 +127,10 @@ public class EnemyMageM extends Creature implements Serializable{
 		npcWanderLogic();
 		
 		if(!stopped && !close) {
-			collisionLogic();
+			//collisionLogic();
 			npcTrackLogic();
 		}
-		avoidance();
+		//avoidance();
 		checkBounds();
 		if(close) {
 			xMove = 0;

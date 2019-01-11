@@ -2,15 +2,15 @@ import java.awt.Graphics;
 import java.io.Serializable;
 
 public class SpellFireBall extends Creature implements Serializable{
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1971804220179129277L;
 	private Animation right, left, up, down;
 	private Animation currentAnim;
-	private int direction;
 	private boolean doneTracking;
+	private float cenX, cenY;
+	private float tX, tY;
+	private double angle;
+	private long birthTime = System.currentTimeMillis();
 
 	public SpellFireBall(Handler handler, float x, float y, int width, int height) {
 		super(handler, x, y, width, height);
@@ -30,6 +30,10 @@ public class SpellFireBall extends Creature implements Serializable{
 	@Override
 	public void tick() {
 		
+		if(System.currentTimeMillis() - birthTime > 2500) {
+			handler.getWorld().getEntityManager().getEntities().remove(this);
+		}
+		
 		if(handler.getWorld().getEntityManager().getPlayer().getCollisionBounds(0, 0).contains(this.x, this.y)) {
 			handler.getWorld().getEntityManager().getPlayer().hurt(10);
 			active = false;
@@ -44,24 +48,20 @@ public class SpellFireBall extends Creature implements Serializable{
 			this.width = 52;
 			this.height = 18;
 			currentAnim = right;
-			direction = 0;
 			
 		} else if(xMove < 0) {
 			this.width = 52;
 			this.height = 18;
 			currentAnim = left;
-			direction = 1;
 			
 		} else if(yMove < 0) {
 			this.width = 16;
 			this.height = 32;
-			direction = 3;
 			currentAnim = up;
 			
 		} else if(yMove > 0) {
 			this.width = 16;
 			this.height = 32;
-			direction = 2;
 			currentAnim = down;
 			
 		} 
@@ -93,52 +93,29 @@ public class SpellFireBall extends Creature implements Serializable{
 	
 	public void trackPlayer() {
 		
-		if(doneTracking && Math.abs(this.x - handler.getWorld().getEntityManager().getPlayer().x) > 400 ) {
-			active = false;
-		}
-		
-		if(Math.abs(this.x - handler.getWorld().getEntityManager().getPlayer().x) < 80 && Math.abs(this.y - handler.getWorld().getEntityManager().getPlayer().y) < 80 || doneTracking) {
-			doneTracking = true;
+		if(doneTracking) {
 			return;
 		}
 		
-		if(this.x < handler.getWorld().getEntityManager().getPlayer().x + handler.getWorld().getEntityManager().getPlayer().width/2) {
-			if(Math.abs(this.x - handler.getWorld().getEntityManager().getPlayer().x) < 5) {
-				xMove = 0;
-			} else {
-				xMove = 3;
-			}
-			
+		cenX = (this.x );
+		cenY = (this.y );
+		
+		tX = handler.getWorld().getEntityManager().getPlayer().x + handler.getWorld().getEntityManager().getPlayer().width/2 - cenX;
+		tY = handler.getWorld().getEntityManager().getPlayer().y + handler.getWorld().getEntityManager().getPlayer().height - cenY;
+
+		angle = Math.atan(tY/ tX);
+		
+		
+		xMove = (float) (7 * Math.cos(angle));
+		yMove = (float) (7 * Math.sin(angle));
+		
+		if(tX < 0) {
+			xMove *= -1;
+			yMove *= -1;
 		}
 		
-		if(this.x > handler.getWorld().getEntityManager().getPlayer().x + handler.getWorld().getEntityManager().getPlayer().width/2) {
-			if(Math.abs(this.x - handler.getWorld().getEntityManager().getPlayer().x) < 5) {
-				xMove = 0;
-			} else {
-				xMove = -3;
-			}
-			
-		}
 		
-		if(this.y < handler.getWorld().getEntityManager().getPlayer().y) {
-			if(Math.abs(this.y - handler.getWorld().getEntityManager().getPlayer().y) < 5) {
-				yMove = 0;
-			} else {
-				yMove = 3;
-			}
-			
-		}
-		
-		if(this.y > handler.getWorld().getEntityManager().getPlayer().y ) {
-			
-			if(Math.abs(this.y - handler.getWorld().getEntityManager().getPlayer().y) < 5) {
-				yMove = 0;
-			} else {
-				yMove = -3;
-			}
-			
-		}
-		
+		doneTracking = true;
 		
 	}
 

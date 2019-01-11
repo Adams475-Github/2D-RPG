@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Player extends Creature implements Serializable {
 	
@@ -23,6 +24,7 @@ public class Player extends Creature implements Serializable {
 	private Item chestPlate;
 	private Item bobble;
 	private Item shield;
+	private Random r = new Random();
 	
 	//Post control variables
 	private int damageFinal;
@@ -121,6 +123,7 @@ public class Player extends Creature implements Serializable {
 	
 	public void tick() {
 		
+		//no touch order
 		skillManager.tick();
 		calculateFinalValues();
 		setValues();
@@ -138,21 +141,26 @@ public class Player extends Creature implements Serializable {
 		resize();
 		inventory.tick();
 		removeEscapeMenu();
-		System.out.println(damageFinal);
+		
+		
 	}
 	
 	public void render(Graphics g) {
 
 		//forces render to loop through attack if called, else draws normally
-		//TODO refactor this garbage code
 		if(attacking) {
-			g.drawImage(currentAttack.getCurrentFrame(), (int) (x - handler.getGameCamera().getxOffset() - 7), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
-			if(currentAttack.hasPlayedOnce() && !handler.getKeyManager().attackDown && !handler.getKeyManager().attackUp && !handler.getKeyManager().attackRight && !handler.getKeyManager().attackLeft) {
+			g.drawImage(currentAttack.getCurrentFrame(), (int) (x - handler.getGameCamera().getxOffset() - 7), 
+					(int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+			
+			if(currentAttack.hasPlayedOnce() && !handler.getKeyManager().attackDown && 
+					!handler.getKeyManager().attackUp && !handler.getKeyManager().attackRight && !handler.getKeyManager().attackLeft) {
+				
 				attacking = false;
 				setDimension(60, 98);
 			}
 		} else {
-			g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset() - 7), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+			g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset() - 7), 
+					(int) (y - handler.getGameCamera().getyOffset()), width, height, null);
 		}
 		
 		escapeMenu.render(g);
@@ -183,7 +191,10 @@ public class Player extends Creature implements Serializable {
 	}
 	
 	private void calculateFinalValues() {
+		
 		damageFinal = sword.attackValue + skillAttack;
+		
+		
 		healthFinal = health + skillHealth;
 		moveSpeedFinal = baseSpeed + skillMS;
 		
@@ -191,6 +202,19 @@ public class Player extends Creature implements Serializable {
 	
 	private void setValues() {
 		this.speed = moveSpeedFinal;
+	}
+	
+	private boolean calculateCrit() {
+		int range = (int) Math.ceil(20);
+		
+		int temp1 = r.nextInt(range);
+		int temp2 = r.nextInt(range);
+		
+		if(temp1 == temp2) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 	private void checkQuests() {
@@ -398,7 +422,13 @@ public class Player extends Creature implements Serializable {
 				continue;
 			}
 			if(e.getCollisionBounds(0, 0).intersects(ar)) {
-				e.hurt(damageFinal);
+				if(calculateCrit()) {
+					e.hurt(damageFinal*2);
+					System.out.println("Crit!");
+				} else {
+					e.hurt(damageFinal);
+				}
+				
 			}
 		}
 		
