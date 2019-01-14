@@ -48,6 +48,10 @@ public class Animation implements Serializable {
 		return frames[index];
 	}
 	
+	public BufferedImage[] getAllFrames() {
+		return frames;
+	}
+	
 	//gets if the animation has been played once, useful for single play animations like attacking
 	public boolean hasPlayedOnce() {
 		return playedOnce;

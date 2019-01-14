@@ -77,7 +77,8 @@ public class SpellFireBall extends Creature implements Serializable{
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(currentAnim.getCurrentFrame(), (int) (this.x - handler.getGameCamera().getxOffset()), (int) (this.y - handler.getGameCamera().getyOffset() ), width, height, null);
+		g.drawImage(currentAnim.getCurrentFrame(), (int) (this.x - handler.getGameCamera().getxOffset()), 
+				(int) (this.y - handler.getGameCamera().getyOffset() ), width, height, null);
 	
 	}
 

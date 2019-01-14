@@ -147,21 +147,28 @@ public class Player extends Creature implements Serializable {
 	
 	public void render(Graphics g) {
 
-		//forces render to loop through attack if called, else draws normally
+		//Please Ignore this. Seriously.
 		if(attacking) {
-			g.drawImage(currentAttack.getCurrentFrame(), (int) (x - handler.getGameCamera().getxOffset() - 7), 
-					(int) (y - handler.getGameCamera().getyOffset()), width, height, null);
-			
 			if(currentAttack.hasPlayedOnce() && !handler.getKeyManager().attackDown && 
 					!handler.getKeyManager().attackUp && !handler.getKeyManager().attackRight && !handler.getKeyManager().attackLeft) {
 				
 				attacking = false;
 				setDimension(60, 98);
 			}
+			
+			if(attacking) {
+				g.drawImage(currentAttack.getCurrentFrame(), (int) (x - handler.getGameCamera().getxOffset() - 7), 
+						(int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+			} else {
+				g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset() - 7), 
+						(int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+			}
+			
 		} else {
 			g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset() - 7), 
 					(int) (y - handler.getGameCamera().getyOffset()), width, height, null);
 		}
+		//End Ignore.
 		
 		escapeMenu.render(g);
 		playerO.render(g);
@@ -193,8 +200,6 @@ public class Player extends Creature implements Serializable {
 	private void calculateFinalValues() {
 		
 		damageFinal = sword.attackValue + skillAttack;
-		
-		
 		healthFinal = health + skillHealth;
 		moveSpeedFinal = baseSpeed + skillMS;
 		
@@ -206,7 +211,6 @@ public class Player extends Creature implements Serializable {
 	
 	private boolean calculateCrit() {
 		int range = (int) Math.ceil(20);
-		
 		int temp1 = r.nextInt(range);
 		int temp2 = r.nextInt(range);
 		
@@ -332,6 +336,7 @@ public class Player extends Creature implements Serializable {
 			xMove = speed;
 			
 		}
+		
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_DOWN) && !inv && sword != Item.nothing) {
 			attacking = true;
 			if(handler.getWorld().getEntityManager().getPlayer().sword != Item.blueSword) {
@@ -340,6 +345,7 @@ public class Player extends Creature implements Serializable {
 				currentAttack = animAttackDownB;
 			}
 		}
+		
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP) && !inv && sword != Item.nothing) {
 			attacking = true;
 			if(handler.getWorld().getEntityManager().getPlayer().sword != Item.blueSword) {
@@ -348,6 +354,7 @@ public class Player extends Creature implements Serializable {
 				currentAttack = animAttackUpB;
 			}
 		}
+		
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_LEFT) && !inv && sword != Item.nothing) {
 			attacking = true;
 			if(handler.getWorld().getEntityManager().getPlayer().sword != Item.blueSword) {
@@ -356,6 +363,7 @@ public class Player extends Creature implements Serializable {
 				currentAttack = animAttackLeftB;
 			}
 		}
+		
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT) && !inv && sword != Item.nothing) {
 			attacking = true;
 			if(handler.getWorld().getEntityManager().getPlayer().sword != Item.blueSword) {
@@ -459,6 +467,9 @@ public class Player extends Creature implements Serializable {
 		} else if(yMove > 0){
 			lastAnim = 0;
 			return animDown.getCurrentFrame();
+		} else if(attacking) {
+			return currentAttack.getCurrentFrame();
+		
 		} else {
 			//returns a standing sill player in the correct direction
 			return still[lastAnim];
@@ -466,7 +477,6 @@ public class Player extends Creature implements Serializable {
 		
 	}
 	
-
 	//sets render dimension of player, used for consistent sizes with different width/height sprites
 	public void setDimension(int setWidth, int setHeight) {
 		width = setWidth;
