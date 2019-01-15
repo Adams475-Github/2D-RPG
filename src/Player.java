@@ -60,6 +60,11 @@ public class Player extends Creature {
 	private Animation animLeft = new Animation(250, Assets.player_left);
 	private Animation animRight = new Animation(250, Assets.player_right);
 	
+	private Animation animDownBs = new Animation(250, Assets.player_down_bs);
+	private Animation animUpBs = new Animation(250, Assets.player_up_bs);
+	private Animation animLeftBs = new Animation(250, Assets.player_left_bs);
+	private Animation animRightBs = new Animation(250, Assets.player_right_bs);
+	
 	//Attacking with a normal sword
 	private Animation animAttackDown = new Animation(125, Assets.player_attack_down);
 	private Animation animAttackUp = new Animation(125, Assets.player_attack_up);
@@ -74,6 +79,7 @@ public class Player extends Creature {
 
 	//Array for still sprites
 	private transient BufferedImage still[] = Assets.player_idle;
+	private transient BufferedImage stillBs[] = Assets.player_idle_bs;
 	
 	//Miscellaneous Variables from ongoing implementation (will refactor)
 	private int lastAnim = 0;
@@ -278,10 +284,17 @@ public class Player extends Creature {
 	}
 	
 	private void tickAnimations() {
-		animDown.tick();
-		animUp.tick();
-		animLeft.tick();
-		animRight.tick();
+		if(shield != null) {
+			animDownBs.tick();
+			animUpBs.tick();
+			animLeftBs.tick();
+			animRightBs.tick();
+		} else {
+			animDown.tick();
+			animUp.tick();
+			animLeft.tick();
+			animRight.tick();
+		}
 	}
 	
 	private void manageSword() {
@@ -444,22 +457,42 @@ public class Player extends Creature {
 		//last anim keeps track of which direction the player is facing
 		if(xMove < 0) {
 			lastAnim = 3;
-			return animLeft.getCurrentFrame();
+			if(shield == null) {
+				return animLeft.getCurrentFrame();
+			} else {
+				return animLeftBs.getCurrentFrame();
+			}
 		} else if(xMove > 0) {
 			lastAnim = 2;
-			return animRight.getCurrentFrame();
+			if(shield == null) {
+				return animRight.getCurrentFrame();
+			} else  {
+				return animRightBs.getCurrentFrame();
+			}
 		} else if(yMove < 0) {
 			lastAnim = 1;
-			return animUp.getCurrentFrame();
+			if(shield == null) {
+				return animUp.getCurrentFrame();
+			} else {
+				return animUpBs.getCurrentFrame();
+			}
 		} else if(yMove > 0){
 			lastAnim = 0;
-			return animDown.getCurrentFrame();
+			if(shield == null) {
+				return animDown.getCurrentFrame();
+			} else  {
+				return animDownBs.getCurrentFrame();
+			}
 		} else if(attacking) {
 			return currentAttack.getCurrentFrame();
 		
 		} else {
 			//returns a standing sill player in the correct direction
-			return still[lastAnim];
+			if(shield == null) {
+				return still[lastAnim];
+			} else  {
+				return stillBs[lastAnim];
+			}
 		}
 		
 	}

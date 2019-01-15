@@ -17,6 +17,7 @@ public class Assets implements Serializable {
 	vendorScreen, floorWood, stoneWall, stairs, tableTop, conversationUI;
 	//Player walk
 	public static BufferedImage[] player_down, player_up, player_right, player_left, player_idle;
+	public static BufferedImage[] player_down_bs, player_up_bs, player_right_bs, player_left_bs, player_idle_bs;
 	//Player attack
 	public static BufferedImage[] player_attack_down, player_attack_up, player_attack_right, player_attack_left;
 	public static BufferedImage[] player_attack_downB, player_attack_rightB,  player_attack_upB,  player_attack_leftB;
@@ -69,6 +70,7 @@ public class Assets implements Serializable {
 		SpriteSheet bookPageSheet = new SpriteSheet(ImageLoader.loadImage("/textures/bookPage.png"));
 		SpriteSheet invUIpat2 = new SpriteSheet(ImageLoader.loadImage("/textures/invUi.png"));
 		SpriteSheet cvUI = new SpriteSheet(ImageLoader.loadImage("/textures/converstionUI.png"));
+		SpriteSheet sheetCharacterBs = new SpriteSheet(ImageLoader.loadImage("/textures/characterBasicShield.png"));
 		//303 225
 		
 		//more overlay
@@ -340,6 +342,13 @@ public class Assets implements Serializable {
 		player_left = new BufferedImage[3];
 		player_right = new BufferedImage[3];
 		player_idle = new BufferedImage[4];
+
+		player_down_bs = new BufferedImage[2];
+		player_up_bs = new BufferedImage[2];
+		player_left_bs = new BufferedImage[3];
+		player_right_bs = new BufferedImage[3];
+		player_idle_bs = new BufferedImage[4];
+		
 		player_attack_down = new BufferedImage[4];
 		player_attack_up = new BufferedImage[4];
 		player_attack_left = new BufferedImage[4];
@@ -349,6 +358,23 @@ public class Assets implements Serializable {
 		player_attack_leftB = new BufferedImage[4];
 		player_attack_rightB = new BufferedImage[4];
 		player_attack_upB = new BufferedImage[4];
+		
+		//Walking
+		player_down_bs[0] = sheetCharacterBs.crop(17, 7, 15, 20);
+		player_down_bs[1] = sheetCharacterBs.crop(49, 7, 15, 20);
+		player_up_bs[0] = sheetCharacterBs.crop(16, 70, 15, 21);
+		player_up_bs[1] = sheetCharacterBs.crop(48, 70, 15, 21);
+		player_right_bs[0] = sheetCharacterBs.crop(18, 39, 15, 21);
+		player_right_bs[1] = sheetCharacterBs.crop(34, 38, 15, 21);
+		player_right_bs[2] = sheetCharacterBs.crop(50, 39, 15, 21);
+		player_left_bs[0] = sheetCharacterBs.crop(17, 103, 15, 21);
+		player_left_bs[1] = sheetCharacterBs.crop(33, 102, 15, 21);
+		player_left_bs[2] = sheetCharacterBs.crop(49, 103, 15, 21);
+		//Idle
+		player_idle_bs[0] = sheetCharacterBs.crop(33, 6, 15, 21);
+		player_idle_bs[1] = sheetCharacterBs.crop(32, 69, 15, 22);
+		player_idle_bs[2] = sheetCharacterBs.crop(34, 38, 15, 21);
+		player_idle_bs[3] = sheetCharacterBs.crop(33, 102, 15, 21);
 		
 		//Walking
 		player_down[0] = sheetCharacter.crop(17, 7, 15, 20);
