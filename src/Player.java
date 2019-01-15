@@ -7,13 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Player extends Creature implements Serializable {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3519735914463066053L;
-	//Instance variable initialization
+public class Player extends Creature {
 	
 	//Inventory
 	private float baseSpeed = 4;
@@ -32,8 +26,6 @@ public class Player extends Creature implements Serializable {
 	private int healthFinal;
 	private float moveSpeedFinal;
 	private int resistanceFinal;
-	
-
 	
 	//display box code
 	private boolean drawDisplayBox = false;
@@ -61,10 +53,7 @@ public class Player extends Creature implements Serializable {
 	private int skillHealth;
 	private int skillMS;
 	private int skillAnim;
-	
-	
-	//Animations
-	
+
 	//Walking
 	private Animation animDown = new Animation(250, Assets.player_down);
 	private Animation animUp = new Animation(250, Assets.player_up);
@@ -118,12 +107,11 @@ public class Player extends Creature implements Serializable {
 		skillManager = new SkillManager(handler);
 		escapeMenu = new EscapeMenu(handler);
 		
-		
 	}
 	
 	public void tick() {
 		
-		//no touch order
+		//Method calls
 		skillManager.tick();
 		calculateFinalValues();
 		setValues();
@@ -142,12 +130,11 @@ public class Player extends Creature implements Serializable {
 		inventory.tick();
 		removeEscapeMenu();
 		
-		
 	}
 	
 	public void render(Graphics g) {
 
-		//Please Ignore this. Seriously.
+		//Please Ignore this. Seriously. It's legacy code. 
 		if(attacking) {
 			if(currentAttack.hasPlayedOnce() && !handler.getKeyManager().attackDown && 
 					!handler.getKeyManager().attackUp && !handler.getKeyManager().attackRight && !handler.getKeyManager().attackLeft) {
@@ -569,6 +556,10 @@ public class Player extends Creature implements Serializable {
 
 	public void setChestPlate(Item chestPlate) {
 		this.chestPlate = chestPlate;
+	}
+	
+	public void setShield(Item shield) {
+		this.shield = shield;
 	}
 
 	public Item getBobble() {

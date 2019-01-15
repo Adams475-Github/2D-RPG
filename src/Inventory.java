@@ -66,6 +66,7 @@ public class Inventory implements Serializable{
 		hotbar = new ArrayList<Item>();
 		init();
 		addItem(Item.swordStarter);
+		addItem(Item.shieldStarter);
 		
 	}
 	
@@ -94,6 +95,7 @@ public class Inventory implements Serializable{
 	
 	//tick method to update everything
 	public void tick() {
+		
 		
 		//if user presses E either opens or closes menu
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_I) && !handler.getWorld().getEntityManager().getPlayer().getEscapeMenu().isActive()) {
@@ -391,7 +393,11 @@ public class Inventory implements Serializable{
 						handler.getWorld().getEntityManager().getPlayer().setChestPlate(currentInv.get(i));
 						setNothing(i, x, y);
 						
-					} 
+					} else if (currentInv.get(i).type == 4) {
+						hotbar.set(1, currentInv.get(i));
+						handler.getWorld().getEntityManager().getPlayer().setShield(currentInv.get(i));
+						setNothing(i, x, y);
+					}
 					
 					if(temp != Item.nothing) {
 						this.addItem(temp);

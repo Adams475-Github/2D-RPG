@@ -3,10 +3,6 @@ import java.awt.image.BufferStrategy;
 import java.io.Serializable;
 
 public class Game implements Runnable, Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2876973920364048982L;
 
 	//TODO add jump scare with ear-rape
 	private transient Display display;
@@ -56,8 +52,6 @@ public class Game implements Runnable, Serializable {
 		
 	}
 	
-
-	
 	private void init() {
 		display = new Display(title, width, height);
 		display.getFrame().addKeyListener(keyManager);
@@ -68,8 +62,7 @@ public class Game implements Runnable, Serializable {
 		display.getCanvas().addMouseListener(mouseManager);
 		display.getCanvas().addMouseMotionListener(mouseManager);
 		Assets.init();
-		
-		
+		 
 		handler = new Handler(this);
 		
 		gameCamera = new GameCamera(handler, 0, 0);

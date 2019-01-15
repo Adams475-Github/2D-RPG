@@ -42,6 +42,7 @@ public class Assets implements Serializable {
 	public static BufferedImage tabHighlightSword, tabHighlightShield, tabHighlightPotion, tabHighlightQuest;
 	public static BufferedImage questScreen, bookPage, questMark, expBar, face, expLeft, expMid, expRight;
 	public static BufferedImage coin1, coin2, coin3, coin4;
+	public static BufferedImage shieldStarter;
 	
 	
 	public static void init() {
@@ -76,6 +77,9 @@ public class Assets implements Serializable {
 		expLeft = objectSheet.crop(22, 280, 3, 4);
 		expMid = objectSheet.crop(25, 280, 2, 4);
 		expRight = objectSheet.crop(27, 280, 3, 4);
+		
+		//shields
+		shieldStarter = sw.crop(0, 18, 16, 14);
 		
 		//Quest Menu
 		questMark = indoors.crop(380, 204, 7, 17);
@@ -135,6 +139,13 @@ public class Assets implements Serializable {
 		
 		btn_exit[1] = vendorUI.crop(541, 168, 26, 32);
 		btn_exit[0] = vendorUI.crop(515, 168, 26, 32); 
+		
+		//Coin spin
+		coin_spin = new BufferedImage[4];
+		coin_spin[0] = objectSheet.crop(2, 66, 11, 11);
+		coin_spin[1] = objectSheet.crop(18, 66, 11, 11);
+		coin_spin[2] = objectSheet.crop(38, 66, 11, 11);
+		coin_spin[3] = objectSheet.crop(51, 66, 11, 11);
 		
 		//Fireball
 		fb_left = new BufferedImage[8];

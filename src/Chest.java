@@ -32,11 +32,13 @@ public class Chest extends Entity implements Serializable {
 	@Override
 	public void render(Graphics g) {
 		if(!opened) {
-			g.drawImage(Assets.chestClosed, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width * 4, height * 4, null);
+			g.drawImage(Assets.chestClosed, (int) (x - handler.getGameCamera().getxOffset()), 
+					(int) (y - handler.getGameCamera().getyOffset()), width * 4, height * 4, null);
 			
 		} else {
-			g.drawImage(Assets.chestOpen, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width * 4, height * 4, null);
-			g.drawRect((int)x, (int)y, width * 4, height * 4);
+			g.drawImage(Assets.chestOpen, (int) (x - handler.getGameCamera().getxOffset()), 
+					(int) (y - handler.getGameCamera().getyOffset()), width * 4, height * 4, null);
+		
 		}
 		
 	}
@@ -60,14 +62,5 @@ public class Chest extends Entity implements Serializable {
 		handler.getWorld().getEntityManager().getPlayer().getInventory().addItem(this.item);
 		
 	}
-	
-	public Point center() {
-		
-		Point center = new Point( (int) (x - handler.getGameCamera().getxOffset() + (width * 4 / 2)) , (int) (y - handler.getGameCamera().getyOffset() + (height * 4 / 2)) );		
-		
-		return center;
-	}
-
-
 
 }
