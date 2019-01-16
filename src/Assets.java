@@ -14,7 +14,7 @@ public class Assets implements Serializable {
 	//Stand-alone
 	public static BufferedImage dirt, grass, stone, tree, rock, bush, 
 	wood, coin, chestClosed, chestOpen, displayBoxRed, speechBubble, 
-	vendorScreen, floorWood, stoneWall, stairs, tableTop, conversationUI;
+	vendorScreen, floorWood, stoneWall, stairs, tableTop, conversationUI, healthPotion, manaPotion, swiftPotion;
 	//Player walk
 	public static BufferedImage[] player_down, player_up, player_right, player_left, player_idle;
 	public static BufferedImage[] player_down_bs, player_up_bs, player_right_bs, player_left_bs, player_idle_bs;
@@ -82,6 +82,11 @@ public class Assets implements Serializable {
 		
 		//shields
 		shieldStarter = sw.crop(0, 18, 16, 14);
+		
+		//Potions
+		healthPotion = sw.crop(0, 32, 16, 16);
+		manaPotion = sw.crop(16, 32, 16, 16);
+		swiftPotion = sw.crop(32, 32, 16, 16);
 		
 		//Quest Menu
 		questMark = indoors.crop(380, 204, 7, 17);

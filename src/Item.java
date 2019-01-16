@@ -8,22 +8,51 @@ public class Item implements Serializable{
 	static Animation coinSpin1 = new Animation(125, Assets.coin_spin);
 	private static final long serialVersionUID = -154986130137370073L;
 	//Universal Item Types
-	public static int nothingType = 0;
-	public static int swordType = 1;
-	public static int shield = 2;
-	public static int helmet = 3;
+
 	
-	//Item Instantiation
+
 	
-	//syntax for args (texture, name, id, width, height, type, armorvalue, attackvalue, goldvalue, decription)
+	/* Item Type Structuring:
+	 * -1 - Nothing
+	 * 0 - Staffs
+	 * 1 - Swords
+	 * 2 - Bombs
+	 * 3 - 
+	 * 10 - Shields
+	 * 11 - Armor
+	 * 12 -
+	 * 20 - Health Potion
+	 * 21 - Speed Potion
+	 * 22 - 
+	 * 99 - coin
+	 * 
+	 */
+	//Syntax for constructor:
+	//(texture, name, id, type, width, height, armor value, attack value, gold value, description, animation boolean, animation)
 	//Swords are type 1, armor is type 3, nothing type 0, shield 4
 	public static Item[] items = new Item[256];
-	public static Item coinItem = new Item(Assets.coin, "coin", 2, 10, 10, 0, 0, 0, 1, "A common coin.", true, coinSpin1);
-	public static Item nothing = new Item(Assets.nothing, "nothing", 3, 10, 10, 4, 0, 0, 0, "", false, null);
-	public static Item swordStarter = new Item(Assets.swordStarter, "Basic Sword", 5, 14, 22, 1, 0, 5, 5, "A rusty old thing, its seen better days. This is alex's sword. Wooohoo", false, null);
-	public static Item blueSword = new Item(Assets.swordBlue, "Blue Sword", 6, 14, 22, 1, 0, 100, 5, "A blue sword. It seems to shimmer when you look at it.", false, null);
-	public static Item armorStarter = new Item(Assets.chestPlate, "chestPlate", 4, 14, 22, 3, 10, 0, 5, "Standard leather armor. Comfortable but not invincible.", false, null);
-	public static Item shieldStarter = new Item(Assets.shieldStarter, "Basic Shield", 7, 14, 22, 4, 5, 0, 1, "A basic shield. It's been through some things.", false, null);
+	
+	public static Item coinI = new Item(Assets.coin, "coin", 2, 99, 10, 10, 0, 0, 1, "", true, coinSpin1);
+	
+	public static Item nothing = new Item(Assets.nothing, "nothing", 3, -1,
+			10, 10, 0, 0, 0, "");
+	
+	public static Item swordStarter = new Item(Assets.swordStarter, "Basic Sword", 5, 1,
+			14, 22, 0, 5, 5, "A rusty old thing, its seen better days. This is alex's sword. Wooohoo");
+	
+	public static Item blueSword = new Item(Assets.swordBlue, "Blue Sword", 6, 1, 
+			14, 22, 0, 100, 5, "A blue sword. It seems to shimmer when you look at it.");
+	
+	public static Item armorStarter = new Item(Assets.chestPlate, "chestPlate", 4, 11,
+			14, 22, 10, 0, 5, "Standard leather armor. Comfortable but not invincible.");
+	
+	public static Item shieldStarter = new Item(Assets.shieldStarter, "Basic Shield", 7, 10, 
+			14, 22, 5, 0, 1, "A basic shield. It's been through some things.");
+	
+	public static Item hpPotion = new Item(Assets.healthPotion, "Health Potion", 8, 20, 14, 22, 0, 0, 5, "fix");
+	public static Item mpPotion = new Item(Assets.manaPotion, "Mana Potion", 9, 20, 14, 22, 0, 0, 5, "fix");
+	public static Item spPotion = new Item(Assets.swiftPotion, "Speed Potion", 10, 20, 14, 22, 0, 0, 5, "fix");
+	
 	
 	//Class
 	public static final int ITEMWIDTH = 2, ITEMHEIGHT = 2;
@@ -31,7 +60,7 @@ public class Item implements Serializable{
 	protected transient Handler handler;
 	protected transient BufferedImage texture;
 	protected String name;
-	protected final int id;
+	protected int id;
 	protected int wid, hei;
 	protected Rectangle bounds;
 	protected transient Animation anim;
@@ -43,9 +72,9 @@ public class Item implements Serializable{
 	protected int x, y, count;
 	protected boolean pickedUp = false;
 	protected boolean hasAnimation;
-	
+	//Items With Animation
 	public Item(BufferedImage texture, String name, int id, 
-			int wid, int hei, int type, int armorValue, int attackValue, int goldValue, String description, boolean hasAnimation, Animation anim) {
+			int type, int wid, int hei, int armorValue, int attackValue, int goldValue, String description, boolean hasAnimation, Animation anim) {
 		this.texture = texture;
 		this.name = name;
 		this.id = id;
@@ -59,6 +88,25 @@ public class Item implements Serializable{
 		this.description = description;
 		this.hasAnimation = hasAnimation;
 		this.anim = anim;
+		
+		bounds = new Rectangle(x, y, wid * ITEMWIDTH, hei * ITEMHEIGHT);		
+		
+		items[id] = this;
+	}
+	//Items without Animation
+	public Item(BufferedImage texture, String name, int id, 
+			int type, int wid, int hei, int armorValue, int attackValue, int goldValue, String description) {
+		this.texture = texture;
+		this.name = name;
+		this.id = id;
+		count = 1;
+		this.wid = wid;
+		this.hei = hei;
+		this.type = type;
+		this.armorValue = armorValue;
+		this.attackValue = attackValue;
+		this.goldValue = goldValue;
+		this.description = description;
 		
 		bounds = new Rectangle(x, y, wid * ITEMWIDTH, hei * ITEMHEIGHT);		
 		
@@ -98,13 +146,13 @@ public class Item implements Serializable{
 	
 	
 	public Item createNew(int x, int y) {
-		Item i = new Item(texture, name, id, wid, hei, type, armorValue, attackValue, goldValue, description, hasAnimation, anim);
+		Item i = new Item(texture, name, id, type, wid, hei, armorValue, attackValue, goldValue, description, hasAnimation, anim);
 		i.setPosition(x, y);
 		return i;
 	}
 	
 	public Item createNew(int count) {
-		Item i = new Item(texture, name, id, wid, hei, type, armorValue, attackValue, goldValue, description, hasAnimation, anim);
+		Item i = new Item(texture, name, id, type, wid, hei, armorValue, attackValue, goldValue, description, hasAnimation, anim);
 		i.setPickedUp(true);
 		i.setCount(count);
 		return i;

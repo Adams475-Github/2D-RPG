@@ -67,6 +67,9 @@ public class Inventory implements Serializable{
 		init();
 		addItem(Item.swordStarter);
 		addItem(Item.shieldStarter);
+		addItem(Item.hpPotion);
+		addItem(Item.spPotion);
+		addItem(Item.mpPotion);
 		
 	}
 	
@@ -303,21 +306,25 @@ public class Inventory implements Serializable{
 	public void addItem(Item item) {
 		
 		//checks which list to add to
-		if(item.type == 0) {
+		if(item.type == 99) {
 			coins += 1;
-		} else if(item.type == 1) {
+			return;
+		} else if(item.type > -1 && item.type < 10) {
 			invAdd = inventoryAttack;
-		} else if(item.type == 2) {
+		} else if(item.type > 9 && item.type < 20) {
+			
 			invAdd = inventoryArmor;
+		} else if(item.type > 19 && item.type < 30) {
+			invAdd = inventoryPotions;
 		}
 		
 		//this code checks for empty slots to fill in blanks first, and then add on to end.
 		for(int i = 0; i < invAdd.size(); i++) {
-			if(invAdd.get(i).getId() == Item.nothing.getId() && invAdd.get(i).type != 0 && item.type != 0) {
+			if(invAdd.get(i).getId() == Item.nothing.getId() && item.type != -1) {
 				invAdd.set(i, item);
 				return;
 				
-			} else if(invAdd.get(i) != Item.nothing && i == (invAdd.size() - 1) && item.type != 0){
+			} else if(invAdd.get(i) != Item.nothing && i == (invAdd.size() - 1) && item.type != -1){
 				invAdd.add(item);
 				return;
 				
@@ -377,7 +384,8 @@ public class Inventory implements Serializable{
 			for(int y = 0; y < 3; y++) {
 				if(x == highX && y == highY) {
 					//checks which item it is so it knows where to put in hot-bar. could condense but it would be a lot of work tbh, don't even know if it really would "condense".
-					if(i < currentInv.size() && currentInv.get(i).type == 1) {
+					//Swords/Staffs
+					if(i < currentInv.size() && currentInv.get(i).type == 0 || currentInv.get(i).type == 1) {
 						
 						if(hotbar.get(0) != Item.nothing) {
 							temp = hotbar.get(0);
@@ -387,13 +395,25 @@ public class Inventory implements Serializable{
 						hotbar.set(0, currentInv.get(i));
 						handler.getWorld().getEntityManager().getPlayer().setSword(currentInv.get(i));
 						setNothing(i, x, y);
+					
+					//Shields
+					} else if (currentInv.get(i).type == 11) {
 						
-					} else if (currentInv.get(i).type == 3) {
+						if(hotbar.get(2) != Item.nothing) {
+							temp = hotbar.get(2);
+							
+						}
+						
 						hotbar.set(2, currentInv.get(i));
 						handler.getWorld().getEntityManager().getPlayer().setChestPlate(currentInv.get(i));
 						setNothing(i, x, y);
+					//Armor	
+					} else if (currentInv.get(i).type == 10) {
 						
-					} else if (currentInv.get(i).type == 4) {
+						if(hotbar.get(1) != Item.nothing) {
+							temp = hotbar.get(1);
+							
+						}
 						hotbar.set(1, currentInv.get(i));
 						handler.getWorld().getEntityManager().getPlayer().setShield(currentInv.get(i));
 						setNothing(i, x, y);
