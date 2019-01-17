@@ -9,9 +9,19 @@ public class Item implements Serializable{
 	private static final long serialVersionUID = -154986130137370073L;
 	//Universal Item Types
 
-	
+	/* Item Id List
+	 * 0 - Coin
+	 * 3 - Nothing
+	 * 4 - Basic Chestplate
+	 * 5 - Basic Sword
+	 * 6 - Blue Sword
+	 * 7 - Basic Shield
+	 * 8 - Health Potion
+	 * 9 - Mana Potion
+	 * 10 - Swiftness Potion
+	 * 
+	 */
 
-	
 	/* Item Type Structuring:
 	 * -1 - Nothing
 	 * 0 - Staffs
@@ -32,7 +42,7 @@ public class Item implements Serializable{
 	//Swords are type 1, armor is type 3, nothing type 0, shield 4
 	public static Item[] items = new Item[256];
 	
-	public static Item coinI = new Item(Assets.coin, "coin", 2, 99, 10, 10, 0, 0, 1, "", true, coinSpin1);
+	public static Item coinI = new Item(Assets.coin, "coin", 0, 99, 10, 10, 0, 0, 1, "", true, coinSpin1);
 	
 	public static Item nothing = new Item(Assets.nothing, "nothing", 3, -1,
 			10, 10, 0, 0, 0, "");

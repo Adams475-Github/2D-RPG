@@ -242,6 +242,15 @@ public class Player extends Creature {
 		
 	}
 	
+	public void usePotion(Item potion, int x, int y, int i) {
+
+		if(potion.id == 8) {
+			health += 20;
+		}
+
+		this.inventory.setNothing(i, x, y);
+	}
+	
 	private void resize() {
 		//Fixes Resizing if player sprite is bigger for animations
 		if(attacking && (xMove + yMove) == 0) {

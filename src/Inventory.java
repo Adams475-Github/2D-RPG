@@ -207,9 +207,11 @@ public class Inventory implements Serializable{
 			
 			
 			if (use.contains(mouseX, mouseY) && handler.getMouseManager().isLeftPressed() && holder == 0) {
+				
+				
 				hotbarAdd();
 				holder = 1;
-			}
+			} 
 			
 			
 			
@@ -383,6 +385,12 @@ public class Inventory implements Serializable{
 			
 			for(int y = 0; y < 3; y++) {
 				if(x == highX && y == highY) {
+					
+					
+					if(currentInv.get(i).type > 19 && currentInv.get(i).type < 30) {
+						handler.getWorld().getEntityManager().getPlayer().usePotion(currentInv.get(i), x, y, i);
+					}
+					
 					//checks which item it is so it knows where to put in hot-bar. could condense but it would be a lot of work tbh, don't even know if it really would "condense".
 					//Swords/Staffs
 					if(i < currentInv.size() && currentInv.get(i).type == 0 || currentInv.get(i).type == 1) {
@@ -430,6 +438,7 @@ public class Inventory implements Serializable{
 			}
 		}
 	}
+	
 	
 	//Getters and Setters
 	public Handler getHandler() {
