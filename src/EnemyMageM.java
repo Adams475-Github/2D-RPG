@@ -24,7 +24,6 @@ public class EnemyMageM extends Creature implements Serializable{
 	private Entity lastEntity = this;
 	private int moveCount = 0;
 	private int magnitude = 1;
-	private int steeringTime;
 	private float centerX;
 	private float centerY;
 	private boolean stopped;

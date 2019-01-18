@@ -70,6 +70,7 @@ public class Inventory implements Serializable{
 		addItem(Item.hpPotion);
 		addItem(Item.spPotion);
 		addItem(Item.mpPotion);
+		addItem(Item.crystalWand);
 		
 	}
 	

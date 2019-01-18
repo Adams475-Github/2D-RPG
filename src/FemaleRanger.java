@@ -6,9 +6,6 @@ import java.util.Random;
 
 public class FemaleRanger extends Creature implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -155178062881772475L;
 	private transient Animation animDown;
 	private transient Animation animUp;
@@ -71,8 +68,6 @@ public class FemaleRanger extends Creature implements Serializable{
 
 	}
 	
-	
-
 	@Override
 	public void render(Graphics g) {
 		
@@ -110,8 +105,6 @@ public class FemaleRanger extends Creature implements Serializable{
 		animUp.tick();
 		animDown.tick();
 	}
-	
-	
 	
 	private void checkQuest() {
 		if(!giveableQuests.isEmpty()) {
@@ -154,8 +147,6 @@ public class FemaleRanger extends Creature implements Serializable{
 			return;
 		}
 		
-		
-		
 		if(moveTimer < moveCooldown) {
 			return;
 		}
@@ -184,8 +175,6 @@ public class FemaleRanger extends Creature implements Serializable{
 			
 		}
 			
-		
-		
 		num = rand.nextInt(10);
 		
 		if(num == 0) {

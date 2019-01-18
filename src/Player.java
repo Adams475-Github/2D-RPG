@@ -138,7 +138,7 @@ public class Player extends Creature {
 	}
 	
 	public void render(Graphics g) {
-
+		
 		//Please Ignore this.
 		if(attacking) {
 			if(currentAttack.hasPlayedOnce() && !handler.getKeyManager().attackDown && 
@@ -402,12 +402,15 @@ public class Player extends Creature {
 	}
 	
 	private void checkAttacks() {
+		
+		
 		attackTimer += System.currentTimeMillis() - lastAttackTimer;
 		lastAttackTimer = System.currentTimeMillis();
 		
 		if(attackTimer < attackCooldown) {
 			return;
 		}
+		
 		
 		Rectangle cb = getCollisionBounds(0,0);
 		Rectangle ar = new Rectangle();
@@ -416,6 +419,12 @@ public class Player extends Creature {
 		ar.height = arSize;
 		
 		if(handler.getKeyManager().attackUp) {
+			if(sword.type == 0) {
+				handler.getWorld().getEntityManager().addEntity(new IceBallClass(handler, handler.getWorld().getEntityManager().getPlayer().x, 
+						handler.getWorld().getEntityManager().getPlayer().y, 0, 0));
+				attackTimer = 0;
+				return;
+			}
 			ar.x = cb.x + cb.width / 2 - arSize / 2;
 			ar.y = cb.y - arSize - 40;
 		} else if(handler.getKeyManager().attackDown) {

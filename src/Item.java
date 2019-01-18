@@ -6,6 +6,7 @@ import java.io.Serializable;
 public class Item implements Serializable{
 	
 	static Animation coinSpin1 = new Animation(125, Assets.coin_spin);
+	static Animation iceBall = new Animation(125, Assets.iceShot);
 	private static final long serialVersionUID = -154986130137370073L;
 	//Universal Item Types
 
@@ -39,7 +40,7 @@ public class Item implements Serializable{
 	 */
 	//Syntax for constructor:
 	//(texture, name, id, type, width, height, armor value, attack value, gold value, description, animation boolean, animation)
-	//Swords are type 1, armor is type 3, nothing type 0, shield 4
+	
 	public static Item[] items = new Item[256];
 	
 	public static Item coinItem = new Item(Assets.coin, "coin", 0, 99, 10, 10, 0, 0, 1, "", true, coinSpin1);
@@ -59,15 +60,18 @@ public class Item implements Serializable{
 	public static Item shieldStarter = new Item(Assets.shieldStarter, "Basic Shield", 7, 10, 
 			14, 22, 5, 0, 1, "A basic shield. It's been through some things.");
 	
+	public static Item crystalWand = new Item(Assets.crystalWandA, "Crystal Wand", 11, 0, 14, 22, 0, 34, 20, "wand");
+	
 	public static Item hpPotion = new Item(Assets.healthPotion, "Health Potion", 8, 20, 14, 22, 0, 0, 5, "fix");
 	public static Item mpPotion = new Item(Assets.manaPotion, "Mana Potion", 9, 20, 14, 22, 0, 0, 5, "fix");
-	public static Item spPotion = new Item(Assets.swiftPotion, "Speed Potion", 10, 20, 14, 22, 0, 0, 5, "fix");
+	public static Item spPotion = new Item(Assets.swiftPotion, "Speed Potion", 10, 20, 14, 22, 0, 0, 5, "fix", iceBall);
 	
 	
 	//Class
 	public static final int ITEMWIDTH = 2, ITEMHEIGHT = 2;
 
 	protected transient Handler handler;
+	protected Animation projectile;
 	protected transient BufferedImage texture;
 	protected String name;
 	protected int id;
@@ -122,6 +126,25 @@ public class Item implements Serializable{
 		
 		items[id] = this;
 	}
+	public Item(BufferedImage texture, String name, int id, 
+			int type, int wid, int hei, int armorValue, int attackValue, int goldValue, String description, Animation projectile) {
+		this.texture = texture;
+		this.name = name;
+		this.id = id;
+		count = 1;
+		this.wid = wid;
+		this.hei = hei;
+		this.type = type;
+		this.armorValue = armorValue;
+		this.attackValue = attackValue;
+		this.goldValue = goldValue;
+		this.description = description;
+		this.projectile = projectile;
+		
+		bounds = new Rectangle(x, y, wid * ITEMWIDTH, hei * ITEMHEIGHT);		
+		
+		items[id] = this;
+	}
 	
 	public void tick() {
 		anim.tick();
@@ -146,6 +169,8 @@ public class Item implements Serializable{
 			g.drawImage(texture, x, y, wid*ITEMWIDTH, hei*ITEMHEIGHT, null);
 		}
 	}
+	
+	
 	
 	public void setPosition(int x, int y) {
 		this.x = x;

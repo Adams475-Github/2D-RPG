@@ -14,7 +14,7 @@ public class Assets implements Serializable {
 	//Stand-alone
 	public static BufferedImage dirt, grass, stone, tree, rock, bush, 
 	wood, coin, chestClosed, chestOpen, displayBoxRed, speechBubble, 
-	vendorScreen, floorWood, stoneWall, stairs, tableTop, conversationUI, healthPotion, manaPotion, swiftPotion;
+	vendorScreen, floorWood, stoneWall, stairs, tableTop, conversationUI, healthPotion, manaPotion, swiftPotion, crystalWandA;
 	//Player walk
 	public static BufferedImage[] player_down, player_up, player_right, player_left, player_idle;
 	public static BufferedImage[] player_down_bs, player_up_bs, player_right_bs, player_left_bs, player_idle_bs;
@@ -34,6 +34,7 @@ public class Assets implements Serializable {
 	public static BufferedImage[] btn_sell, btn_buy, btn_sword, btn_armor, btn_potions, btn_exit, btn_text;
 	//Coin Spin :))
 	public static BufferedImage[] coin_spin;
+	public static BufferedImage[] iceShot;
 	
 
 	public static BufferedImage inventoryScreen, itemHighlighter, nothing, heartFull, heartHalf, heartFourth, heartThreeFourths, heartEmpty;
@@ -83,10 +84,20 @@ public class Assets implements Serializable {
 		//shields
 		shieldStarter = sw.crop(0, 18, 16, 14);
 		
+		//wands
+		crystalWandA = sw.crop(18, 17, 15, 15);
+		
 		//Potions
 		healthPotion = sw.crop(0, 32, 16, 16);
 		manaPotion = sw.crop(16, 32, 16, 16);
 		swiftPotion = sw.crop(32, 32, 16, 16);
+		
+		//ice projectile
+		iceShot = new BufferedImage[4];
+		iceShot[0] = sw.crop(4, 65, 7, 10);
+		iceShot[1] = sw.crop(20, 65, 7, 10);
+		iceShot[2] = sw.crop(36, 65, 7, 10);
+		iceShot[3] = sw.crop(52, 65, 7, 10);
 		
 		//Quest Menu
 		questMark = indoors.crop(380, 204, 7, 17);
