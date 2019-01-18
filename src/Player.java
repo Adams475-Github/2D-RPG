@@ -117,7 +117,6 @@ public class Player extends Creature {
 	
 	public void tick() {
 		
-		//Method calls
 		skillManager.tick();
 		calculateFinalValues();
 		setValues();
@@ -140,7 +139,7 @@ public class Player extends Creature {
 	
 	public void render(Graphics g) {
 
-		//Please Ignore this. Seriously. It's legacy code. 
+		//Please Ignore this.
 		if(attacking) {
 			if(currentAttack.hasPlayedOnce() && !handler.getKeyManager().attackDown && 
 					!handler.getKeyManager().attackUp && !handler.getKeyManager().attackRight && !handler.getKeyManager().attackLeft) {
@@ -203,14 +202,14 @@ public class Player extends Creature {
 	}
 	
 	private boolean calculateCrit() {
-		int range = (int) Math.ceil(20);
-		int temp1 = r.nextInt(range);
-		int temp2 = r.nextInt(range);
-		
-		if(temp1 == temp2) {
-			return true;
-		}
-		
+//		int range = (int) Math.ceil(20);
+//		int temp1 = r.nextInt(range);
+//		int temp2 = r.nextInt(range);
+//		
+//		if(temp1 == temp2) {
+//			return true;
+//		}
+//		
 		return false;
 	}
 	

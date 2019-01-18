@@ -96,24 +96,48 @@ public class Inventory implements Serializable{
 
 	}
 	
-	//tick method to update everything
 	public void tick() {
+
+		getActivation();
 		
-		
-		//if user presses E either opens or closes menu
-		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_I) && !handler.getWorld().getEntityManager().getPlayer().getEscapeMenu().isActive()) {
-			active = !active;
-		}		
-		
-		//doesn't tick if it's not active
 		if(!active) {
 			return;
 		}
-
+		
 		checkUse();
+		updateDisplay();
+		manageHighlights();
+		getInput();
+		findSelectedItem();
+		manageSubinventories();
+
 		
 		
-		//updates correct arrays based on which one it's displaying
+	}
+	
+	public boolean contains(Item item) {
+		if(inventoryAttack.contains(item) || inventoryArmor.contains(item) || inventoryPotions.contains(item)) {
+			return true;
+			
+		} else {
+			return false;
+			
+		}
+	}
+	
+	private void getActivation() {
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_I) && !handler.getWorld().getEntityManager().getPlayer().getEscapeMenu().isActive()) {
+			active = !active;
+		}	
+	}
+	
+	private void getInput() {
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_S)) {
+			sort();
+		}
+	}
+	
+	private void updateDisplay() {
 		if(display == 0) {
 			currentInv = inventoryAttack;
 			
@@ -123,25 +147,9 @@ public class Inventory implements Serializable{
 		} else if(display == 2) {
 			
 		}
-		
-		//sets mouse x and y as variables so I don't have to type all the way out
-		mouseX = handler.getMouseManager().getMouseX();
-		mouseY = handler.getMouseManager().getMouseY();
-		
-		if(handler.getMouseManager().isLeftPressed()) {
-			if(clickBounds.contains(handler.getMouseManager().getMouseX(), handler.getMouseManager().getMouseY())) {
-				highX = (int) ( Math.floor( (handler.getMouseManager().getMouseX() - clickBounds.x) / (17 * 4) ) );
-				highY = (int) ( Math.floor( (handler.getMouseManager().getMouseY() - clickBounds.y)  / (17 * 4) ) );
-				
-			}
-			
-		}
-		
-		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_S)) {
-			sort();
-		}
-		
+	}
 	
+	private void findSelectedItem() {
 		int p = 0;
 		
 		for(int x = 0; x < 5; x++) {
@@ -154,10 +162,12 @@ public class Inventory implements Serializable{
 				p++;
 			}
 		}
-		
+	}
 	
+	private void manageSubinventories() {
 		
 		//sets up correct display, ArrayList, and 2d arrays to be modified based on which display is selected
+		
 		if(active && handler.getWorld().getEntityManager().getPlayer().getInventory() == this) {
 			if (swordBounds.contains(mouseX, mouseY) && handler.getMouseManager().isLeftPressed()) {
 				display = 0;
@@ -213,23 +223,24 @@ public class Inventory implements Serializable{
 				holder = 1;
 			} 
 			
-			
-			
+		}
+	}
+	
+	private void manageHighlights() {
+		mouseX = handler.getMouseManager().getMouseX();
+		mouseY = handler.getMouseManager().getMouseY();
+		
+		if(handler.getMouseManager().isLeftPressed()) {
+			if(clickBounds.contains(handler.getMouseManager().getMouseX(), handler.getMouseManager().getMouseY())) {
+				highX = (int) ( Math.floor( (handler.getMouseManager().getMouseX() - clickBounds.x) / (17 * 4) ) );
+				highY = (int) ( Math.floor( (handler.getMouseManager().getMouseY() - clickBounds.y)  / (17 * 4) ) );
+				
+			}
 			
 		}
 	}
 	
-	public boolean contains(Item item) {
-		if(inventoryAttack.contains(item) || inventoryArmor.contains(item) || inventoryPotions.contains(item)) {
-			return true;
-			
-		} else {
-			return false;
-			
-		}
-	}
-	
-	public void checkUse() {
+	private void checkUse() {
 		time += System.currentTimeMillis() - timeDone;
 		timeDone = System.currentTimeMillis();
 		
@@ -352,7 +363,7 @@ public class Inventory implements Serializable{
 		currentInv.set(i, Item.nothing);
 	}
 	
-	public void sort() {
+	 void sort() {
 		for(int i = 0; i < currentInv.size(); i++) {
 			//have to be careful with zero since going left is out of bounds
 			if(i == 0) {				
@@ -377,7 +388,7 @@ public class Inventory implements Serializable{
 	}
 	
 	//smart method to add items to hot-bar, although I don't know how smart it was to make this.. Maybe could've implemented into normal add
-	public void hotbarAdd() {
+	private void hotbarAdd() {
 		int i = 0;
 		Item temp = Item.nothing;
 		

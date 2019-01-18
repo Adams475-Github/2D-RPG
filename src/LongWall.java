@@ -26,7 +26,7 @@ public class LongWall extends StaticEntity implements Serializable{
 	@Override
 	public void die() {
 		for (int i = 0; i <= rand.nextInt(10) + 1; i++) {
-			handler.getWorld().getItemManager().addItem(Item.coinI.createNew((int)x + rand.nextInt(25), (int)y + rand.nextInt(25)));
+			handler.getWorld().getItemManager().addItem(Item.coinItem.createNew((int)x + rand.nextInt(25), (int)y + rand.nextInt(25)));
 		}
 
 	}

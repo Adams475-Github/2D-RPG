@@ -42,7 +42,7 @@ public class Item implements Serializable{
 	//Swords are type 1, armor is type 3, nothing type 0, shield 4
 	public static Item[] items = new Item[256];
 	
-	public static Item coinI = new Item(Assets.coin, "coin", 0, 99, 10, 10, 0, 0, 1, "", true, coinSpin1);
+	public static Item coinItem = new Item(Assets.coin, "coin", 0, 99, 10, 10, 0, 0, 1, "", true, coinSpin1);
 	
 	public static Item nothing = new Item(Assets.nothing, "nothing", 3, -1,
 			10, 10, 0, 0, 0, "");
