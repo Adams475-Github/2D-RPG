@@ -6,7 +6,10 @@ import java.io.Serializable;
 public class Item implements Serializable{
 	
 	static Animation coinSpin1 = new Animation(125, Assets.coin_spin);
-	static Animation iceBall = new Animation(125, Assets.iceShot);
+	static Animation iceBallUp = new Animation(125, Assets.ice_shot_up);
+	static Animation iceBallRight = new Animation(125, Assets.ice_shot_right);
+	static Animation iceBallDown = new Animation(125, Assets.ice_shot_down);
+	static Animation iceBallLeft = new Animation(125, Assets.ice_shot_left);
 	private static final long serialVersionUID = -154986130137370073L;
 	//Universal Item Types
 
@@ -64,7 +67,7 @@ public class Item implements Serializable{
 	
 	public static Item hpPotion = new Item(Assets.healthPotion, "Health Potion", 8, 20, 14, 22, 0, 0, 5, "fix");
 	public static Item mpPotion = new Item(Assets.manaPotion, "Mana Potion", 9, 20, 14, 22, 0, 0, 5, "fix");
-	public static Item spPotion = new Item(Assets.swiftPotion, "Speed Potion", 10, 20, 14, 22, 0, 0, 5, "fix", iceBall);
+	public static Item spPotion = new Item(Assets.swiftPotion, "Speed Potion", 10, 20, 14, 22, 0, 0, 5, "fix");
 	
 	
 	//Class

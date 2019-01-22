@@ -34,7 +34,7 @@ public class Assets implements Serializable {
 	public static BufferedImage[] btn_sell, btn_buy, btn_sword, btn_armor, btn_potions, btn_exit, btn_text;
 	//Coin Spin :))
 	public static BufferedImage[] coin_spin;
-	public static BufferedImage[] iceShot;
+	public static BufferedImage[] ice_shot_up, ice_shot_down, ice_shot_left, ice_shot_right;
 	
 
 	public static BufferedImage inventoryScreen, itemHighlighter, nothing, heartFull, heartHalf, heartFourth, heartThreeFourths, heartEmpty;
@@ -93,11 +93,27 @@ public class Assets implements Serializable {
 		swiftPotion = sw.crop(32, 32, 16, 16);
 		
 		//ice projectile
-		iceShot = new BufferedImage[4];
-		iceShot[0] = sw.crop(4, 65, 7, 10);
-		iceShot[1] = sw.crop(20, 65, 7, 10);
-		iceShot[2] = sw.crop(36, 65, 7, 10);
-		iceShot[3] = sw.crop(52, 65, 7, 10);
+		ice_shot_up = new BufferedImage[4];
+		ice_shot_right = new BufferedImage[4];
+		ice_shot_left = new BufferedImage[4];
+		ice_shot_down = new BufferedImage[4];
+		ice_shot_up[0] = sw.crop(4, 65, 7, 10);
+		ice_shot_up[1] = sw.crop(20, 65, 7, 10);
+		ice_shot_up[2] = sw.crop(36, 65, 7, 10);
+		ice_shot_up[3] = sw.crop(52, 65, 7, 10);
+		ice_shot_right[0] = sw.crop(4, 91, 10, 7);
+		ice_shot_right[1] = sw.crop(16, 91, 10, 7);
+		ice_shot_right[2] = sw.crop(29, 91, 10, 7);
+		ice_shot_right[3] = sw.crop(41, 91, 10, 7);
+		ice_shot_left[0] = sw.crop(4, 99, 10, 7);
+		ice_shot_left[1] = sw.crop(17, 99, 10, 7);
+		ice_shot_left[2] = sw.crop(29, 99, 10, 7);
+		ice_shot_left[3] = sw.crop(41, 99, 10, 7);
+		ice_shot_down[0] = sw.crop(4, 78, 7, 10);
+		ice_shot_down[1] = sw.crop(20, 78, 7, 10);
+		ice_shot_down[2] = sw.crop(36, 78, 7, 10);
+		ice_shot_down[3] = sw.crop(52, 78, 7, 10);
+		
 		
 		//Quest Menu
 		questMark = indoors.crop(380, 204, 7, 17);

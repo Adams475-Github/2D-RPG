@@ -60,6 +60,8 @@ public class Player extends Creature {
 	private Animation animLeft = new Animation(250, Assets.player_left);
 	private Animation animRight = new Animation(250, Assets.player_right);
 	
+	private Animation b = new Animation(125, Assets.ice_shot_down);
+	
 	private Animation animDownBs = new Animation(250, Assets.player_down_bs);
 	private Animation animUpBs = new Animation(250, Assets.player_up_bs);
 	private Animation animLeftBs = new Animation(250, Assets.player_left_bs);
@@ -130,15 +132,17 @@ public class Player extends Creature {
 		interactWith();
 		manageMenus();
 		getInput();
+		getSwordInput();
 		move();
 		resize();
 		inventory.tick();
 		removeEscapeMenu();
+		b.tick();
 		
 	}
 	
 	public void render(Graphics g) {
-		
+
 		//Please Ignore this.
 		if(attacking) {
 			if(currentAttack.hasPlayedOnce() && !handler.getKeyManager().attackDown && 
@@ -216,6 +220,74 @@ public class Player extends Creature {
 	private void checkQuests() {
 		for(int i = 0; i < quests.size(); i++) {
 			quests.get(i).checkCompleted();
+		}
+	}
+	
+	private void staffAttack() {
+		
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_DOWN) && !inv) {
+			
+			handler.getWorld().getEntityManager().addEntity(new IceBallClass(handler, this.x, this.y, 7*4, 10*4, "down"));
+		}
+		
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP) && !inv) {
+			
+			handler.getWorld().getEntityManager().addEntity(new IceBallClass(handler, this.x, this.y, 7*4, 10*4, "up"));
+		}
+		
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_LEFT) && !inv) {
+			
+			handler.getWorld().getEntityManager().addEntity(new IceBallClass(handler, this.x, this.y,  10*4, 7*4, "left"));
+		}
+		
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT) && !inv) {
+			
+			handler.getWorld().getEntityManager().addEntity(new IceBallClass(handler, this.x, this.y, 10*4, 7*4, "right"));
+		}
+		
+		
+		
+	}
+	
+	private void getSwordInput() {
+		if(sword.type == 0) {
+			staffAttack();
+			return;
+		}
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_DOWN) && !inv && sword != Item.nothing) {
+			attacking = true;
+			if(handler.getWorld().getEntityManager().getPlayer().sword != Item.blueSword) {
+				currentAttack = animAttackDown;
+			} else {
+				currentAttack = animAttackDownB;
+			}
+		}
+		
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP) && !inv && sword != Item.nothing) {
+			attacking = true;
+			if(handler.getWorld().getEntityManager().getPlayer().sword != Item.blueSword) {
+				currentAttack = animAttackUp;
+			} else {
+				currentAttack = animAttackUpB;
+			}
+		}
+		
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_LEFT) && !inv && sword != Item.nothing) {
+			attacking = true;
+			if(handler.getWorld().getEntityManager().getPlayer().sword != Item.blueSword) {
+				currentAttack = animAttackLeft;
+			} else {
+				currentAttack = animAttackLeftB;
+			}
+		}
+		
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT) && !inv && sword != Item.nothing) {
+			attacking = true;
+			if(handler.getWorld().getEntityManager().getPlayer().sword != Item.blueSword) {
+				currentAttack = animAttackRight;
+			} else {
+				currentAttack = animAttackRightB;
+			}
 		}
 	}
 	
@@ -345,41 +417,6 @@ public class Player extends Creature {
 			
 		}
 		
-		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_DOWN) && !inv && sword != Item.nothing) {
-			attacking = true;
-			if(handler.getWorld().getEntityManager().getPlayer().sword != Item.blueSword) {
-				currentAttack = animAttackDown;
-			} else {
-				currentAttack = animAttackDownB;
-			}
-		}
-		
-		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP) && !inv && sword != Item.nothing) {
-			attacking = true;
-			if(handler.getWorld().getEntityManager().getPlayer().sword != Item.blueSword) {
-				currentAttack = animAttackUp;
-			} else {
-				currentAttack = animAttackUpB;
-			}
-		}
-		
-		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_LEFT) && !inv && sword != Item.nothing) {
-			attacking = true;
-			if(handler.getWorld().getEntityManager().getPlayer().sword != Item.blueSword) {
-				currentAttack = animAttackLeft;
-			} else {
-				currentAttack = animAttackLeftB;
-			}
-		}
-		
-		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT) && !inv && sword != Item.nothing) {
-			attacking = true;
-			if(handler.getWorld().getEntityManager().getPlayer().sword != Item.blueSword) {
-				currentAttack = animAttackRight;
-			} else {
-				currentAttack = animAttackRightB;
-			}
-		}
 		
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_R)) {
 			if(handler.getWorld().isRaining()) {
@@ -419,12 +456,6 @@ public class Player extends Creature {
 		ar.height = arSize;
 		
 		if(handler.getKeyManager().attackUp) {
-			if(sword.type == 0) {
-				handler.getWorld().getEntityManager().addEntity(new IceBallClass(handler, handler.getWorld().getEntityManager().getPlayer().x, 
-						handler.getWorld().getEntityManager().getPlayer().y, 0, 0));
-				attackTimer = 0;
-				return;
-			}
 			ar.x = cb.x + cb.width / 2 - arSize / 2;
 			ar.y = cb.y - arSize - 40;
 		} else if(handler.getKeyManager().attackDown) {
@@ -441,7 +472,9 @@ public class Player extends Creature {
 		}
 		
 		attackTimer = 0;
-		
+		if(sword.type == 0) {
+			return;
+		}
 		for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
 			if(e.equals(this)) {
 				continue;
