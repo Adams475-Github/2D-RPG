@@ -245,13 +245,9 @@ public class Inventory implements Serializable{
 		time += System.currentTimeMillis() - timeDone;
 		timeDone = System.currentTimeMillis();
 		
-		
-		
 		if(time < 550) {
 			return;
 		}
-		
-		
 		
 		holder = 0;
 		time = 0;

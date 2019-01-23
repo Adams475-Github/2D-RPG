@@ -8,7 +8,7 @@ public class IceBallClass extends Creature implements Serializable{
 			up = new Animation(125, Assets.ice_shot_up), down = new Animation(125, Assets.ice_shot_down);
 	private Animation currentAnim;
 	private long birthTime = System.currentTimeMillis();
-
+	
 	public IceBallClass(Handler handler, float x, float y, int width, int height, String direction) {
 		super(handler, x, y, width, height);
 		
@@ -19,15 +19,22 @@ public class IceBallClass extends Creature implements Serializable{
 		
 		
 		if(direction == "up") {
+			this.x += 8;
 			currentAnim = up;
 			yMove = -5;
 		} else if(direction == "right") {
+			this.x += 30;
+			this.y += 28;
 			currentAnim = right;
 			xMove = 5;
 		} else if(direction == "down") {
+			this.x += 8;
+			this.y += 25;
 			currentAnim = down;
 			yMove = 5;
 		} else {
+			this.x -= 5;
+			this.y += 28;
 			currentAnim = left;
 			xMove = -5;
 		}
@@ -37,17 +44,13 @@ public class IceBallClass extends Creature implements Serializable{
 	@Override
 	public void tick() {
 		
-		if(System.currentTimeMillis() - birthTime > 2500) {
-			handler.getWorld().getEntityManager().getEntities().remove(this);
-		}
-		
+		checkDestroy();
 		right.tick();
 		left.tick();
 		up.tick();
 		down.tick();
-		
 		move();
-
+		dealDamage();
 	}
 
 	@Override
@@ -56,6 +59,12 @@ public class IceBallClass extends Creature implements Serializable{
 		g.drawImage(currentAnim.getCurrentFrame(), (int) (this.x - handler.getGameCamera().getxOffset()), 
 				(int) (this.y - handler.getGameCamera().getyOffset() ), width, height, null);
 	
+	}
+	
+	private void checkDestroy() {
+		if(System.currentTimeMillis() - birthTime > 2500) {
+			handler.getWorld().getEntityManager().getEntities().remove(this);
+		}
 	}
 
 	@Override
@@ -66,6 +75,18 @@ public class IceBallClass extends Creature implements Serializable{
 	@Override
 	public void interact() {
 		
+	}
+	
+	private void dealDamage() {
+		
+		for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
+			if(e.equals(this)) {
+				continue;
+			}
+			if(e.getCollisionBounds(0, 0).contains(this.x, this.y)) {
+				e.hurt(10);
+			}
+		}
 	}
 	
 

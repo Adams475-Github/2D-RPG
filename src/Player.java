@@ -3,7 +3,6 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -19,6 +18,10 @@ public class Player extends Creature {
 	private Item bobble;
 	private Item shield;
 	private Random r = new Random();
+	
+	private long time = 550;
+	private boolean cast = false;
+	private long timeDone;
 	
 	//Post control variables
 	private int damageFinal;
@@ -225,27 +228,41 @@ public class Player extends Creature {
 	
 	private void staffAttack() {
 		
-		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_DOWN) && !inv) {
+		
+		time += System.currentTimeMillis() - timeDone;
+		timeDone = System.currentTimeMillis();
+		
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_DOWN) && !inv && !cast) {
 			
 			handler.getWorld().getEntityManager().addEntity(new IceBallClass(handler, this.x, this.y, 7*4, 10*4, "down"));
+			cast = true;
 		}
 		
-		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP) && !inv) {
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP) && !inv && !cast) {
 			
 			handler.getWorld().getEntityManager().addEntity(new IceBallClass(handler, this.x, this.y, 7*4, 10*4, "up"));
+			cast = true;
 		}
 		
-		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_LEFT) && !inv) {
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_LEFT) && !inv && !cast) {
 			
 			handler.getWorld().getEntityManager().addEntity(new IceBallClass(handler, this.x, this.y,  10*4, 7*4, "left"));
+			cast = true;
 		}
 		
-		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT) && !inv) {
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT) && !inv && !cast) {
 			
 			handler.getWorld().getEntityManager().addEntity(new IceBallClass(handler, this.x, this.y, 10*4, 7*4, "right"));
+			cast = true;
+		}
+		
+		if(time < 1050) {
+			return;
 		}
 		
 		
+		cast = false;
+		time = 0;
 		
 	}
 	

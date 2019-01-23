@@ -1,6 +1,4 @@
 import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.event.KeyEvent;
 import java.io.Serializable;
 
 public class Chest extends Entity implements Serializable {
@@ -10,7 +8,7 @@ public class Chest extends Entity implements Serializable {
 	 */
 	private static final long serialVersionUID = -4095869842042066014L;
 	private boolean opened = false;
-	private boolean display = false;
+	
 	Item item;
 	
 	public Chest(Handler handler, float x, float y, int width, int height, Item item) {
@@ -23,9 +21,7 @@ public class Chest extends Entity implements Serializable {
 
 	@Override
 	public void tick() {
-		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
-			display = false;
-		}
+		
 		
 	}
 

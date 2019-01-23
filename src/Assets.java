@@ -46,6 +46,12 @@ public class Assets implements Serializable {
 	public static BufferedImage coin1, coin2, coin3, coin4;
 	public static BufferedImage shieldStarter;
 	
+	static Animation coinSpin1 = new Animation(125, Assets.coin_spin);
+	static Animation iceBallUp = new Animation(125, Assets.ice_shot_up);
+	static Animation iceBallRight = new Animation(125, Assets.ice_shot_right);
+	static Animation iceBallDown = new Animation(125, Assets.ice_shot_down);
+	static Animation iceBallLeft = new Animation(125, Assets.ice_shot_left);
+	
 	
 	public static void init() {
 		

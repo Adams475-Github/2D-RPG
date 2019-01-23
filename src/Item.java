@@ -1,16 +1,15 @@
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.Serializable;
 
-public class Item implements Serializable{
+public class Item {
 	
 	static Animation coinSpin1 = new Animation(125, Assets.coin_spin);
 	static Animation iceBallUp = new Animation(125, Assets.ice_shot_up);
 	static Animation iceBallRight = new Animation(125, Assets.ice_shot_right);
 	static Animation iceBallDown = new Animation(125, Assets.ice_shot_down);
 	static Animation iceBallLeft = new Animation(125, Assets.ice_shot_left);
-	private static final long serialVersionUID = -154986130137370073L;
+	
 	//Universal Item Types
 
 	/* Item Id List
