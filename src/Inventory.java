@@ -54,6 +54,9 @@ public class Inventory implements Serializable{
 	private int mouseY;
 	//coins
 	public int coins = 0;
+	private long timeSinceClosed = 0;
+	private long timeOpened = 0;
+	private boolean startTime = false;
 	
 	//constructor
 	public Inventory(Handler handler) {
@@ -100,6 +103,7 @@ public class Inventory implements Serializable{
 	public void tick() {
 
 		getActivation();
+		tickTime();
 		
 		if(!active) {
 			return;
@@ -111,6 +115,7 @@ public class Inventory implements Serializable{
 		getInput();
 		findSelectedItem();
 		manageSubinventories();
+	
 
 		
 		
@@ -127,9 +132,32 @@ public class Inventory implements Serializable{
 	}
 	
 	private void getActivation() {
+		
+		if(active) {
+			if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE) || handler.getKeyManager().keyJustPressed(KeyEvent.VK_I)) {
+				System.out.println("closed");
+				active = !active;
+				timeSinceClosed = 0;
+				startTime = true;
+				return;
+			}
+		}
+		
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_I) && !handler.getWorld().getEntityManager().getPlayer().getEscapeMenu().isActive()) {
+			System.out.println("opened");
+			timeSinceClosed = 0;
+			startTime = false;
 			active = !active;
+			timeOpened = System.currentTimeMillis();
 		}	
+	}
+	
+	private void tickTime() {
+		if(startTime && timeSinceClosed < 5000) {
+			timeSinceClosed = System.currentTimeMillis() - timeOpened;
+		}  else if(startTime){
+			timeSinceClosed = 5000;
+		}
 	}
 	
 	private void getInput() {
@@ -540,6 +568,24 @@ public class Inventory implements Serializable{
 
 	public void setyOffset(int yOffset) {
 		this.yOffset = yOffset;
+	}
+
+	public long getTimeSinceClosed() {
+		return timeSinceClosed;
+	}
+
+	public void setTimeSinceClosed(long timeSinceClosed) {
+		this.timeSinceClosed = timeSinceClosed;
+	}
+
+	public long getTimeOpened() {
+		return timeOpened;
+	}
+
+	public void setTimeOpened(long timeOpened) {
+		this.timeOpened = timeOpened;
 	}	
 
+	
+	
 }

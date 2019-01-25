@@ -2,15 +2,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
-import java.io.Serializable;
 
-public class EscapeMenu implements Serializable{
-	
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2124627859290612395L;
+public class EscapeMenu {
+
 	private int pX = 275, pY = 125, pW = 512, pH = 512;
 	Rectangle saveBounds = new Rectangle(pX + 512/2 - 278/2, pY + 130, 278, 54);
 	Rectangle settingsBounds = new Rectangle(pX + 512/2 - 278/2, pY + 230, 278, 54);
@@ -24,7 +18,9 @@ public class EscapeMenu implements Serializable{
 	}
 	
 	public void tick() {
-		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE) && !handler.getWorld().getEntityManager().getPlayer().getInventory().isActive()) {
+		System.out.println(handler.getWorld().getEntityManager().getPlayer().getInventory().getTimeSinceClosed());
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE) && !handler.getWorld().getEntityManager().getPlayer().getInventory().isActive() &&
+				handler.getWorld().getEntityManager().getPlayer().getInventory().getTimeSinceClosed() > 1000) {
 			active = !active;
 		}
 		

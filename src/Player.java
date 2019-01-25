@@ -260,7 +260,6 @@ public class Player extends Creature {
 			return;
 		}
 		
-		
 		cast = false;
 		time = 0;
 		
@@ -786,12 +785,4 @@ public class Player extends Creature {
 		this.skillAnim = skillAnim;
 	}
 
-	
-	
-
-	
-
-
-
-	
 }
