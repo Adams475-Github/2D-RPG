@@ -12,11 +12,9 @@ public class IceBallClass extends Creature implements Serializable{
 	public IceBallClass(Handler handler, float x, float y, int width, int height, String direction) {
 		super(handler, x, y, width, height);
 		
-		
 		bounds.width = 0;
 		bounds.height = 0;
 		this.health = 999;
-		
 		
 		if(direction == "up") {
 			this.x += 8;

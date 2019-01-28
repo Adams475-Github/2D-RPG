@@ -2,15 +2,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Inventory implements Serializable{
+public class Inventory {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2464666426241643982L;
 	//timer variables
 	private long time = 550;
 	private int holder = 0;
@@ -62,12 +57,16 @@ public class Inventory implements Serializable{
 	public Inventory(Handler handler) {
 		//Setting instance variables
 		this.handler = handler;
+		
 		inventoryAttack = new ArrayList<Item>();
 		inventoryArmor = new ArrayList<Item>();
 		inventoryPotions = new ArrayList<Item>();
+		
 		invAdd = new ArrayList<Item>();
 		hotbar = new ArrayList<Item>();
+		
 		init();
+		
 		addItem(Item.swordStarter);
 		addItem(Item.shieldStarter);
 		addItem(Item.hpPotion);
@@ -115,9 +114,6 @@ public class Inventory implements Serializable{
 		getInput();
 		findSelectedItem();
 		manageSubinventories();
-	
-
-		
 		
 	}
 	
@@ -129,6 +125,14 @@ public class Inventory implements Serializable{
 			return false;
 			
 		}
+	}
+	
+	public boolean canPay(int cost) {
+		if(this.coins >= cost) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 	private void getActivation() {

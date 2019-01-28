@@ -1,13 +1,8 @@
 import java.awt.Graphics;
-import java.io.Serializable;
 import java.util.Random;
 
-public class BushSmall extends StaticEntity implements Serializable {
+public class BushSmall extends StaticEntity {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1139387500950334528L;
 	private Random rand;
 
 	public BushSmall(Handler handler, float x, float y) {

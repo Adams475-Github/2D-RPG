@@ -1,25 +1,25 @@
 import java.awt.Graphics;
-import java.io.Serializable;
+import java.awt.event.KeyEvent;
 
-public class WorldMap extends State implements Serializable {
+public class WorldMap extends State {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7712914976732503077L;
-	private transient Handler handler;
+	private Handler handler;
 	private int width;
 	private int height;
 	private int[][] tiles;
 	
 	public WorldMap(Handler handler) {
 		super(handler);
+		this.handler = handler;
 		init();
 	}
 
 	@Override
 	public void tick() {
 		
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
+			State.setState(handler.getGame().gameState);
+		}
 		
 	}
 

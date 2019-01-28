@@ -1,11 +1,5 @@
-import java.io.Serializable;
+public class Launcher {
 
-public class Launcher implements Serializable{
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7175885768341968821L;
 	public static final int SCREEN_WIDTH = 1024;
 	public static final int SCREEN_HEIGHT = 768;
 	

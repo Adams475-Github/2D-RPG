@@ -1,11 +1,5 @@
-import java.io.Serializable;
-
-public class Handler implements Serializable {
+public class Handler  {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6196027817573194024L;
 	private Game game;
 	private World world;
 	
